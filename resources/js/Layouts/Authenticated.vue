@@ -19,6 +19,11 @@
                                     Dashboard
                                 </BreezeNavLink>
                             </div>
+                            <div v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 2" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
+                                    Uzytkownicy
+                                </BreezeNavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -82,12 +87,12 @@
                 </div>
             </nav>
 
-            <!-- Page Heading -->
+            <!-- Page Heading
             <header class="bg-white shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
-            </header>
+            </header> -->
 
             <!-- Page Content -->
             <main>
