@@ -18,8 +18,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
+        'phone',
         'password',
+        'privilege_id',
+        'fire_brigade_unit_id'
     ];
 
     /**
@@ -40,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function privilege(){
+        return $this->belongsTo(Privilege::class);
+    }
+
+    public function fireBrigadeUnit(){
+        return $this->belongsTo(FireBrigadeUnit::class);
+    }
 }
