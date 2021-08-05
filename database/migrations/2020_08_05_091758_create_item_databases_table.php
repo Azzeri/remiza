@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class CreateItemDatabasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('item_databases', function (Blueprint $table) {
             $table->id();
-            $table->string('description')->nullable();
-            $table->date('perform_date');
-            $table->boolean('is_performed')->default(false);
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('item_id')->constrained();
+            $table->string('name');
+            $table->foreignId('cathegory_id')->constrained();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('item_databases');
     }
 }

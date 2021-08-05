@@ -15,9 +15,9 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->date('expiry_date');
-            $table->foreignId('cathegory_id')->constrained();
+            $table->foreignId('item_database_id')->constrained();
+            $table->foreignId('fire_brigade_unit_id')->constrained();
             $table->timestamps();
         });
     }
