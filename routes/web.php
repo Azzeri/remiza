@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CathegoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware(['auth','isAdmin']);
+Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']])->middleware(['auth']);
 
 require __DIR__ . '/auth.php';
