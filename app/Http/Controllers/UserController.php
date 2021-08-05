@@ -59,7 +59,7 @@ class UserController extends Controller
         //     );
 
         return redirect()->back()
-            ->with('message', 'Post Created Successfully.');
+            ->with('message', 'Sukces');
     }
 
     public function update(Request $request)
@@ -78,7 +78,7 @@ class UserController extends Controller
         if ($request->has('id')) {
             User::find($request->input('id'))->update($request->all());
             return redirect()->back()
-                ->with('message', 'Post Updated Successfully.');
+                ->with('message', 'Sukces');
         }
     }
 

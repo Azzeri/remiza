@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('privileges')->insert([
-            'name'=>'global admin'
+            'name'=>'Administrator'
         ]);
 
         DB::table('privileges')->insert([
-            'name'=>'unit admin'
+            'name'=>'Administrator jednostki'
         ]);
 
         DB::table('privileges')->insert([
-            'name'=>'inventory manager'
+            'name'=>'Koordynator sprzętu'
         ]);
 
         DB::table('fire_brigade_units')->insert([
