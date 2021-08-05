@@ -10,8 +10,18 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'expiry_date',
-        'cathegory_id'
+        'item_database_id',
+        'fire_brigade_unit_id'
     ];
+
+    public function databaseItems()
+    {
+        return $this->belongsTo(ItemDatabase::class, 'item_database_id');
+    }
+
+    public function fireBrigadeUnit()
+    {
+        return $this->belongsTo(FireBrigadeUnit::class);
+    }
 }

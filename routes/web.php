@@ -6,6 +6,8 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CathegoryController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +37,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware(['auth','isAdmin']);
 Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']])->middleware(['auth']);
+Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']])->middleware(['auth']);
+Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']])->middleware(['auth']);
 
 require __DIR__ . '/auth.php';
