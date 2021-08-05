@@ -81,5 +81,65 @@ class DatabaseSeeder extends Seeder
             'privilege_id'=>3,
             'fire_brigade_unit_id'=>2
         ]);
+
+        DB::table('cathegories')->insert([
+            'name'=>'Hełm',
+        ]);
+
+        DB::table('cathegories')->insert([
+            'name'=>'Butla',
+        ]);
+
+        DB::table('items')->insert([
+            'name'=>'hełm 1',
+            'expiry_date'=>'2025-01-01',
+            'cathegory_id'=>1
+        ]);
+
+        DB::table('items')->insert([
+            'name'=>'hełm 2',
+            'expiry_date'=>'2025-01-01',
+            'cathegory_id'=>1
+        ]);
+
+        DB::table('items')->insert([
+            'name'=>'butla 1',
+            'expiry_date'=>'2025-01-01',
+            'cathegory_id'=>2
+        ]);
+
+        DB::table('items')->insert([
+            'name'=>'butla 2',
+            'expiry_date'=>'2025-01-01',
+            'cathegory_id'=>2
+        ]);
+
+        DB::table('services')->insert([
+            'name'=>'wymiana w hełmie 1',
+            'perform_date'=>'2023-01-01',
+            'days_to_next'=>365,
+            'cathegory_id'=>1
+        ]);
+
+        DB::table('services')->insert([
+            'name'=>'wymiana w hełmie 2',
+            'perform_date'=>'2022-01-01',
+            'days_to_next'=>165,
+            'cathegory_id'=>1
+        ]);
+
+        DB::table('services')->insert([
+            'name'=>'wymiana w butli 1',
+            'perform_date'=>'2021-09-01',
+            'days_to_next'=>30,
+            'cathegory_id'=>2
+        ]);
+
+        DB::table('services')->insert([
+            'name'=>'wymiana w butli 2',
+            'perform_date'=>'2023-09-01',
+            'days_to_next'=>320,
+            'cathegory_id'=>2
+        ]);
     }
 }
