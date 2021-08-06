@@ -151,13 +151,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('services')->insert([
-            'perform_date' => '2021-08-05',
+            'perform_date' => '2021-08-07',
             'item_id' => 2,
             'service_database_id' => 2
         ]);
 
         DB::table('services')->insert([
-            'perform_date' => '2021-08-05',
+            'perform_date' => '2021-08-07',
             'item_id' => 2,
             'service_database_id' => 3
         ]);
