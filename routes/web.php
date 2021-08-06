@@ -40,4 +40,8 @@ Route::resource('cathegories', CathegoryController::class, ['names' => ['index' 
 Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']])->middleware(['auth']);
 Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']])->middleware(['auth']);
 
+Route::get('items/{item}',[ItemController::class, 'itemDetails'])->name('item.details')->middleware(['auth']);
+// Route::post('services/finish/{service}',[ServiceController::class, 'finish'])->middleware(['auth']);
+Route::post('services/finish/',[ServiceController::class, 'finish'])->middleware(['auth']);
+
 require __DIR__ . '/auth.php';

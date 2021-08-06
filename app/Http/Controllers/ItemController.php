@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use App\Models\Item;
 use App\Models\ItemDatabase;
+use App\Models\Service;
+use App\Models\ServiceDatabase;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -18,6 +20,14 @@ class ItemController extends Controller
         // $items = Item::with('databaseItems')->first();
         // print($items);
         return Inertia::render('items', ['items' => $items]);
+    }
+
+    public function itemDetails(Item $item){
+
+        $dbservices=ServiceDatabase::where('cathegory_id',$item->databaseItems->cathegory_id)->get();
+        $services=Service::where('item_id',$item->id)->with('serviceDatabase')->get();
+        
+        return Inertia::render('itemDetails', ['item' => $item, 'dbservices' => $dbservices, 'services' => $services]);
     }
 
     // public function store(Request $request)

@@ -123,5 +123,25 @@ class DatabaseSeeder extends Seeder
             'days_to_next' => 123,
             'cathegory_id' => 2
         ]);
+
+        DB::table('service_databases')->insert([
+            'name' => 'wymiana w butli 2',
+            'days_to_next' => 68,
+            'cathegory_id' => 2
+        ]);
+
+        DB::table('services')->insert([
+            'perform_date' => '2021-08-05',
+            'item_id' => 2,
+            'service_database_id' => 2
+        ]);
+
+        DB::table('services')->insert([
+            'perform_date' => '2021-08-05',
+            'item_id' => 2,
+            'service_database_id' => 3
+        ]);
+
+
     }
 }

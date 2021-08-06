@@ -14,6 +14,17 @@ class Service extends Model
         'perform_date',
         'is_performed',
         'user_id',
-        'item_id'
+        'item_id',
+        'service_database_id'
     ];
+
+    public function serviceDatabase()
+    {
+        return $this->belongsTo(ServiceDatabase::class, 'service_database_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }           

@@ -32,7 +32,7 @@
                                 <td class="border px-4 py-2">
                                     <button @click="edit(row)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">E</button>
                                     <button @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button>
-                                    <Link href="services.index">Home</Link>
+                                    <Link :href="'items/'+row.id">Serwis</Link>
                                 </td>
                             </tr>
                         </tbody>
