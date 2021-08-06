@@ -7,53 +7,49 @@
              <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
                     {{ $page.props.flash.message }}
                 </div>
-            <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
+            <!-- <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
                 <div>{{item.database_items.name}}</div>
                 <ul>
                     <li v-for="service in dbservices" :key="service.id">{{service.name}}</li>
                 </ul>
-            </div>
-            <div class="flex">
+            </div> -->
+            <div class="flex justify-evenly">
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
+                    <h1 class="text-xl font-semibold text-green-600">Nadchodzące</h1>
                     <ul>
                         <li v-for="service in services" :key="service.id">
                             <template v-if="service.is_performed == 0">
-                                Id: {{service.id}}<br>
-                                Opis: {{service.description}}<br>
-                                Data: {{service.perform_date}}<br>
-                                Zakończono: {{service.is_performed}}<br>
-                                Wykonawca: {{service.user_id}}<br>
-                                Nazwa serwisu: {{service.service_database.name}}<br>
-
-                                <form >
-                                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="border-b-2 mt-4">
+                                    Data: {{service.perform_date}}<br>
+                                    Nazwa serwisu: {{service.service_database.name}}<br>
+                                    <form >
                                         <input type="hidden" v-model="form.id">
                                         <div class="mb-4">
-                                            <BreezeLabel for="descField" value="Opis" /> 
-                                            <BreezeInput id="descField" type="text" class="mt-1 block w-full" v-model="form.desc" placeholder="Wprowadź opis"/>
+                                            <BreezeInput id="descField" type="textarea" class="mt-1 block w-full" v-model="form.desc" placeholder="Wprowadź opis"/>
                                             <div class="text-red-500" v-if="errors.desc">{{ errors.desc }}</div>
                                         </div>    
-                                        <span  class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
-                                            <BreezeButton @click="save(form, service.id)">
-                                                Zapisz
-                                            </BreezeButton>
-                                        </span>                                                     
-                                    </div>
-                                </form>
+                                        <BreezeButton class="mb-2" @click="save(form, service.id)">
+                                            Potwierdź wykonanie
+                                        </BreezeButton>
+                                    </form>
+                                </div>
                             </template>
                         </li>
                     </ul>
                 </div>
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
+                    <h1 class="text-xl font-semibold">Historia</h1>
                     <ul>
                         <li v-for="service in services" :key="service.id">
                             <template v-if="service.is_performed == 1">
-                                Id: {{service.id}}<br>
+                                <div class="border-b-2 mt-4">
+                                <!-- Id: {{service.id}}<br> -->
+                                Nazwa serwisu: {{service.service_database.name}}<br>                               
                                 Opis: {{service.description}}<br>
                                 Data: {{service.perform_date}}<br>
-                                Zakończono: {{service.is_performed}}<br>
-                                Wykonawca: {{service.user_id}}<br>
-                                Nazwa serwisu: {{service.service_database.name}}<br>
+                                <!-- Zakończono: {{service.is_performed}}<br> -->
+                                Wykonawca: {{service.user.name}} {{service.user.surname}}<br>
+                                </div>
                             </template>
                         </li>
                     </ul>
@@ -76,7 +72,7 @@ import { Link } from '@inertiajs/inertia-vue3'
 
 export default {
     props: {
-      dbservices: Object,
+    //   dbservices: Object,
         item: Object,
         services: Object,
         errors: Object,

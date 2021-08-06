@@ -24,10 +24,10 @@ class ItemController extends Controller
 
     public function itemDetails(Item $item){
 
-        $dbservices=ServiceDatabase::where('cathegory_id',$item->databaseItems->cathegory_id)->get();
-        $services=Service::where('item_id',$item->id)->with('serviceDatabase')->get();
+        // $dbservices=ServiceDatabase::where('cathegory_id',$item->databaseItems->cathegory_id)->get();
+        $services=Service::where('item_id',$item->id)->with('serviceDatabase','user')->get();
         
-        return Inertia::render('itemDetails', ['item' => $item, 'dbservices' => $dbservices, 'services' => $services]);
+        return Inertia::render('itemDetails', ['item' => $item, 'services' => $services]);
     }
 
     // public function store(Request $request)

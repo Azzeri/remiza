@@ -100,6 +100,26 @@ class DatabaseSeeder extends Seeder
             'cathegory_id' => 2
         ]);
 
+        DB::table('item_databases')->insert([
+            'name' => 'hełm 2',
+            'cathegory_id' => 1
+        ]);
+
+        DB::table('item_databases')->insert([
+            'name' => 'butla 2',
+            'cathegory_id' => 2
+        ]);
+
+        DB::table('item_databases')->insert([
+            'name' => 'hełm 3',
+            'cathegory_id' => 1
+        ]);
+
+        DB::table('item_databases')->insert([
+            'name' => 'butla 3',
+            'cathegory_id' => 2
+        ]);
+
         DB::table('items')->insert([
             'expiry_date' => '2025-01-01',
             'item_database_id' => 1,
