@@ -34,6 +34,11 @@
                                     Sprzęt
                                 </BreezeNavLink>
                             </div>
+                            <div v-if="$page.props.auth.user.privilege_id == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
+                                    Remizy
+                                </BreezeNavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">

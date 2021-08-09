@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CathegoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
-
+use App\Http\Controllers\FireBrigadeUnitController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,17 +31,21 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
 
-Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware(['auth','isAdmin']);
-Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']])->middleware(['auth']);
-Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']])->middleware(['auth']);
-Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']])->middleware(['auth']);
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->middleware('verified')->name('dashboard');
 
-Route::get('items/{item}',[ItemController::class, 'itemDetails'])->name('item.details')->middleware(['auth']);
-// Route::post('services/finish/{service}',[ServiceController::class, 'finish'])->middleware(['auth']);
-Route::post('services/finish/',[ServiceController::class, 'finish'])->middleware(['auth']);
+    Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
+    Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
+    Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
+    Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
+    Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
+
+    Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
+    Route::post('services/finish/', [ServiceController::class, 'finish']);
+});
+
 
 require __DIR__ . '/auth.php';
