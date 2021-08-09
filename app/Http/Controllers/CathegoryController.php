@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use App\Models\Cathegory;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Request;
 
 class CathegoryController extends Controller
 {
@@ -18,34 +17,29 @@ class CathegoryController extends Controller
         return Inertia::render('cathegories', ['cathegories' => $cathegories]);
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        Validator::make($request->all(), [
-            'name' => 'unique:cathegories|required|string|min:3|max:32',
-        ])->validate();
-
-        Cathegory::create($request->all());
+        Cathegory::create(
+            Request::validate([
+                'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
+            ])
+        );
 
         return redirect()->back()
             ->with('message', 'Sukces');
     }
 
-    public function update(Request $request)
+    public function update(Cathegory $cathegory)
     {
-        if ($request->has('id'))
-            $avoid = Cathegory::find($request->input('id'));
+        $cathegory->update(
+            Request::validate([
+                'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id))]
+            ])
+        );
 
-        Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore($avoid)],
-        ])->validate();
-
-        if ($request->has('id')) {
-            Cathegory::find($request->input('id'))->update($request->all());
-            return redirect()->back()
-                ->with('message', 'Sukces');
-        }
+        return redirect()->back()
+            ->with('message', 'Sukces');
     }
-
     // public function destroy(Request $request)
     // {
     //     if ($request->has('id')) {

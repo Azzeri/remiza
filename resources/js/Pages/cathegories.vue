@@ -6,7 +6,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
                     <BreezeButton @click="openModal()">
-                        Nowa
+                        Dodaj
                     </BreezeButton>
 
                     <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
@@ -43,7 +43,7 @@
 
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
                 <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
-                    <form>
+                    <form @submit.prevent="save, update"> 
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="mb-4">
                                 <BreezeLabel for="nameField" value="Nazwa" />
@@ -54,7 +54,7 @@
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
-                            <BreezeButton v-show="!editMode" @click="save(form)">
+                            <BreezeButton type="submit" v-show="!editMode" @click="save(form)">
                                 Zapisz
                             </BreezeButton>
                         </span>
@@ -64,7 +64,7 @@
                             </BreezeButton>
                         </span>
                         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                            <BreezeButton  @click="closeModal()">
+                            <BreezeButton @click="closeModal()">
                                 Zamknij
                             </BreezeButton>
                         </span>
@@ -88,7 +88,7 @@ export default {
         cathegories: Object,
         errors: Object,
     },
-
+ 
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -106,6 +106,7 @@ export default {
             },
         }
     },
+    
     methods: {
         openModal: function () {
             this.isOpen = true;
@@ -121,10 +122,10 @@ export default {
             }
         },
         save: function (data) {
-            this.$inertia.post('/cathegories', data)
+            this.$inertia.post('/cathegories', data,{
+                onSuccess: () => this.closeModal(),
+            })
             this.reset();
-            // this.closeModal();
-            this.editMode = false;
         },
         edit: function (data) {
             this.form = Object.assign({}, data);
@@ -132,10 +133,9 @@ export default {
             this.openModal();
         },
         update: function (data) {
-            data._method = 'PUT';
-            this.$inertia.post('/cathegories/' + data.id, data)
-            this.reset();
-            this.closeModal();
+            this.$inertia.put('/cathegories/' + data.id, data,{
+                onSuccess: () => this.closeModal()
+            });     
         },
         // deleteRow: function (data) {
         //     if (!confirm('Na pewno?')) return;
