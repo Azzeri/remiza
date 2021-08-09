@@ -19053,7 +19053,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    users: Object,
+    data: Object,
     errors: Object
   },
   components: {
@@ -19093,10 +19093,14 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     save: function save(data) {
-      this.$inertia.post('/users', data);
-      this.reset(); // this.closeModal();
+      var _this = this;
 
-      this.editMode = false;
+      this.$inertia.post('/users', data, {
+        onSuccess: function onSuccess() {
+          return _this.closeModal();
+        }
+      });
+      this.reset();
     },
     edit: function edit(data) {
       this.form = Object.assign({}, data);
@@ -19104,18 +19108,21 @@ __webpack_require__.r(__webpack_exports__);
       this.openModal();
     },
     update: function update(data) {
-      data._method = 'PUT';
-      this.$inertia.post('/users/' + data.id, data);
-      this.reset();
-      this.closeModal();
-    },
-    deleteRow: function deleteRow(data) {
-      if (!confirm('Na pewno?')) return;
-      data._method = 'DELETE';
-      this.$inertia.post('/users/' + data.id, data);
-      this.reset();
-      this.closeModal();
-    }
+      var _this2 = this;
+
+      this.$inertia.put('/users/' + data.id, data, {
+        onSuccess: function onSuccess() {
+          return _this2.closeModal();
+        }
+      });
+    } // deleteRow: function (data) {
+    //     if (!confirm('Na pewno?')) return;
+    //     data._method = 'DELETE';
+    //     this.$inertia.post('/users/' + data.id, data)
+    //     this.reset();
+    //     this.closeModal();
+    // }
+
   }
 });
 
@@ -21602,7 +21609,7 @@ var _hoisted_3 = {
   "class": "p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Nowy ");
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Dodaj ");
 
 var _hoisted_5 = {
   key: 1,
@@ -21759,7 +21766,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$page.props.flash.message ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.flash.message), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.users, function (row) {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data, function (row) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
           key: row.id
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
@@ -21781,20 +21788,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         }, "E", 8
         /* PROPS */
-        , ["onClick"]), _ctx.$page.props.auth.user.id != row.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
-          key: 0,
-          onClick: function onClick($event) {
-            return $options.deleteRow(row);
-          },
-          "class": "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        }, "U", 8
-        /* PROPS */
-        , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+        , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button v-if=\"$page.props.auth.user.id != row.id\" @click=\"deleteRow(row)\" class=\"bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded\">U</button> ")])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])]), $data.isOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [_hoisted_17, _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-        onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-          return $options.save && $options.save.apply($options, arguments);
+        onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+          return $options.save, $options.update;
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "nameField",

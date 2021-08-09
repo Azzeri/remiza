@@ -6,7 +6,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
                     <BreezeButton v-if="$page.props.auth.user.privilege_id == 2" @click="openModal()">
-                        Nowy
+                        Dodaj
                     </BreezeButton>
 
                     <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="row in users" :key="row.id">
+                            <tr v-for="row in data" :key="row.id">
                                 <td class="border px-4 py-2">{{ row.name }}</td>
                                 <td class="border px-4 py-2">{{ row.surname }}</td>
                                 <td class="border px-4 py-2">{{ row.email }}</td>
@@ -35,7 +35,7 @@
                                 <td class="border px-4 py-2">{{ row.fire_brigade_unit.name }}</td>
                                 <td class="border px-4 py-2">
                                     <button @click="edit(row)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">E</button>
-                                    <button v-if="$page.props.auth.user.id != row.id" @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button>
+                                    <!-- <button v-if="$page.props.auth.user.id != row.id" @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -53,7 +53,7 @@
 
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
                 <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
-                    <form @submit.prevent="save">
+                    <form @submit.prevent="save, update">
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="mb-4">
                                 <BreezeLabel for="nameField" value="Imię" />
@@ -110,7 +110,7 @@ import { Head } from '@inertiajs/inertia-vue3';
 
 export default {
     props: {
-        users: Object,
+        data: Object,
         errors: Object,
     },
 
@@ -152,10 +152,10 @@ export default {
             }
         },
         save: function (data) {
-            this.$inertia.post('/users', data)
+            this.$inertia.post('/users', data,{
+                onSuccess: () => this.closeModal(),
+            })
             this.reset();
-            // this.closeModal();
-            this.editMode = false;
         },
         edit: function (data) {
             this.form = Object.assign({}, data);
@@ -163,18 +163,17 @@ export default {
             this.openModal();
         },
         update: function (data) {
-            data._method = 'PUT';
-            this.$inertia.post('/users/' + data.id, data)
-            this.reset();
-            this.closeModal();
+            this.$inertia.put('/users/' + data.id, data,{
+                onSuccess: () => this.closeModal()
+            });  
         },
-        deleteRow: function (data) {
-            if (!confirm('Na pewno?')) return;
-            data._method = 'DELETE';
-            this.$inertia.post('/users/' + data.id, data)
-            this.reset();
-            this.closeModal();
-        }
+        // deleteRow: function (data) {
+        //     if (!confirm('Na pewno?')) return;
+        //     data._method = 'DELETE';
+        //     this.$inertia.post('/users/' + data.id, data)
+        //     this.reset();
+        //     this.closeModal();
+        // }
     }
 }
 </script>

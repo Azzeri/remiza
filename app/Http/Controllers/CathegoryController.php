@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Cathegory;
 use Illuminate\Validation\Rule;
