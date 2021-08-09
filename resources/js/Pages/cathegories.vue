@@ -21,7 +21,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="row in cathegories" :key="row.id">
+                            <tr v-for="row in data" :key="row.id">
                                 <td class="border px-4 py-2">{{ row.name }}</td>
                                 <td class="border px-4 py-2">
                                     <button @click="edit(row)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">E</button>
@@ -85,7 +85,7 @@ import { Head } from '@inertiajs/inertia-vue3';
 
 export default {
     props: {
-        cathegories: Object,
+        data: Object,
         errors: Object,
     },
  

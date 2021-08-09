@@ -14,7 +14,7 @@ class CathegoryController extends Controller
     {
         $cathegories = Cathegory::all();
 
-        return Inertia::render('cathegories', ['cathegories' => $cathegories]);
+        return Inertia::render('cathegories', ['data' => $cathegories]);
     }
 
     public function store()

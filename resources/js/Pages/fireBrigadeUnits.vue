@@ -1,12 +1,12 @@
 <template>
-    <Head title="Kategorie" />
+    <Head title="Remizy" />
 
     <BreezeAuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
                     <BreezeButton @click="openModal()">
-                        Nowa
+                        Dodaj
                     </BreezeButton>
 
                     <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
@@ -22,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="row in units" :key="row.id">
+                            <tr v-for="row in data" :key="row.id">
                                 <td class="border px-4 py-2">{{ row.name }}</td>
                                 <td class="border px-4 py-2">{{ row.address }}</td>
                                 <td class="border px-4 py-2">
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-<!-- 
+
         <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
@@ -45,18 +45,22 @@
 
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
                 <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
-                    <form>
+                    <form @submit.prevent="save, update"> 
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="mb-4">
                                 <BreezeLabel for="nameField" value="Nazwa" />
                                 <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
                                 <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
-                            </div>                                                         
-                        </div>
-
+                            </div>   
+                            <div class="mb-4">
+                                <BreezeLabel for="addressField" value="Adres" />
+                                <BreezeInput id="addressField" type="text" class="mt-1 block w-full" v-model="form.address" placeholder="Wprowadź adres" />
+                                <div class="text-red-500" v-if="errors.address">{{ errors.address }}</div>
+                            </div>                                                        
+                        </div>                       
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
-                            <BreezeButton v-show="!editMode" @click="save(form)">
+                            <BreezeButton type="submit" v-show="!editMode" @click="save(form)">
                                 Zapisz
                             </BreezeButton>
                         </span>
@@ -66,7 +70,7 @@
                             </BreezeButton>
                         </span>
                         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                            <BreezeButton  @click="closeModal()">
+                            <BreezeButton @click="closeModal()">
                                 Zamknij
                             </BreezeButton>
                         </span>
@@ -74,7 +78,7 @@
                     </form>
                 </div>
             </div>
-        </div> -->
+        </div>
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -87,10 +91,10 @@ import { Head } from '@inertiajs/inertia-vue3';
 
 export default {
     props: {
-        units: Object,
+        data: Object,
         errors: Object,
     },
-
+ 
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -105,9 +109,11 @@ export default {
             isOpen: false,
             form: {
                 name: null,
+                address: null
             },
         }
     },
+    
     methods: {
         openModal: function () {
             this.isOpen = true;
@@ -120,13 +126,14 @@ export default {
         reset: function () {
             this.form = {
                 name: null,
+                address: null
             }
         },
         save: function (data) {
-            this.$inertia.post('/cathegories', data)
+            this.$inertia.post('/fireBrigadeUnits', data,{
+                onSuccess: () => this.closeModal(),
+            })
             this.reset();
-            // this.closeModal();
-            this.editMode = false;
         },
         edit: function (data) {
             this.form = Object.assign({}, data);
@@ -134,10 +141,9 @@ export default {
             this.openModal();
         },
         update: function (data) {
-            data._method = 'PUT';
-            this.$inertia.post('/cathegories/' + data.id, data)
-            this.reset();
-            this.closeModal();
+            this.$inertia.put('/fireBrigadeUnits/' + data.id, data,{
+                onSuccess: () => this.closeModal()
+            });     
         },
         // deleteRow: function (data) {
         //     if (!confirm('Na pewno?')) return;
