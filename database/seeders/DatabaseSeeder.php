@@ -86,38 +86,48 @@ class DatabaseSeeder extends Seeder
             'name' => 'Hełm',
         ]);
 
+        DB::table('subcathegories')->insert([
+            'name' => 'Hełm podk 1',
+            'cathegory_id' => 1
+        ]);
+
+        DB::table('subcathegories')->insert([
+            'name' => 'Hełm podk2',
+            'cathegory_id' => 1
+        ]);
+
         DB::table('cathegories')->insert([
             'name' => 'Butla',
         ]);
 
+        DB::table('subcathegories')->insert([
+            'name' => 'Butla podk 1',
+            'cathegory_id' => 2
+        ]);
+
+        DB::table('subcathegories')->insert([
+            'name' => 'Butla podk2',
+            'cathegory_id' => 2
+        ]);
+
         DB::table('item_databases')->insert([
             'name' => 'hełm 1',
-            'cathegory_id' => 1
+            'subcathegory_id' => 1
         ]);
 
         DB::table('item_databases')->insert([
             'name' => 'butla 1',
-            'cathegory_id' => 2
+            'subcathegory_id' => 3
         ]);
 
         DB::table('item_databases')->insert([
             'name' => 'hełm 2',
-            'cathegory_id' => 1
+            'subcathegory_id' => 1
         ]);
 
         DB::table('item_databases')->insert([
             'name' => 'butla 2',
-            'cathegory_id' => 2
-        ]);
-
-        DB::table('item_databases')->insert([
-            'name' => 'hełm 3',
-            'cathegory_id' => 1
-        ]);
-
-        DB::table('item_databases')->insert([
-            'name' => 'butla 3',
-            'cathegory_id' => 2
+            'subcathegory_id' => 4
         ]);
 
         DB::table('items')->insert([
@@ -135,19 +145,19 @@ class DatabaseSeeder extends Seeder
         DB::table('service_databases')->insert([
             'name' => 'wymiana w hełmie 1',
             'days_to_next' => 255,
-            'cathegory_id' => 1
+            'subcathegory_id' => 1
         ]);
 
         DB::table('service_databases')->insert([
             'name' => 'wymiana w butli 1',
             'days_to_next' => 123,
-            'cathegory_id' => 2
+            'subcathegory_id' => 3
         ]);
 
         DB::table('service_databases')->insert([
             'name' => 'wymiana w butli 2',
             'days_to_next' => 68,
-            'cathegory_id' => 2
+            'subcathegory_id' => 3
         ]);
 
         DB::table('services')->insert([

@@ -16,17 +16,18 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::with('databaseItems', 'fireBrigadeUnit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+        $items = Item::with('databaseItems', 'fireBrigadeUnit', 'subcathegory', 'cathegory')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
         // $items = Item::with('databaseItems')->first();
         // print($items);
         return Inertia::render('items', ['items' => $items]);
     }
 
-    public function itemDetails(Item $item){
+    public function itemDetails(Item $item)
+    {
 
         // $dbservices=ServiceDatabase::where('cathegory_id',$item->databaseItems->cathegory_id)->get();
-        $services=Service::where('item_id',$item->id)->with('serviceDatabase','user')->get();
-        
+        $services = Service::where('item_id', $item->id)->with('serviceDatabase', 'user')->get();
+
         return Inertia::render('itemDetails', ['item' => $item, 'services' => $services]);
     }
 

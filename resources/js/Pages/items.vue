@@ -18,6 +18,7 @@
                             <tr class="bg-gray-100">
                                 <th class="px-4 py-2">Nazwa</th>
                                 <th class="px-4 py-2">Kategoria</th>
+                                <th class="px-4 py-2">Podkategoria</th>
                                 <th class="px-4 py-2">Remiza</th>
                                 <th class="px-4 py-2">Data ważności</th>
                                 <th class="px-4 py-2">Działania</th>
@@ -26,7 +27,8 @@
                         <tbody>
                             <tr v-for="row in items" :key="row.id">
                                 <td class="border px-4 py-2">{{ row.database_items.name }}</td>
-                                <td class="border px-4 py-2">{{ row.database_items.cathegory_id }}</td>
+                                <td class="border px-4 py-2">{{ row.cathegory.cathegory.cathegory.name }}</td>
+                                <td class="border px-4 py-2">{{ row.subcathegory.subcathegory.name }}</td>
                                 <td class="border px-4 py-2">{{ row.fire_brigade_unit.name }}</td>
                                 <td class="border px-4 py-2">{{ row.expiry_date}}</td>
                                 <td class="border px-4 py-2">

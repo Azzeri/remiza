@@ -5,10 +5,12 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
-                    <BreezeButton v-if="$page.props.auth.user.privilege_id == 2" @click="openModal()">
+                    <!-- <BreezeButton v-if="$page.props.auth.user.privilege_id == 2" @click="openModal()">
                         Dodaj
+                    </BreezeButton> -->
+                    <BreezeButton @click="openModal()">
+                        Nowy
                     </BreezeButton>
-
                     <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
                         {{ $page.props.flash.message }}
                     </div>

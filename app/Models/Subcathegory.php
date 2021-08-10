@@ -5,22 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemDatabase extends Model
+class Subcathegory extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'subcathegory_id',
     ];
-
-    public function subcathegory()
-    {
-        return $this->belongsTo(Subcathegory::class);
-    }
 
     public function cathegory()
     {
-        return $this->subcathegory()->with('cathegory');
+        return $this->belongsTo(Cathegory::class);
     }
 }

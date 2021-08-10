@@ -16,7 +16,7 @@ class CreateItemDatabasesTable extends Migration
         Schema::create('item_databases', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('cathegory_id')->constrained();
+            $table->foreignId('subcathegory_id')->constrained();
             $table->timestamps();
         });
     }

@@ -17,12 +17,18 @@
                         <thead>
                             <tr class="bg-gray-100">
                                 <th class="px-4 py-2">Nazwa</th>
+                                <th class="px-4 py-2">Podkategorie</th>
                                 <th class="px-4 py-2">Działania</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="row in data" :key="row.id">
                                 <td class="border px-4 py-2">{{ row.name }}</td>
+                                <td class="border px-4 py-2">
+                                    <ul>
+                                        <li v-for="subcat in row.subcathegories" :key="subcat.id">{{subcat.name}}</li>
+                                    </ul>
+                                </td>
                                 <td class="border px-4 py-2">
                                     <button @click="edit(row)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">E</button>
                                     <!-- <button @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button> -->

@@ -50,4 +50,18 @@ class FireBrigadeUnitController extends Controller
         return redirect()->back()
             ->with('message', 'Sukces');
     }
+
+    public function update(FireBrigadeUnit $unit)
+    {
+        echo $unit;
+        // $unit->update(
+        //     Request::validate([
+        //         'name' => [ Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
+        //         'address' => ['required'],
+        //     ])
+        // );
+
+        // return redirect()->back()
+        //     ->with('message', 'Sukces');
+    }
 }

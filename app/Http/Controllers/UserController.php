@@ -23,51 +23,41 @@ class UserController extends Controller
 
     public function store()
     {
-        if (Auth::user()->privilege_id == 2) {
-            User::create(
-                [
-                    Request::validate([
-                        'name' => 'required|string|min:3|max:32',
-                        'surname' => 'required|string|min:3|max:32',
-                        'email' => 'unique:users|required|email',
-                        'phone' => 'nullable|size:9',
-                    ]),
-                    'name' => Request::get('name'),
-                    'surname' => Request::get('surname'),
-                    'email' => Request::get('email'),
-                    'phone' => Request::get('phone'),
-                    'password' => Hash::make('qwerty'),
-                    'privilege_id' => 3,
-                    'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
-                ]
-            );
+        User::create(
+            [
+                Request::validate([
+                    'name' => 'required|string|min:3|max:32',
+                    'surname' => 'required|string|min:3|max:32',
+                    'email' => 'unique:users|required|email',
+                    'phone' => 'nullable|size:9',
+                ]),
+                'name' => Request::get('name'),
+                'surname' => Request::get('surname'),
+                'email' => Request::get('email'),
+                'phone' => Request::get('phone'),
+                'password' => Hash::make('qwerty'),
+                'privilege_id' => 3,
+                'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
+            ]
+        );
 
-            return redirect()->back()
-                ->with('message', 'Sukces');
-        } else {
-            return redirect()->back()
-                ->with('message', 'Brak uprawnień');
-        }
+        return redirect()->back()
+            ->with('message', 'Sukces');
     }
 
     public function update(User $user)
     {
-        if (Auth::user()->privilege_id == 2) {
-            $user->update(
-                Request::validate([
-                    'name' => 'required|string|min:3|max:32',
-                    'surname' => 'required|string|min:3|max:32',
-                    'email' => ['required', 'email', Rule::unique('users')->ignore(User::find($user->id))],
-                    'phone' => 'nullable|size:9',
-                ])
-            );
+        $user->update(
+            Request::validate([
+                'name' => 'required|string|min:3|max:32',
+                'surname' => 'required|string|min:3|max:32',
+                'email' => ['required', 'email', Rule::unique('users')->ignore(User::find($user->id))],
+                'phone' => 'nullable|size:9',
+            ])
+        );
 
-            return redirect()->back()
-                ->with('message', 'Sukces');
-        } else {
-            return redirect()->back()
-                ->with('message', 'Brak uprawnień');
-        }
+        return redirect()->back()
+            ->with('message', 'Sukces');
     }
 
     // public function destroy(Request $request)
