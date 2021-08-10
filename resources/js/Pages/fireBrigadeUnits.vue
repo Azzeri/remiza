@@ -56,7 +56,27 @@
                                 <BreezeLabel for="addressField" value="Adres" />
                                 <BreezeInput id="addressField" type="text" class="mt-1 block w-full" v-model="form.address" placeholder="Wprowadź adres" />
                                 <div class="text-red-500" v-if="errors.address">{{ errors.address }}</div>
-                            </div>                                                        
+                            </div>
+                            <div class="mb-4">
+                                <BreezeLabel for="userNameField" value="Imię" />
+                                <BreezeInput id="userNameField" type="text" class="mt-1 block w-full" v-model="form.username" placeholder="Wprowadź imię" />
+                                <div class="text-red-500" v-if="errors.username">{{ errors.username }}</div>
+                            </div>
+                            <div class="mb-4">
+                                <BreezeLabel for="surnameField" value="Nazwisko" />
+                                <BreezeInput id="surnameField" type="text" class="mt-1 block w-full" v-model="form.surname" placeholder="Wprowadź nazwisko"  />
+                                <div class="text-red-500" v-if="errors.surname">{{ errors.surname }}</div>
+                            </div>
+                            <div class="mb-4">
+                                <BreezeLabel for="emailField" value="Email" />
+                                <BreezeInput id="emailField" type="email" class="mt-1 block w-full" v-model="form.email" placeholder="Wprowadź email" />
+                                <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
+                            </div>
+                            <div class="mb-4">
+                                <BreezeLabel for="phoneField" value="Phone" />
+                                <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
+                                <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
+                            </div>                                                                
                         </div>                       
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
@@ -109,7 +129,11 @@ export default {
             isOpen: false,
             form: {
                 name: null,
-                address: null
+                address: null,
+                username: null,
+                surname: null,
+                email: null,
+                phone: null
             },
         }
     },
@@ -126,7 +150,11 @@ export default {
         reset: function () {
             this.form = {
                 name: null,
-                address: null
+                address: null,
+                username: null,
+                surname: null,
+                email: null,
+                phone: null
             }
         },
         save: function (data) {
