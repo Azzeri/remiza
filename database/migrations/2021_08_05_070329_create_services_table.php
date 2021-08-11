@@ -18,9 +18,9 @@ class CreateServicesTable extends Migration
             $table->string('description')->nullable();
             $table->date('perform_date');
             $table->boolean('is_performed')->default(false);
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('item_id')->constrained();
-            $table->foreignId('service_database_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('service_database_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

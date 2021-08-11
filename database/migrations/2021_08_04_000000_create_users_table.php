@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->foreignId('privilege_id')->constrained();
-            $table->foreignId('fire_brigade_unit_id')->constrained()->nullable();
+            $table->foreignId('fire_brigade_unit_id')->constrained()->nullable()->onUpdate('cascade')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -15,7 +15,28 @@ class Cathegory extends Model
         'cathegory_id'
     ];
 
-    public function subcathegories(){
+    public function subcathegories()
+    {
         return $this->hasMany(Cathegory::class);
+    }
+
+    public function itemsdb()
+    {
+        return $this->hasMany(ItemDatabase::class);
+    }
+
+    public function items()
+    {
+        return $this->itemsdb()->with('items');
+    }
+
+    public function servicesdb()
+    {
+        return $this->hasMany(ServiceDatabase::class);
+    }
+
+    public function services()
+    {
+        return $this->servicesdb()->with('services');
     }
 }

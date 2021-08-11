@@ -16,8 +16,8 @@ class CreateItemDatabasesTable extends Migration
         Schema::create('item_databases', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('cathegory_id')->constrained();
-            $table->foreignId('manufacturer_id')->constrained();
+            $table->foreignId('cathegory_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('manufacturer_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,4 +15,8 @@ class ServiceDatabase extends Model
         'days_to_next',
         'cathegory_id',
     ];
+
+    public function services(){
+        return $this->hasMany(Service::class);
+    }
 }

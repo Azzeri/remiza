@@ -55,7 +55,18 @@
                                 <BreezeLabel for="nameField" value="Nazwa" />
                                 <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
                                 <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
-                            </div>                                                         
+                            </div>    
+                            <div class="mb-4">
+                                <select v-model="form.parent">
+                                    <option value="-1">Brak</option>                                   
+                                        <template v-for="row in data" :key="row.id">
+                                            <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
+                                            {{row.name}}
+                                            </option> 
+                                        </template>                         
+                                </select>
+                                <span>Selected: {{ form.parent }}</span>
+                            </div>                                                        
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -109,6 +120,7 @@ export default {
             isOpen: false,
             form: {
                 name: null,
+                parent: -1
             },
         }
     },
@@ -125,6 +137,7 @@ export default {
         reset: function () {
             this.form = {
                 name: null,
+                parent: -1
             }
         },
         save: function (data) {
@@ -135,6 +148,10 @@ export default {
         },
         edit: function (data) {
             this.form = Object.assign({}, data);
+            if(data.cathegory_id != null)
+                this.form.parent = data.cathegory_id;
+            else
+                this.form.parent = -1;
             this.editMode = true;
             this.openModal();
         },
