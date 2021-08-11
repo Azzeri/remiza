@@ -11,10 +11,10 @@ class Cathegory extends Model
 
     protected $fillable = [
         'name',
+        'cathegory_id'
     ];
 
-    public function subcathegories()
-    {
-        return $this->hasMany(Subcathegory::class);
+    public function subcathegories(){
+        return $this->hasMany(Cathegory::class);
     }
 }

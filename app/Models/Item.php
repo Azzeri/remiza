@@ -25,14 +25,9 @@ class Item extends Model
         return $this->belongsTo(FireBrigadeUnit::class);
     }
 
-    public function subcathegory()
-    {
-        return $this->databaseItems()->with('subcathegory');
-    }
-
     public function cathegory()
     {
-        return $this->subcathegory()->with('cathegory');
+        return $this->databaseItems()->with('cathegory');
     }
 
     public function manufacturer()

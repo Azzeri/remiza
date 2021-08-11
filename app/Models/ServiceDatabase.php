@@ -12,6 +12,6 @@ class ServiceDatabase extends Model
     protected $fillable = [
         'name',
         'days_to_next',
-        'subcathegory_id',
+        'cathegory_id',
     ];
 }

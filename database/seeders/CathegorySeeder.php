@@ -20,6 +20,7 @@ class CathegorySeeder extends Seeder
 
         DB::table('cathegories')->insert([
             'name' => 'Butla',
+            'cathegory_id' => 1
         ]);
     }
 }

@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             FireBrigadeUnitSeeder::class,
             UserSeeder::class,
             CathegorySeeder::class,
-            SubcathegorySeeder::class,
             ManufacturerSeeder::class,
             ItemDatabaseSeeder::class,
             ItemSeeder::class,

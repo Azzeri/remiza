@@ -17,7 +17,7 @@ class CreateServiceDatabasesTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('days_to_next');
-            $table->foreignId('subcathegory_id')->constrained();
+            $table->foreignId('cathegory_id')->constrained();
             $table->timestamps();
         });
     }

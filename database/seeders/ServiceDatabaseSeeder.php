@@ -17,19 +17,19 @@ class ServiceDatabaseSeeder extends Seeder
         DB::table('service_databases')->insert([
             'name' => 'wymiana w hełmie 1',
             'days_to_next' => 255,
-            'subcathegory_id' => 1
+            'cathegory_id' => 1
         ]);
 
         DB::table('service_databases')->insert([
             'name' => 'wymiana w butli 1',
             'days_to_next' => 123,
-            'subcathegory_id' => 3
+            'cathegory_id' => 2
         ]);
 
         DB::table('service_databases')->insert([
             'name' => 'wymiana w butli 2',
             'days_to_next' => 68,
-            'subcathegory_id' => 3
+            'cathegory_id' => 2
         ]);
 
     }

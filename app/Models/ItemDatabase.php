@@ -11,18 +11,13 @@ class ItemDatabase extends Model
 
     protected $fillable = [
         'name',
-        'subcathegory_id',
+        'cathegory_id',
         'manufacturer_id'
     ];
 
-    public function subcathegory()
-    {
-        return $this->belongsTo(Subcathegory::class);
-    }
-
     public function cathegory()
     {
-        return $this->subcathegory()->with('cathegory');
+        return $this->belongsTo(Cathegory::class);
     }
 
     public function manufacturer()

@@ -16,7 +16,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::with('databaseItems', 'fireBrigadeUnit', 'subcathegory', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+        $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
         // $items = Item::with('databaseItems')->first();
         // print($items);
         return Inertia::render('items', ['items' => $items]);

@@ -16,25 +16,25 @@ class ItemDatabaseSeeder extends Seeder
     {
         DB::table('item_databases')->insert([
             'name' => 'hełm 1',
-            'subcathegory_id' => 1,
-            'manufacturer_id' => 1
-        ]);
-
-        DB::table('item_databases')->insert([
-            'name' => 'butla 1',
-            'subcathegory_id' => 3,
+            'cathegory_id' => 1,
             'manufacturer_id' => 1
         ]);
 
         DB::table('item_databases')->insert([
             'name' => 'hełm 2',
-            'subcathegory_id' => 1,
+            'cathegory_id' => 1,
+            'manufacturer_id' => 1
+        ]);
+
+        DB::table('item_databases')->insert([
+            'name' => 'butla 1',
+            'cathegory_id' => 2,
             'manufacturer_id' => 1
         ]);
 
         DB::table('item_databases')->insert([
             'name' => 'butla 2',
-            'subcathegory_id' => 4,
+            'cathegory_id' => 2,
             'manufacturer_id' => 1
         ]);
     }
