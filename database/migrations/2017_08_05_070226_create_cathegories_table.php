@@ -18,6 +18,7 @@ class CreateCathegoriesTable extends Migration
             $table->string('name');
             $table->foreignId('cathegory_id')->nullable()->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

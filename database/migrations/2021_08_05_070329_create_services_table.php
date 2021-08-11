@@ -22,6 +22,7 @@ class CreateServicesTable extends Migration
             $table->foreignId('item_id')->constrained();
             $table->foreignId('service_database_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -19,6 +19,7 @@ class CreateFireBrigadeUnitsTable extends Migration
             $table->string('address');
             // $table->foreignId('marshal')->constrained('users')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

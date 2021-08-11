@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->foreignId('item_database_id')->constrained();
             $table->foreignId('fire_brigade_unit_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -4,16 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $fillable = [
         'expiry_date',
         'item_database_id',
         'fire_brigade_unit_id'
     ];
+
+    public function cathegory()
+    {
+        return $this->databaseItems()->with('cathegory');
+    }
 
     public function databaseItems()
     {
@@ -23,11 +29,6 @@ class Item extends Model
     public function fireBrigadeUnit()
     {
         return $this->belongsTo(FireBrigadeUnit::class);
-    }
-
-    public function cathegory()
-    {
-        return $this->databaseItems()->with('cathegory');
     }
 
     public function manufacturer()

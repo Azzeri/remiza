@@ -143,13 +143,12 @@ export default {
                 onSuccess: () => this.closeModal()
             });     
         },
-        // deleteRow: function (data) {
-        //     if (!confirm('Na pewno?')) return;
-        //     data._method = 'DELETE';
-        //     this.$inertia.post('/cathegories/' + data.id, data)
-        //     this.reset();
-        //     this.closeModal();
-        // }
+        deleteRow: function (data) {
+            if (!confirm('Na pewno? Wszystkie przedmioty należące do kategorii również zostaną usunięte!')) return;
+            this.$inertia.delete('/cathegories/' + data.id)
+            this.reset();
+            this.closeModal();
+        }
     }
 }
 </script>

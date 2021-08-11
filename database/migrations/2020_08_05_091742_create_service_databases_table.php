@@ -19,6 +19,7 @@ class CreateServiceDatabasesTable extends Migration
             $table->integer('days_to_next');
             $table->foreignId('cathegory_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

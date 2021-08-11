@@ -12,7 +12,7 @@ class CathegoryController extends Controller
     public function index()
     {
         $cathegories = Cathegory::with('subcathegories')->orderBy('name')->get();
-        
+
         return Inertia::render('cathegories', ['data' => $cathegories]);
     }
 
@@ -39,11 +39,11 @@ class CathegoryController extends Controller
         return redirect()->back()
             ->with('message', 'Sukces');
     }
-    // public function destroy(Request $request)
-    // {
-    //     if ($request->has('id')) {
-    //         Cathegory::find($request->input('id'))->delete();
-    //         return redirect()->back();
-    //     }
-    // }
+
+    public function destroy(Cathegory $cathegory)
+    {
+        $cathegory->delete();
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 }

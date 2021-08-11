@@ -19,6 +19,7 @@ class CreateItemDatabasesTable extends Migration
             $table->foreignId('cathegory_id')->constrained();
             $table->foreignId('manufacturer_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
