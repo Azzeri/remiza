@@ -35,5 +35,9 @@ class Item extends Model
         return $this->subcathegory()->with('cathegory');
     }
 
+    public function manufacturer()
+    {
+        return $this->databaseItems()->with('manufacturer');
+    }
 
 }

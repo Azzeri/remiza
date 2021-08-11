@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemDatabasesTable extends Migration
+class CreateManufacturersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateItemDatabasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_databases', function (Blueprint $table) {
+        Schema::create('manufacturers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('subcathegory_id')->constrained();
-            $table->foreignId('manufacturer_id')->constrained();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateItemDatabasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_databases');
+        Schema::dropIfExists('manufacturers');
     }
 }
