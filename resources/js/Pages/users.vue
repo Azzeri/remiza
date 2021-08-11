@@ -37,7 +37,7 @@
                                 <td class="border px-4 py-2">{{ row.fire_brigade_unit.name }}</td>
                                 <td class="border px-4 py-2">
                                     <button @click="edit(row)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">E</button>
-                                    <!-- <button v-if="$page.props.auth.user.id != row.id" @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button> -->
+                                    <button v-if="row.privilege_id == 3" @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="mb-4">
                                 <BreezeLabel for="emailField" value="Email" />
-                                <BreezeInput id="emailField" type="email" class="mt-1 block w-full" v-model="form.email" placeholder="Wprowadź email" />
+                                <BreezeInput id="emailField" type="email" class="mt-1 block w-full" v-model="form.email" placeholder="Wprowadź email"/>
                                 <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
                             </div>
                             <div class="mb-4">
@@ -169,13 +169,12 @@ export default {
                 onSuccess: () => this.closeModal()
             });  
         },
-        // deleteRow: function (data) {
-        //     if (!confirm('Na pewno?')) return;
-        //     data._method = 'DELETE';
-        //     this.$inertia.post('/users/' + data.id, data)
-        //     this.reset();
-        //     this.closeModal();
-        // }
+        deleteRow: function (data) {
+            if (!confirm('Na pewno?')) return;
+            this.$inertia.delete('/users/' + data.id, data)
+            this.reset();
+            this.closeModal();
+        }
     }
 }
 </script>

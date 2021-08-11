@@ -60,11 +60,10 @@ class UserController extends Controller
             ->with('message', 'Sukces');
     }
 
-    // public function destroy(Request $request)
-    // {
-    //     if ($request->has('id')) {
-    //         User::find($request->input('id'))->delete();
-    //         return redirect()->back();
-    //     }
-    // }
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 }

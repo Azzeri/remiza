@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('fire_brigade_unit_id')->constrained()->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
