@@ -25,7 +25,7 @@ class FireBrigadeUnitController extends Controller
 
         Validator::make(Request::all(), [
             'name' => ['unique:fire_brigade_units', 'required', 'string', 'min:3', 'max:32'],
-            'address' => ['required'],
+            'address' => ['required', 'min:3', 'max:255'],
             'username' => 'required|string|min:3|max:32',
             'surname' => 'required|string|min:3|max:32',
             'email' => 'unique:users|required|email',

@@ -61,7 +61,7 @@
                                     <option value="-1">Brak</option>                                   
                                         <template v-for="row in data" :key="row.id">
                                             <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
-                                            {{row.name}}
+                                                {{row.name}}
                                             </option> 
                                         </template>                         
                                 </select>

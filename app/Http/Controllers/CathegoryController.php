@@ -18,24 +18,20 @@ class CathegoryController extends Controller
 
     public function store()
     {
-        if (Request::get('parent') == -1) {
-            Cathegory::create(
+        Request::get('parent') == -1 ?
+            $parent = NULL : $parent = Request::get('parent');
+
+        Cathegory::create(
+            [
                 Request::validate([
                     'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-                ])
-            );
-        } else {
-            Cathegory::create(
-                [
-                    Request::validate([
-                        'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-                    ]),
+                ]),
 
-                    'name' => Request::get('name'),
-                    'cathegory_id' => Request::get('parent'),
-                ]
-            );
-        }
+                'name' => Request::get('name'),
+                'cathegory_id' => $parent,
+            ]
+        );
+
 
         return redirect()->back()
             ->with('message', 'Sukces');
@@ -43,29 +39,20 @@ class CathegoryController extends Controller
 
     public function update(Cathegory $cathegory)
     {
-        if (Request::get('parent') == -1) {
-            $cathegory->update(
-                [
-                    Request::validate([
-                        'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id))]
-                    ]),
-                    'name' => Request::get('name'),
-                    'cathegory_id' => NULL
-                ]
+        Request::get('parent') == -1 ?
+            $parent = NULL : $parent = Request::get('parent');
 
-            );
-        } else {
-            $cathegory->update(
-                [
-                    Request::validate([
-                        'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id))]
-                    ]),
-                    'name' => Request::get('name'),
-                    'cathegory_id' => Request::get('parent')
-                ]
 
-            );
-        }
+        $cathegory->update(
+            [
+                Request::validate([
+                    'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id))]
+                ]),
+                'name' => Request::get('name'),
+                'cathegory_id' => $parent
+            ]
+
+        );
 
         return redirect()->back()
             ->with('message', 'Sukces');

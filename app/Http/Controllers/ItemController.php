@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Cathegory;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -17,9 +18,10 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
-        // $items = Item::with('databaseItems')->first();
-        // print($items);
-        return Inertia::render('items', ['items' => $items]);
+        $dbitems = ItemDatabase::all();
+        $cathegories = Cathegory::with('subcathegories', 'parent')->get();
+
+        return Inertia::render('items', ['items' => $items, 'cathegories' => $cathegories, 'dbitems' => $dbitems]);
     }
 
     public function itemDetails(Item $item)
@@ -31,17 +33,26 @@ class ItemController extends Controller
         return Inertia::render('itemDetails', ['item' => $item, 'services' => $services]);
     }
 
-    // public function store(Request $request)
-    // {
-    //     Validator::make($request->all(), [
-    //         'name' => 'unique:cathegories|required|string|min:3|max:32',
-    //     ])->validate();
+    public function store()
+    {
+        Item::create(
+            [
+                Request::validate([
+                    'item' => 'required',
+                    'date' => 'required',
+                ]),
 
-    //     Item::create($request->all());
+                'expiry_date' => Request::get('date'),
+                'item_database_id' => Request::get('item'),
+                'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
 
-    //     return redirect()->back()
-    //         ->with('message', 'Sukces');
-    // }
+            ]
+        );
+
+
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 
     // public function update(Request $request)
     // {

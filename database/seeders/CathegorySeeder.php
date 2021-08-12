@@ -15,12 +15,45 @@ class CathegorySeeder extends Seeder
     public function run()
     {
         DB::table('cathegories')->insert([
-            'name' => 'Hełm',
+            'name' => 'Hełmy',
         ]);
 
         DB::table('cathegories')->insert([
-            'name' => 'Butla',
-            'cathegory_id' => 1
+            'name' => 'Kamery Termowizyjne',
         ]);
+
+        DB::table('cathegories')->insert([
+            'name' => 'Latarki',
+        ]);
+
+        DB::table('cathegories')->insert([
+            'name' => 'Sprzęt pomocniczy',
+        ]);
+
+        DB::table('cathegories')->insert([
+            'name' => 'Latarki Streamlight',
+            'cathegory_id' => 3
+        ]);
+
+        DB::table('cathegories')->insert([
+            'name' => 'Latarki Nightstick',
+            'cathegory_id' => 3
+        ]); 
+
+        DB::table('cathegories')->insert([
+            'name' => 'Hydronetki',
+            'cathegory_id' => 4
+        ]);
+
+        DB::table('cathegories')->insert([
+            'name' => 'Toporki strażackie',
+            'cathegory_id' => 4
+        ]); 
+
+        DB::table('cathegories')->insert([
+            'name' => 'Bosaki strażackie',
+            'cathegory_id' => 4
+        ]); 
+
     }
 }

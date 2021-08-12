@@ -20,6 +20,11 @@ class Cathegory extends Model
         return $this->hasMany(Cathegory::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Cathegory::class);
+    }
+
     public function itemsdb()
     {
         return $this->hasMany(ItemDatabase::class);
