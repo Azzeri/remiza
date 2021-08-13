@@ -51,17 +51,17 @@ class FireBrigadeUnitController extends Controller
             ->with('message', 'Sukces');
     }
 
-    public function update(FireBrigadeUnit $unit)
+    public function update()
     {
-        echo $unit;
-        // $unit->update(
-        //     Request::validate([
-        //         'name' => [ Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
-        //         'address' => ['required'],
-        //     ])
-        // );
+        $unit = FireBrigadeUnit::find(Request::get('id'));
+        $unit->update(
+            Request::validate([
+                'name' => [ Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
+                'address' => ['required'],
+            ])
+        );
 
-        // return redirect()->back()
-        //     ->with('message', 'Sukces');
+        return redirect()->back()
+            ->with('message', 'Sukces');
     }
 }
