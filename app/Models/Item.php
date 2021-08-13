@@ -13,7 +13,8 @@ class Item extends Model
     protected $fillable = [
         'expiry_date',
         'item_database_id',
-        'fire_brigade_unit_id'
+        'fire_brigade_unit_id',
+        'activated'
     ];
 
     public function cathegory()

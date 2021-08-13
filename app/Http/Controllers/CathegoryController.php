@@ -11,7 +11,7 @@ class CathegoryController extends Controller
 {
     public function index()
     {
-        $cathegories = Cathegory::with('subcathegories')->orderBy('name')->get();
+        $cathegories = Cathegory::with('subcathegories')->get();
 
         return Inertia::render('cathegories', ['data' => $cathegories]);
     }

@@ -33,4 +33,9 @@ class Service extends Model
     {
         return $this->belongsTo(User::class)->withTrashed();
     }
+
+    public function unit()
+    {
+        return $this->user()->with('fireBrigadeUnit');
+    }
 }           

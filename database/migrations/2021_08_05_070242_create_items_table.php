@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->date('expiry_date');
             $table->foreignId('item_database_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('fire_brigade_unit_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('activated')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -85802,7 +85802,7 @@ select {
     color: currentColor;
   }
 
-  .group:hover .md\:group-hover\:text-black {
+  .group:hover .md\ºgroup-hover\:text-black {
     --tw-text-opacity: 1;
     color: rgba(0, 0, 0, var(--tw-text-opacity));
   }

@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
     Route::post('services/finish/', [ServiceController::class, 'finish']);
+    Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
+
 });
 
 

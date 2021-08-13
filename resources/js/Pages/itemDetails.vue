@@ -13,7 +13,12 @@
                     <li v-for="service in dbservices" :key="service.id">{{service.name}}</li>
                 </ul>
             </div> -->
-            <div class="flex justify-evenly">
+            <div v-if="!item.activated">
+                <BreezeButton @click="openModal()" class="mb-2">
+                    Aktywuj
+                </BreezeButton>
+            </div>
+            <div v-if="item.activated" class="flex justify-evenly">
                 <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
                     <h1 class="text-xl font-semibold text-green-600">Nadchodzące</h1>
                     <ul>
@@ -54,11 +59,41 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
         </div>
      </div> 
 
+            <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+                <div class="fixed inset-0 transition-opacity">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
+                   <form @submit.prevent="activate">
+                       <div v-for="(service, index) in dbservices" :key="service.id">
+                            <input type="date" v-model="dates[index]">
+                       </div>
+                        
+
+                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
+                            <BreezeButton @click="activate()">
+                                Zapisz
+                            </BreezeButton>
+                        </span>
+                        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                            <BreezeButton  @click="closeModal()">
+                                Zamknij
+                            </BreezeButton>
+                        </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -72,7 +107,7 @@ import { Link } from '@inertiajs/inertia-vue3'
 
 export default {
     props: {
-    //   dbservices: Object,
+        dbservices: Object,
         item: Object,
         services: Object,
         errors: Object,
@@ -89,22 +124,45 @@ export default {
 
     data() {
         return {
+            isOpen: false,
             form: {
                 desc: null,
                 id: null
             },
+            dates: ['2021-01-01','2021-01-01']
+            
         }
     },
     methods: {
-        
+        openModal: function () {
+            this.isOpen = true;
+        },
+        closeModal: function () {
+            this.isOpen = false;
+        },
         reset: function () {
             this.form = {
                 desc: null,
             }
+            this.dates = ['2021-01-01','2021-01-01']
         },
         save: function (data, id) {
             this.form.id = id
             this.$inertia.post('/services/finish', data)
+            this.reset();
+        },
+        activate: function() {
+            let data = []
+            for (let i=0; i< this.dbservices.length; i++){
+                let x =  {
+                id: this.dbservices[i].id,
+                date: this.dates[i]
+            }
+                data.push(x)
+            }
+            this.$inertia.post('/services/activate/'+this.item.id, data,{
+                onSuccess: () => this.closeModal(),
+            });
             this.reset();
         }
     }

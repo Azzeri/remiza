@@ -16,6 +16,7 @@
                     <table class="table-fixed w-full mt-2">
                         <thead>
                             <tr class="bg-gray-100">
+                                <th class="px-4 py-2">Id</th>
                                 <th class="px-4 py-2">Nazwa</th>
                                 <th class="px-4 py-2">Podkategorie</th>
                                 <th class="px-4 py-2">Działania</th>
@@ -23,6 +24,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="row in data" :key="row.id">
+                                <td class="border px-4 py-2">{{ row.id }}</td>
                                 <td class="border px-4 py-2">{{ row.name }}</td>
                                 <td class="border px-4 py-2">
                                     <ul>

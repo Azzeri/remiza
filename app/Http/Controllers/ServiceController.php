@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,33 @@ class ServiceController extends Controller
                 'item_id' => $service->item_id,
                 'service_database_id' => $service->service_database_id
 
-            ]);
+            ]
+        );
+
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
+
+    public function activate(Request $request, $id)
+    {
+        $index = 0;
+        while (true) {
+            Service::create(
+                [
+                    'perform_date' => $request[$index]['date'],
+                    'item_id' => $id,
+                    'service_database_id' => $request[$index]['id']
+                ]
+            );
+
+            $index++;
+            if ($request[$index] == null)
+                break;
+        }
+
+        $item = Item::find($id);
+        $item->activated = 1;
+        $item->save();
 
         return redirect()->back()
             ->with('message', 'Sukces');

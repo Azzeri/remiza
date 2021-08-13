@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\FireBrigadeUnit;
 use App\Models\Service;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -42,22 +43,28 @@ class sendEmail extends Command
     public function handle()
     {
         $services = Service::where('is_performed', 0)->get();
+        $units = FireBrigadeUnit::all();
         $servicesToNotify = [];
+        foreach ($units as $unit) {
+            foreach ($services as $service) {
+                if ($service->unit->id == $unit->id) {
+                    $date = Carbon::createFromFormat('Y-m-d', $service->perform_date)->format('Y-m-d');
+                    $now = Carbon::now();
 
-        foreach ($services as $service) {
-            $date = Carbon::createFromFormat('Y-m-d', $service->perform_date)->format('Y-m-d');
-            $now = Carbon::now();
-
-            if ($now->diffInDays($date) <= 0) {
-                array_push($servicesToNotify, $service);
+                    if ($now->diffInDays($date) <= 0) {
+                        array_push($servicesToNotify, $service);
+                    }
+                    // Log::info($servicesToNotify);
+                    $details = [
+                        'services' => $servicesToNotify,
+                    ];
+                    foreach ($unit->users as $user) {
+                        if ($user->privilege_id == 3)
+                            Mail::to($user->email)->send(new \App\Mail\ServiceNotification($details));
+                    }
+                    $servicesToNotify = [];
+                }
             }
-            // Log::info($servicesToNotify);
-            $details = [
-                'services' => $servicesToNotify,
-            ];
-
-            Mail::to('mailtester782@gmail.com')->send(new \App\Mail\ServiceNotification($details));
-            $servicesToNotify = [];
         }
     }
 }
