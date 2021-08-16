@@ -3,6 +3,7 @@
 // use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CathegoryController;
@@ -33,20 +34,28 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
+    // Route::get('/dashboard', function () {
+    //     if (Auth::user()->first_time_login == false)
+    //         return Inertia::render('Dashboard', ['user' => Auth::user()]);
+    //     else
+    //         return redirect('/password-change');
+    // })->middleware('verified')->name('dashboard');
+
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', ['user' => Auth::user()]);
     })->middleware('verified')->name('dashboard');
 
-    Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
-    Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
-    Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
-    Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
-    Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
+    Route::group(['middleware' => 'FirstTimeLogin'], function () {
+        Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
+        Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
+        Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
+        Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
+        Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
 
-    Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
-    Route::post('services/finish/', [ServiceController::class, 'finish']);
-    Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
-
+        Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
+        Route::post('services/finish/', [ServiceController::class, 'finish']);
+        Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
+    });
     Route::get('/password-change', function () {
         return Inertia::render('PasswordChange');
     })->name('password.change');

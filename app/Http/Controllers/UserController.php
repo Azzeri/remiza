@@ -83,6 +83,7 @@ class UserController extends Controller
         }
 
         $user->password = Hash::make(Request::get('password'));
+        $user->first_time_login = false;
         $user->save();
 
         return redirect()->back()

@@ -24,7 +24,8 @@ class User extends Authenticatable
         'phone',
         'password',
         'privilege_id',
-        'fire_brigade_unit_id'
+        'fire_brigade_unit_id',
+        'first_time_login'
     ];
 
     /**

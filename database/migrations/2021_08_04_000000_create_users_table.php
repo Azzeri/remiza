@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->foreignId('privilege_id')->constrained();
             $table->foreignId('fire_brigade_unit_id')->constrained()->nullable()->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('first_time_login')->default(true);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
