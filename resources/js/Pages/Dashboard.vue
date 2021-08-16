@@ -15,6 +15,8 @@
                         <qr-stream @decode="onDecode" class="mb">
                             <div style="color: red;" class="frame"></div>
                         </qr-stream>
+                        {{data}}
+                        <Link :href="data">Przejdź</Link>
                     </div>
                 </div>
             </div>
@@ -27,6 +29,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head } from '@inertiajs/inertia-vue3';
 import { defineComponent, reactive, toRefs } from 'vue';
 import { QrStream, QrCapture } from 'vue3-qr-reader';
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     props: {
@@ -36,7 +39,8 @@ export default {
         BreezeAuthenticatedLayout,
         Head,
         QrStream,
-        QrCapture
+        QrCapture,
+        Link
     },
 
     setup() {
