@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
+// use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('services/finish/', [ServiceController::class, 'finish']);
     Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
 
+    Route::get('/password-change', function () {
+        return Inertia::render('PasswordChange');
+    })->name('password.change');
+
+    Route::post('password-change-store', [UserController::class, 'changePassword'])->name('password.change.store');
 });
 
 

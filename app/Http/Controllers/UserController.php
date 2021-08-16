@@ -66,4 +66,26 @@ class UserController extends Controller
         return redirect()->back()
             ->with('message', 'Sukces');
     }
+
+    public function changePassword()
+    {
+        $user = Auth::user();
+        $userPassword = $user->password;
+
+        Request::validate([
+            'password_old' => 'required',
+            'password' => 'required|same:password_confirmation|min:6|different:password_old',
+            'password_confirmation' => 'required',
+        ]);
+
+        if (!Hash::check(Request::get('password_old'), $userPassword)) {
+            return back()->withErrors(['current_password'=>'Obecne hasło jest nieprawidłowe']);
+        }
+
+        $user->password = Hash::make(Request::get('password'));
+        $user->save();
+
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 }
