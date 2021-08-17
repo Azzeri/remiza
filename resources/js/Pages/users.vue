@@ -10,7 +10,22 @@
             <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
                 {{ $page.props.flash.message }}
             </div>
-            <Table :data="data" :tdrows="tdrows" :throws="throws" @edit="edit" @deleteRow="deleteRow"></Table>
+
+            <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow">
+                <tr class="flex flex-col flex-no wrap sm:table-row mb-3 sm:mb-0 hover:bg-gray-100" v-for="row in data" :key="row">
+                    <td class="border-grey-light border  p-3"> {{row.name}}</td>
+                    <td class="border-grey-light border  p-3"> {{row.surname}}</td>
+                    <td class="border-grey-light border  p-3"> {{row.email}}</td>
+                    <td v-if="row.phone" class="border-grey-light border  p-3"> {{row.phone}}</td>
+                    <td v-else class="border-grey-light border  p-3"> Brak danych</td>
+                    <td class="border-grey-light border  p-3"> {{row.privilege.name}}</td>
+                    <td class="border-grey-light border  p-3"> {{row.fire_brigade_unit.name}}</td>
+                    <td class="border-grey-light border text-center p-3">
+                        <i @click="edit(row)" class="far fa-edit fa-lg "></i>
+                        <i v-if="row.privilege_id == 3" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
+                    </td>
+                </tr>
+            </Table>
 
             <!-- <Link :href="route('password.change')" class="underline text-sm text-gray-600 hover:text-gray-900">
                 Zmiana hasła
@@ -86,7 +101,6 @@ export default {
                 phone: null
             },
             throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
-            tdrows:[['name'],['surname'] ,['email'] ,['phone'] ,['privilege','name'] ,['fire_brigade_unit','name']],
         }
     },
     methods: {
