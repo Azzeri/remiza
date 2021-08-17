@@ -55,6 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
         Route::post('services/finish/', [ServiceController::class, 'finish']);
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
+
+        Route::get('scanner', function () {
+            return Inertia::render('scanner');
+        })->name('scanner');
     });
     Route::get('/password-change', function () {
         return Inertia::render('PasswordChange');

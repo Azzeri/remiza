@@ -98,73 +98,72 @@
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import BreezeButton from '@/Components/Button.vue'
-import BreezeInput from '@/Components/Input.vue'
-import BreezeLabel from '@/Components/Label.vue'
-import { Head } from '@inertiajs/inertia-vue3';
-import { Link } from '@inertiajs/inertia-vue3'
+import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import BreezeButton from "@/Components/Button.vue";
+import BreezeInput from "@/Components/Input.vue";
+import BreezeLabel from "@/Components/Label.vue";
+import { Head } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
-    props: {
-        dbservices: Object,
-        item: Object,
-        services: Object,
-        errors: Object,
-    },
+  props: {
+    dbservices: Object,
+    item: Object,
+    services: Object,
+    errors: Object,
+  },
 
-    components: {
-        BreezeAuthenticatedLayout,
-        Head,
-        BreezeButton,
-        BreezeInput,
-        BreezeLabel,
-        Link
-    },
+  components: {
+    BreezeAuthenticatedLayout,
+    Head,
+    BreezeButton,
+    BreezeInput,
+    BreezeLabel,
+    Link,
+  },
 
-    data() {
-        return {
-            isOpen: false,
-            form: {
-                desc: null,
-                id: null
-            },
-            dates: ['2021-01-01','2021-01-01']
-            
-        }
+  data() {
+    return {
+      isOpen: false,
+      form: {
+        desc: null,
+        id: null,
+      },
+      dates: ["2021-01-01", "2021-01-01"],
+    };
+  },
+  methods: {
+    openModal: function () {
+      this.isOpen = true;
     },
-    methods: {
-        openModal: function () {
-            this.isOpen = true;
-        },
-        closeModal: function () {
-            this.isOpen = false;
-        },
-        reset: function () {
-            this.form = {
-                desc: null,
-            }
-            this.dates = ['2021-01-01','2021-01-01']
-        },
-        save: function (data, id) {
-            this.form.id = id
-            this.$inertia.post('/services/finish', data)
-            this.reset();
-        },
-        activate: function() {
-            let data = []
-            for (let i=0; i< this.dbservices.length; i++){
-                let x =  {
-                id: this.dbservices[i].id,
-                date: this.dates[i]
-            }
-                data.push(x)
-            }
-            this.$inertia.post('/services/activate/'+this.item.id, data,{
-                onSuccess: () => this.closeModal(),
-            });
-            this.reset();
-        }
-    }
-}
+    closeModal: function () {
+      this.isOpen = false;
+    },
+    reset: function () {
+      this.form = {
+        desc: null,
+      };
+      this.dates = ["2021-01-01", "2021-01-01"];
+    },
+    save: function (data, id) {
+      this.form.id = id;
+      this.$inertia.post("/services/finish", data);
+      this.reset();
+    },
+    activate: function () {
+      let data = [];
+      for (let i = 0; i < this.dbservices.length; i++) {
+        let x = {
+          id: this.dbservices[i].id,
+          date: this.dates[i],
+        };
+        data.push(x);
+      }
+      this.$inertia.post("/services/activate/" + this.item.id, data, {
+        onSuccess: () => this.closeModal(),
+      });
+      this.reset();
+    },
+  },
+};
 </script>

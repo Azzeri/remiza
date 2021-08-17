@@ -16,12 +16,12 @@
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    Strona główna
                                 </BreezeNavLink>
                             </div>
                             <div v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 2" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
-                                    Uzytkownicy
+                                    Użytkownicy
                                 </BreezeNavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -37,6 +37,11 @@
                             <div v-if="$page.props.auth.user.privilege_id == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
                                     Remizy
+                                </BreezeNavLink>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('scanner')" :active="route().current('scanner')">
+                                    Skanuj
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -82,7 +87,22 @@
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Strona główna
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 2" :href="route('users.index')" :active="route().current('users.index')">
+                            Użytkownicy
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('cathegories.index')" :active="route().current('cathegories.index')">
+                            Kategorie
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('items.index')" :active="route().current('items.index')">
+                            Sprzęt
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == 1" :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
+                            Remizy
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('scanner')" :active="route().current('scanner')">
+                            Skanuj
                         </BreezeResponsiveNavLink>
                     </div>
 
@@ -95,21 +115,13 @@
 
                         <div class="mt-3 space-y-1">
                             <BreezeResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Wyloguj
                             </BreezeResponsiveNavLink>
                         </div>
                     </div>
                 </div>
             </nav>
 
-            <!-- Page Heading
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header> -->
-
-            <!-- Page Content -->
             <main>
                 <slot />
             </main>
