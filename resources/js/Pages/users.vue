@@ -18,60 +18,32 @@
         </Card>
     </BreezeAuthenticatedLayout>
 
-        <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-
-                <div class="fixed inset-0 transition-opacity">
-                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
+        <form @submit.prevent="save, update">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="mb-4">
+                    <BreezeLabel for="nameField" value="Imię" />
+                    <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź imię" />
+                    <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
                 </div>
-
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
-                    <form @submit.prevent="save, update">
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div class="mb-4">
-                                <BreezeLabel for="nameField" value="Imię" />
-                                <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź imię" />
-                                <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
-                            </div>
-                            <div class="mb-4">
-                                <BreezeLabel for="surnameField" value="Nazwisko" />
-                                <BreezeInput id="surnameField" type="text" class="mt-1 block w-full" v-model="form.surname" placeholder="Wprowadź nazwisko"  />
-                                <div class="text-red-500" v-if="errors.surname">{{ errors.surname }}</div>
-                            </div>
-                            <div class="mb-4">
-                                <BreezeLabel for="emailField" value="Email" />
-                                <BreezeInput id="emailField" type="email" class="mt-1 block w-full" v-model="form.email" placeholder="Wprowadź email"/>
-                                <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
-                            </div>
-                            <div class="mb-4">
-                                <BreezeLabel for="phoneField" value="Phone" />
-                                <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
-                                <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
-                            </div>                                                             
-                        </div>
-
-                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
-                            <BreezeButton v-show="!editMode" @click="save(form)">
-                                Zapisz
-                            </BreezeButton>
-                        </span>
-                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">                         
-                            <BreezeButton  v-show="editMode" @click="update(form)">
-                                Edytuj
-                            </BreezeButton>
-                        </span>
-                        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                            <BreezeButton  @click="closeModal()">
-                                Zamknij
-                            </BreezeButton>
-                        </span>
-                        </div>
-                    </form>
+                <div class="mb-4">
+                    <BreezeLabel for="surnameField" value="Nazwisko" />
+                    <BreezeInput id="surnameField" type="text" class="mt-1 block w-full" v-model="form.surname" placeholder="Wprowadź nazwisko"  />
+                    <div class="text-red-500" v-if="errors.surname">{{ errors.surname }}</div>
                 </div>
+                <div class="mb-4">
+                    <BreezeLabel for="emailField" value="Email" />
+                    <BreezeInput id="emailField" type="email" class="mt-1 block w-full" v-model="form.email" placeholder="Wprowadź email"/>
+                    <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
+                </div>
+                <div class="mb-4">
+                    <BreezeLabel for="phoneField" value="Phone" />
+                    <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
+                    <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
+                </div>                                                             
             </div>
-        </div>
+        </form>
+    </Modal>
 
 </template>
 
@@ -83,7 +55,7 @@ import BreezeLabel from '@/Components/Label.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
-
+import Modal from "@/Components/Modal.vue";
 
 export default {
     props: {
@@ -99,7 +71,8 @@ export default {
         BreezeInput,
         BreezeLabel,
         Card,
-        Table
+        Table,
+        Modal
     },
 
     data() {
