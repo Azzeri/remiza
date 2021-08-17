@@ -2,52 +2,21 @@
     <Head title="Użytkownicy" />
 
     <BreezeAuthenticatedLayout>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
-                    <!-- <BreezeButton v-if="$page.props.auth.user.privilege_id == 2" @click="openModal()">
-                        Dodaj
-                    </BreezeButton> -->
-                    <BreezeButton @click="openModal()">
-                        Nowy
-                    </BreezeButton>
-                    <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
-                        {{ $page.props.flash.message }}
-                    </div>
+        <Card>
+            <BreezeButton @click="openModal()">
+                Nowy
+            </BreezeButton>
 
-                    <table class="table-fixed w-full mt-2">
-                        <thead>
-                            <tr class="bg-gray-100">
-                                <th class="px-4 py-2">Imię</th>
-                                <th class="px-4 py-2">Nazwisko</th>
-                                <th class="px-4 py-2">Email</th>
-                                <th class="px-4 py-2">Telefon</th>                               
-                                <th class="px-4 py-2">Remiza</th>
-                                <th class="px-4 py-2">Rola</th>
-                                <th class="px-4 py-2">Działania</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="row in data" :key="row.id">
-                                <td class="border px-4 py-2">{{ row.name }}</td>
-                                <td class="border px-4 py-2">{{ row.surname }}</td>
-                                <td class="border px-4 py-2">{{ row.email }}</td>
-                                <td class="border px-4 py-2">{{ row.phone }}</td>
-                                <td class="border px-4 py-2">{{ row.privilege.name }}</td>
-                                <td class="border px-4 py-2">{{ row.fire_brigade_unit.name }}</td>
-                                <td class="border px-4 py-2">
-                                    <button @click="edit(row)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">E</button>
-                                    <button v-if="row.privilege_id == 3" @click="deleteRow(row)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">U</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-            <Link :href="route('password.change')" class="underline text-sm text-gray-600 hover:text-gray-900">
+            <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
+                {{ $page.props.flash.message }}
+            </div>
+            <Table :data="data" :tdrows="tdrows" :throws="throws" @edit="edit" @deleteRow="deleteRow"></Table>
+
+            <!-- <Link :href="route('password.change')" class="underline text-sm text-gray-600 hover:text-gray-900">
                 Zmiana hasła
-            </Link>
-                </div>
-            </div>            
-        </div>
+            </Link> -->
+        </Card>
+    </BreezeAuthenticatedLayout>
 
         <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -103,7 +72,7 @@
                 </div>
             </div>
         </div>
-    </BreezeAuthenticatedLayout>
+
 </template>
 
 <script>
@@ -111,8 +80,10 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import BreezeButton from '@/Components/Button.vue'
 import BreezeInput from '@/Components/Input.vue'
 import BreezeLabel from '@/Components/Label.vue'
-import { Head } from '@inertiajs/inertia-vue3';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import Card from "@/Components/Card.vue";
+import Table from "@/Components/Table.vue";
+
 
 export default {
     props: {
@@ -126,7 +97,9 @@ export default {
         Link,
         BreezeButton,
         BreezeInput,
-        BreezeLabel
+        BreezeLabel,
+        Card,
+        Table
     },
 
     data() {
@@ -139,6 +112,8 @@ export default {
                 email: null,
                 phone: null
             },
+            throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
+            tdrows:[['name'],['surname'] ,['email'] ,['phone'] ,['privilege','name'] ,['fire_brigade_unit','name']],
         }
     },
     methods: {
