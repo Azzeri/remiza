@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CathegoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
@@ -41,9 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
     //         return redirect('/password-change');
     // })->middleware('verified')->name('dashboard');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard', ['user' => Auth::user()]);
-    })->middleware('verified')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
     Route::group(['middleware' => 'FirstTimeLogin'], function () {
         Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');

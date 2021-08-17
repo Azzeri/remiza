@@ -1,59 +1,50 @@
 <template>
-  <Head title="Dashboard" />
+  <Head title="Strona główna" />
 
   <BreezeAuthenticatedLayout>
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
-            <p class="error">{{ error }}</p>
-            <qr-stream @decode="onDecode" class="mb">
-              <div style="color: red" class="frame"></div>
-            </qr-stream>
-            {{ data }}
-            <Link :href="data">Przejdź</Link>
+    <Card>
+      <h3 class="font-semibold text-xl">Witaj {{ user.name }}</h3>
+		<Link :href="route('scanner')" class="">
+			<BreezeButton class="mb-2">
+				Zeskanuj przedmiot
+			</BreezeButton>
+		</Link>
+		<h3 v-if="services.length" class="font-semibold">Nadchodzące serwisy</h3>
+		<h3 v-else class="font-semibold">Brak nadchodzących serwisów</h3>
+      <ul>
+        <li v-for="service in services" :key="service.id">
+        	<div class="border-b-2 mt-4">
+				<div> {{ service.service_database.name }}</div>	
+				<div class="text-sm">{{ service.perform_date }}</div>
+				<Link :href="'items/'+service.item.id" class="">
+					<BreezeButton class="mb-2">
+						Zobacz
+					</BreezeButton>
+				</Link>
           </div>
-        </div>
-      </div>
-    </div>
+        </li>
+      </ul>
+    </Card>
   </BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import { defineComponent, reactive, toRefs } from "vue";
-import { QrStream, QrCapture } from "vue3-qr-reader";
-import { Link } from "@inertiajs/inertia-vue3";
+import Card from "@/Components/Card.vue";
+import BreezeButton from "@/Components/Button.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 
 export default {
   props: {
     user: Object,
-  },
-  data() {
-    return {
-      error: "",
-    };
+    services: Object,
   },
   components: {
     BreezeAuthenticatedLayout,
     Head,
-    QrStream,
-    QrCapture,
     Link,
-  },
-
-  setup() {
-    const state = reactive({
-      data: null,
-    });
-    function onDecode(data) {
-      state.data = data;
-    }
-    return {
-      ...toRefs(state),
-      onDecode,
-    };
+    Card,
+	BreezeButton
   },
 };
 </script>
