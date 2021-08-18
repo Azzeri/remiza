@@ -3,24 +3,23 @@
 
     <BreezeAuthenticatedLayout>
         <Card>
-            <BreezeButton @click="openModal()">
-                Nowy
-            </BreezeButton>
+
+            <FloatingButton @openModal="openModal"></FloatingButton>
 
             <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
                 {{ $page.props.flash.message }}
             </div>
 
-            <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow">
-                <tr v-for="row in data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-3 sm:mb-0 hover:bg-gray-100">
-                    <td class="border-grey-light border  p-3"> {{row.name}}</td>
-                    <td class="border-grey-light border  p-3"> {{row.surname}}</td>
-                    <td class="border-grey-light border  p-3"> {{row.email}}</td>
-                    <td v-if="row.phone" class="border-grey-light border  p-3"> {{row.phone}}</td>
-                    <td v-else class="border-grey-light border  p-3"> Brak danych</td>
-                    <td class="border-grey-light border  p-3"> {{row.privilege.name}}</td>
-                    <td class="border-grey-light border  p-3"> {{row.fire_brigade_unit.name}}</td>
-                    <td class="border-grey-light border text-center p-3">
+            <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
+                <tr v-for="row in data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-gray-100 justify-center">
+                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.name}}</td>
+                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.surname}}</td>
+                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.email}}</td>
+                    <td v-if="row.phone" class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.phone}}</td>
+                    <td v-else class="h-10 sm:h-auto border-grey-light border  p-3"> Brak danych</td>
+                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.privilege.name}}</td>
+                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.fire_brigade_unit.name}}</td>
+                    <td class="h-10 sm:h-auto border-grey-light border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i v-if="row.privilege_id == 3" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
                     </td>
@@ -55,7 +54,7 @@
                 <span v-if="editMode && $page.props.auth.user.id == form.id" class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <Link :href="route('password.change')">
                         <BreezeButton>
-                        Zmień hasło
+                            Zmień hasło
                         </BreezeButton>
                     </Link>
                 </span>                                                            
@@ -74,6 +73,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
+import FloatingButton from "@/Components/FloatingButton.vue";
 
 export default {
     props: {
@@ -90,7 +90,8 @@ export default {
         BreezeLabel,
         Card,
         Table,
-        Modal
+        Modal,
+        FloatingButton
     },
 
     data() {
