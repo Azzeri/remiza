@@ -24,7 +24,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="row in data" :key="row.id">
-                                <td class="border px-4 py-2">{{ row.id }}</td>
+                                <td class="border px-4 py-2"><img class="w-10 h-10" :src="row.photo_path"></td>
                                 <td class="border px-4 py-2">{{ row.name }}</td>
                                 <td class="border px-4 py-2">
                                     <ul>
@@ -68,7 +68,16 @@
                                         </template>                         
                                 </select>
                                 <span>Selected: {{ form.parent }}</span>
-                            </div>                                                        
+                            </div> 
+                            <template v-if="!editMode"> 
+                            <input type="file" @input="form.avatar = $event.target.files[0]" />
+                            <!-- <input v-if="!editMode" type="file" @input="form.avatar = $event.target.files[0]" /> -->
+                            <!-- <input v-else type="file" @input="form.avatar" /> -->
+                            <div class="text-red-500" v-if="errors.avatar">{{ errors.avatar }}</div>
+                            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                            {{ form.progress.percentage }}%
+                            </progress>  
+                            </template>                                                     
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -122,6 +131,7 @@ export default {
             isOpen: false,
             form: {
                 name: null,
+                avatar: null,
                 parent: -1
             },
         }
@@ -139,6 +149,7 @@ export default {
         reset: function () {
             this.form = {
                 name: null,
+                avatar: null,
                 parent: -1
             }
         },
@@ -158,6 +169,7 @@ export default {
             this.openModal();
         },
         update: function (data) {
+            console.log(data)
             this.$inertia.put('/cathegories/' + data.id, data,{
                 onSuccess: () => this.closeModal()
             });     

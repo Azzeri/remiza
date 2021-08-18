@@ -12,6 +12,7 @@ class Cathegory extends Model
 
     protected $fillable = [
         'name',
+        'photo_path',
         'cathegory_id'
     ];
 

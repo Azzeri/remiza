@@ -16,6 +16,7 @@ class CreateCathegoriesTable extends Migration
         Schema::create('cathegories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('photo_path')->default('/images/default.png');
             $table->foreignId('cathegory_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Cathegory;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
 
 class CathegoryController extends Controller
 {
@@ -16,39 +17,47 @@ class CathegoryController extends Controller
         return Inertia::render('cathegories', ['data' => $cathegories]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        Request::get('parent') == -1 ?
-            $parent = NULL : $parent = Request::get('parent');
+        $request->parent == -1 ?
+            $parent = NULL : $parent = $request->parent;
 
         Cathegory::create(
             [
-                Request::validate([
+                $request->validate([
                     'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
+                    'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
                 ]),
-
-                'name' => Request::get('name'),
+                $imageName = time() . '.' . $request->avatar->extension(),
+                $request->avatar->move(public_path('images'), $imageName),
+                'name' => $request->name,
+                'photo_path' => '/images/' . $imageName,
                 'cathegory_id' => $parent,
             ]
         );
-
 
         return redirect()->back()
             ->with('message', 'Sukces');
     }
 
-    public function update(Cathegory $cathegory)
+    public function update(Request $request, Cathegory $cathegory)
     {
-        Request::get('parent') == -1 ?
-            $parent = NULL : $parent = Request::get('parent');
+        $request->parent == -1 ?
+            $parent = NULL : $parent = $request->parent;
 
+        // echo($request->name);        
+        // dd($request->avatar.$request->name);
 
         $cathegory->update(
             [
-                Request::validate([
-                    'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id))]
+                $request->validate([
+                    'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id)),],
+                    // 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
                 ]),
-                'name' => Request::get('name'),
+                // $imageName = time() . '.' . $request->avatar->extension(),
+                // $request->avatar->move(public_path('images'), $imageName),
+                'name' => $request->name,
+                // 'photo_path' => '/images/' . $imageName,
                 'cathegory_id' => $parent
             ]
 
@@ -58,16 +67,16 @@ class CathegoryController extends Controller
             ->with('message', 'Sukces');
     }
 
-    public function destroy(Cathegory $cathegory)
-    {
-        $cathegory->delete();
-        $cathegory->subcathegories->each->delete();
-        $cathegory->itemsdb->each->delete();
-        $cathegory->items->each->delete();
-        $cathegory->servicesdb->each->delete();
-        $cathegory->services->each->delete();
+    // public function destroy(Cathegory $cathegory)
+    // {
+    //     $cathegory->delete();
+    //     $cathegory->subcathegories->each->delete();
+    //     $cathegory->itemsdb->each->delete();
+    //     $cathegory->items->each->delete();
+    //     $cathegory->servicesdb->each->delete();
+    //     $cathegory->services->each->delete();
 
-        return redirect()->back()
-            ->with('message', 'Sukces');
-    }
+    //     return redirect()->back()
+    //         ->with('message', 'Sukces');
+    // }
 }
