@@ -3,7 +3,6 @@
 
     <BreezeAuthenticatedLayout>
         <Card>
-
             <FloatingButton @openModal="openModal"></FloatingButton>
 
             <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
@@ -25,42 +24,42 @@
                 </tr>
             </Table>
         </Card>
-
-        <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
-            <form @submit.prevent="save, update"> 
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="mb-4">
-                        <BreezeLabel for="nameField" value="Nazwa" />
-                        <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
-                        <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
-                    </div>    
-                    <div class="mb-4">
-                        <BreezeLabel for="parentField" value="Kategoria nadrzędna" />
-                        <select class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="parentField" v-model="form.parent">
-                            <option value="-1">Brak</option>                                   
-                                <template v-for="row in data" :key="row.id">
-                                    <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
-                                        {{row.name}}
-                                    </option> 
-                                </template>                         
-                        </select>
-                        <!-- <span>Selected: {{ form.parent }}</span> -->
-                    </div> 
-
-                    <template v-if="!editMode"> 
-                    <BreezeLabel for="avatarField" value="Zdjęcie" />
-                    <input class="bg-white" id="avatarField" type="file" @input="form.avatar = $event.target.files[0]" />
-                    <!-- <input v-if="!editMode" type="file" @input="form.avatar = $event.target.files[0]" /> -->
-                    <!-- <input v-else type="file" @input="form.avatar" /> -->
-                    <div class="text-red-500" v-if="errors.avatar">{{ errors.avatar }}</div>
-                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                    {{ form.progress.percentage }}%
-                    </progress>  
-                    </template>                                                     
-                </div>
-            </form>
-        </Modal>
     </BreezeAuthenticatedLayout>
+
+    <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
+        <form @submit.prevent="save, update"> 
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="mb-4">
+                    <BreezeLabel for="nameField" value="Nazwa" />
+                    <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
+                    <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
+                </div>    
+                <div class="mb-4">
+                    <BreezeLabel for="parentField" value="Kategoria nadrzędna" />
+                    <select class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="parentField" v-model="form.parent">
+                        <option value="-1">Brak</option>                                   
+                            <template v-for="row in data" :key="row.id">
+                                <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
+                                    {{row.name}}
+                                </option> 
+                            </template>                         
+                    </select>
+                    <!-- <span>Selected: {{ form.parent }}</span> -->
+                </div> 
+
+                <template v-if="!editMode"> 
+                <BreezeLabel for="avatarField" value="Zdjęcie" />
+                <input class="bg-white" id="avatarField" type="file" @input="form.avatar = $event.target.files[0]" />
+                <!-- <input v-if="!editMode" type="file" @input="form.avatar = $event.target.files[0]" /> -->
+                <!-- <input v-else type="file" @input="form.avatar" /> -->
+                <div class="text-red-500" v-if="errors.avatar">{{ errors.avatar }}</div>
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                {{ form.progress.percentage }}%
+                </progress>  
+                </template>                                                     
+            </div>
+        </form>
+    </Modal>
 </template>
 
 <script>
