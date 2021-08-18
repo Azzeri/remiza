@@ -12,7 +12,7 @@
             </div>
 
             <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow">
-                <tr class="flex flex-col flex-no wrap sm:table-row mb-3 sm:mb-0 hover:bg-gray-100" v-for="row in data" :key="row">
+                <tr v-for="row in data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-3 sm:mb-0 hover:bg-gray-100">
                     <td class="border-grey-light border  p-3"> {{row.name}}</td>
                     <td class="border-grey-light border  p-3"> {{row.surname}}</td>
                     <td class="border-grey-light border  p-3"> {{row.email}}</td>
@@ -26,10 +26,6 @@
                     </td>
                 </tr>
             </Table>
-
-            <!-- <Link :href="route('password.change')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                Zmiana hasła
-            </Link> -->
         </Card>
     </BreezeAuthenticatedLayout>
 
@@ -55,7 +51,14 @@
                     <BreezeLabel for="phoneField" value="Phone" />
                     <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
-                </div>                                                             
+                </div> 
+                <span v-if="editMode && $page.props.auth.user.id == form.id" class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                    <Link :href="route('password.change')">
+                        <BreezeButton>
+                        Zmień hasło
+                        </BreezeButton>
+                    </Link>
+                </span>                                                            
             </div>
         </form>
     </Modal>
