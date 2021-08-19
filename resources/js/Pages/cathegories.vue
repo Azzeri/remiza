@@ -38,11 +38,11 @@
                     <BreezeLabel for="parentField" value="Kategoria nadrzędna" />
                     <select class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="parentField" v-model="form.parent">
                         <option value="-1">Brak</option>                                   
-                            <template v-for="row in data" :key="row.id">
-                                <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
-                                    {{row.name}}
-                                </option> 
-                            </template>                         
+                        <template v-for="row in data" :key="row.id">
+                            <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
+                                {{row.name}}
+                            </option> 
+                        </template>                         
                     </select>
                     <!-- <span>Selected: {{ form.parent }}</span> -->
                 </div> 

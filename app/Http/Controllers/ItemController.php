@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cathegory;
-use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -11,6 +11,7 @@ use App\Models\Item;
 use App\Models\ItemDatabase;
 use App\Models\Service;
 use App\Models\ServiceDatabase;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
@@ -19,7 +20,7 @@ class ItemController extends Controller
     {
         $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
         $dbitems = ItemDatabase::all();
-        $cathegories = Cathegory::with('subcathegories', 'parent')->get();
+        $cathegories = Cathegory::with('subcathegories', 'parent', 'itemsdb')->get();
 
         return Inertia::render('items', ['items' => $items, 'cathegories' => $cathegories, 'dbitems' => $dbitems]);
     }
@@ -33,17 +34,19 @@ class ItemController extends Controller
         return Inertia::render('itemDetails', ['item' => $item, 'services' => $services, 'dbservices' => $dbservices]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $request->checked == true?
+        $date = '9999-01-01':
+        $date = $request->date;
+        
         Item::create(
             [
-                Request::validate([
+                $request->validate([
                     'item' => 'required',
-                    'date' => 'required',
                 ]),
-
-                'expiry_date' => Request::get('date'),
-                'item_database_id' => Request::get('item'),
+                'expiry_date' => $date,
+                'item_database_id' => $request->item,
                 'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
 
             ]

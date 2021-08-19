@@ -38,7 +38,7 @@ class ServiceController extends Controller
         while (true) {
             Service::create(
                 [
-                    'perform_date' => $request[$index]['date'],
+                    'perform_date' => $request[$index]['date'],//obliczyć
                     'item_id' => $id,
                     'service_database_id' => $request[$index]['id']
                 ]
