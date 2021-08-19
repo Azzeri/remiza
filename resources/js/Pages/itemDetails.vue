@@ -2,99 +2,76 @@
     <Head title="Przedmiot" />
 
     <BreezeAuthenticatedLayout>
-   <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-             <div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
-                    {{ $page.props.flash.message }}
-                </div>
-            <!-- <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
-                <div>{{item.database_items.name}}</div>
-                <ul>
-                    <li v-for="service in dbservices" :key="service.id">{{service.name}}</li>
-                </ul>
-            </div> -->
-            <div v-if="!item.activated">
-                <BreezeButton @click="openModal()" class="mb-2">
-                    Aktywuj
-                </BreezeButton>
-            </div>
-            <div v-if="item.activated" class="flex justify-evenly">
-                <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
-                    <h1 class="text-xl font-semibold text-green-600">Nadchodzące</h1>
-                    <ul>
-                        <li v-for="service in services" :key="service.id">
-                            <template v-if="service.is_performed == 0">
-                                <div class="border-b-2 mt-4">
-                                    Data: {{service.perform_date}}<br>
-                                    Nazwa serwisu: {{service.service_database.name}}<br>
-                                    <form >
-                                        <input type="hidden" v-model="form.id">
-                                        <div class="mb-4">
-                                            <BreezeInput id="descField" type="textarea" class="mt-1 block w-full" v-model="form.desc" placeholder="Wprowadź opis"/>
-                                            <div class="text-red-500" v-if="errors.desc">{{ errors.desc }}</div>
-                                        </div>    
-                                        <BreezeButton class="mb-2" @click="save(form, service.id)">
-                                            Potwierdź wykonanie
-                                        </BreezeButton>
-                                    </form>
-                                </div>
-                            </template>
-                        </li>
-                    </ul>
-                </div>
-                <div class="p-6 bg-white border-b border-gray-200 overflow-hidden shadow-sm sm:rounded-lg">
-                    <h1 class="text-xl font-semibold">Historia</h1>
-                    <ul>
-                        <li v-for="service in services" :key="service.id">
-                            <template v-if="service.is_performed == 1">
-                                <div class="border-b-2 mt-4">
-                                <!-- Id: {{service.id}}<br> -->
-                                Nazwa serwisu: {{service.service_database.name}}<br>                               
-                                Opis: {{service.description}}<br>
-                                Data: {{service.perform_date}}<br>
-                                <!-- Zakończono: {{service.is_performed}}<br> -->
-                                Wykonawca: {{service.user.name}} {{service.user.surname}}<br>
-                                </div>
-                            </template>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-     </div> 
+		<Card>
+			<div v-if="$page.props.flash.message" class="mt-2 text-green-600 font-semibold">
+				{{ $page.props.flash.message }}
+			</div>
 
-            <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+			<div v-if="!item.activated">
+				<div class="mt-4">
+					<form @submit.prevent="activateService">
+						<div class="mb-4" v-for="(service, index) in dbservices" :key="service.id">
+							<BreezeLabel for="itemField" :value="'Kiedy ostatnio wykonano serwis: '+service.name" />
+							<input type="date" :max="currentDate()" v-model="dates[index]" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+						</div>
+						
+						<div class="flex gap-2">
+							<span class="flex w-full rounded-md shadow-sm sm:w-auto">          
+								<BreezeButton @click="activateService()">
+									Aktywuj
+								</BreezeButton>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
 
-                <div class="fixed inset-0 transition-opacity">
-                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
-                   <form @submit.prevent="activate">
-                       <div v-for="(service, index) in dbservices" :key="service.id">
-                            <input type="date" v-model="dates[index]">
-                       </div>
-                        
-
-                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
-                            <BreezeButton @click="activate()">
-                                Zapisz
-                            </BreezeButton>
-                        </span>
-                        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                            <BreezeButton  @click="closeModal()">
-                                Zamknij
-                            </BreezeButton>
-                        </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </BreezeAuthenticatedLayout>
+			<div v-else class="flex flex-col md:flex-row md:justify-evenly">
+				<div class="p-6 overflow-hidden">
+					<h1 class="text-xl font-semibold text-green-600">Serwisy</h1>
+					<ul>
+						<li v-for="service in services" :key="service.id">
+							<template v-if="service.is_performed == 0">
+								<div class="border-b-2 mt-4">
+									<div class="text-red-700" v-if="service.perform_date < currentDate()">Data: {{service.perform_date}}</div>
+									<div class="text-yellow-700" v-else-if="service.perform_date == currentDate()">Data: {{service.perform_date}}</div>
+									<div v-else>Data: {{service.perform_date}}</div>
+									<div>Nazwa serwisu: {{service.service_database.name}}</div>
+									<form >
+										<input type="hidden" v-model="form.id">
+										<div class="mb-4">
+											<BreezeInput id="descField" type="textarea" class="mt-1 block w-full" v-model="form.desc" placeholder="Wprowadź opis"/>
+											<div class="text-red-500" v-if="errors.desc">{{ errors.desc }}</div>
+										</div>    
+										<BreezeButton class="mb-2" @click="save(form, service.id, service.perform_date)">
+											Potwierdź wykonanie
+										</BreezeButton>
+									</form>
+								</div>
+							</template>
+						</li>
+					</ul>
+				</div>
+				<div class="p-6 mt-6 md:mt-0 overflow-hidden">
+					<h1 class="text-xl font-semibold">Historia</h1>
+					<ul>
+						<li v-for="service in services" :key="service.id">
+							<template v-if="service.is_performed == 1">
+								<div class="border-b-2 mt-4">
+									<!-- Id: {{service.id}}<br> -->
+									Nazwa serwisu: {{service.service_database.name}}<br>                               
+									Opis: {{service.description}}<br>
+									Data: {{service.perform_date}}<br>
+									<!-- Zakończono: {{service.is_performed}}<br> -->
+									Wykonawca: {{service.user.name}} {{service.user.surname}}<br>
+								</div>
+							</template>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</Card>
+	</BreezeAuthenticatedLayout>
 </template>
 
 <script>
@@ -102,8 +79,8 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import BreezeButton from "@/Components/Button.vue";
 import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Head, Link} from "@inertiajs/inertia-vue3";
+import Card from "@/Components/Card.vue";
 
 export default {
   props: {
@@ -120,49 +97,49 @@ export default {
     BreezeInput,
     BreezeLabel,
     Link,
+    Card,
   },
 
   data() {
     return {
-      isOpen: false,
       form: {
         desc: null,
         id: null,
       },
-      dates: ["2021-01-01", "2021-01-01"],
+      dates: [],
     };
   },
   methods: {
-    openModal: function () {
-      this.isOpen = true;
-    },
-    closeModal: function () {
-      this.isOpen = false;
-    },
+	currentDate: function(){
+		return new Date().toISOString().split('T')[0];
+	},
     reset: function () {
       this.form = {
         desc: null,
       };
-      this.dates = ["2021-01-01", "2021-01-01"];
+      this.dates = [];
     },
-    save: function (data, id) {
-      this.form.id = id;
+    save: function (data, id, date) {
+	   if ( date > this.currentDate())
+		   if (!confirm('Do serwisu zostało jeszcze trochę czasu, na pewno zatwierdzić wykonanie serwisu teraz?')) return;
+	   
+	  this.form.id = id;
       this.$inertia.post("/services/finish", data);
       this.reset();
     },
-    activate: function () {
-      let data = [];
-      for (let i = 0; i < this.dbservices.length; i++) {
-        let x = {
-          id: this.dbservices[i].id,
-          date: this.dates[i],
-        };
-        data.push(x);
-      }
-      this.$inertia.post("/services/activate/" + this.item.id, data, {
-        onSuccess: () => this.closeModal(),
-      });
-      this.reset();
+    activateService: function () {
+		if(this.dates.length == this.dbservices.length){
+			let data = [];
+			for (let i = 0; i < this.dbservices.length; i++) {
+				let x = {
+				id: this.dbservices[i].id,
+				date: this.dates[i],
+				};
+				data.push(x);
+			}
+			this.$inertia.post("/services/activate/" + this.item.id, data)
+			this.reset();
+		}
     },
   },
 };

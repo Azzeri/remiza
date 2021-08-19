@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Models\Item;
+use App\Models\ServiceDatabase;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,11 +35,32 @@ class ServiceController extends Controller
 
     public function activate(Request $request, $id)
     {
+        $today = Carbon::now();
+        $dates = [];
+        $index = 0;
+        while (true) {
+            $date = Carbon::parse($request[$index]['date']);
+            $days = ServiceDatabase::find($request[$index]['id'])->days_to_next;
+
+            if ($date->format('Y-m-d') == $today->format('Y-m-d'))
+                array_push($dates, $today->addDays($days)->format('Y-m-d'));
+            else if ($date->addDays($days)->format('Y-m-d') <= $today->format('Y-m-d'))
+                array_push($dates, $today->format('Y-m-d'));
+            else if ($date->addDays($days)->format('Y-m-d') > $today->format('Y-m-d')) {
+                $date = Carbon::parse($request[$index]['date']);
+                array_push($dates, $date->addDays($days)->format('Y-m-d'));
+            }
+
+            $index++;
+            if ($request[$index] == null)
+                break;
+        };
+
         $index = 0;
         while (true) {
             Service::create(
                 [
-                    'perform_date' => $request[$index]['date'],//obliczyć
+                    'perform_date' => $dates[$index],
                     'item_id' => $id,
                     'service_database_id' => $request[$index]['id']
                 ]

@@ -133,7 +133,7 @@ export default {
     data() {
         return {
             editMode: false,
-            isOpen: true,
+            isOpen: false,
             cathegory: null,
             form: {
                 item: null,

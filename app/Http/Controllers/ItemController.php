@@ -11,13 +11,14 @@ use App\Models\Item;
 use App\Models\ItemDatabase;
 use App\Models\Service;
 use App\Models\ServiceDatabase;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
 {
     public function index()
-    {
+    {          
         $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
         $dbitems = ItemDatabase::all();
         $cathegories = Cathegory::with('subcathegories', 'parent', 'itemsdb')->get();
