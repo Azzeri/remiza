@@ -19301,11 +19301,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var vue3_qr_reader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue3-qr-reader */ "./node_modules/vue3-qr-reader/dist/vue3-qr-reader.common.js");
 /* harmony import */ var vue3_qr_reader__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue3_qr_reader__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Components_Card_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Card.vue */ "./resources/js/Components/Card.vue");
+/* harmony import */ var _Components_Button_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Button.vue */ "./resources/js/Components/Button.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -19326,7 +19329,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Head,
     QrStream: vue3_qr_reader__WEBPACK_IMPORTED_MODULE_3__.QrStream,
     QrCapture: vue3_qr_reader__WEBPACK_IMPORTED_MODULE_3__.QrCapture,
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
+    Card: _Components_Card_vue__WEBPACK_IMPORTED_MODULE_4__.default,
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link,
+    BreezeButton: _Components_Button_vue__WEBPACK_IMPORTED_MODULE_5__.default
   },
   setup: function setup() {
     var state = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)({
@@ -22666,23 +22671,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
-  "class": "py-12"
-};
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", {
+  "class": "text-xl font-semibold text-green-600"
+}, "Zeskanuj kod QR", -1
+/* HOISTED */
+);
+
 var _hoisted_2 = {
-  "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
-};
-var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
-};
-var _hoisted_4 = {
-  "class": "p-6 bg-white border-b border-gray-200"
-};
-var _hoisted_5 = {
-  "class": "error"
+  "class": "w-52 h-52 border-2 mx-auto mt-5"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   style: {
     "color": "red"
   },
@@ -22691,49 +22691,71 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Przejdź");
+var _hoisted_4 = {
+  "class": "text-lg font-medium"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Przejdź");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
   var _component_qr_stream = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("qr-stream");
 
+  var _component_BreezeButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeButton");
+
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
+
+  var _component_Card = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Card");
 
   var _component_BreezeAuthenticatedLayout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeAuthenticatedLayout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Head, {
-    title: "Dashboard"
+    title: "Skaner"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeAuthenticatedLayout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error), 1
-      /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_qr_stream, {
-        onDecode: $setup.onDecode,
-        "class": "mb"
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Card, {
+        "class": "text-center"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_6];
+          return [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_qr_stream, {
+            onDecode: $setup.onDecode,
+            "class": "mb"
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_3];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["onDecode"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", _hoisted_4, "Rozpoznano kod QR", 512
+          /* NEED_PATCH */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.data]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+            href: _ctx.data
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeButton, null, {
+                "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+                  return [_hoisted_5];
+                }),
+                _: 1
+                /* STABLE */
+
+              })];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["href"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.data]])];
         }),
         _: 1
         /* STABLE */
 
-      }, 8
-      /* PROPS */
-      , ["onDecode"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.data) + " ", 1
-      /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: _ctx.data
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_7];
-        }),
-        _: 1
-        /* STABLE */
-
-      }, 8
-      /* PROPS */
-      , ["href"])])])])])];
+      })];
     }),
     _: 1
     /* STABLE */

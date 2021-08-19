@@ -1,30 +1,27 @@
 <template>
-  <Head title="Dashboard" />
+	<Head title="Skaner" />
 
-  <BreezeAuthenticatedLayout>
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
-            <p class="error">{{ error }}</p>
-            <qr-stream @decode="onDecode" class="mb">
-              <div style="color: red" class="frame"></div>
-            </qr-stream>
-            {{ data }}
-            <Link :href="data">Przejdź</Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </BreezeAuthenticatedLayout>
+		<BreezeAuthenticatedLayout>
+			<Card class="text-center">
+				<h1 class="text-xl font-semibold text-green-600">Zeskanuj kod QR</h1>
+				<div class="w-52 h-52 border-2 mx-auto mt-5">
+					<qr-stream @decode="onDecode" class="mb">
+						<div style="color: red" class="frame"></div>
+					</qr-stream>
+				</div>
+				<h1 v-show="data" class="text-lg font-medium">Rozpoznano kod QR</h1>
+				<Link v-show="data" :href="data"><BreezeButton>Przejdź</BreezeButton></Link>
+			</Card>
+	</BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import { defineComponent, reactive, toRefs } from "vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
+import { reactive, toRefs } from "vue";
 import { QrStream, QrCapture } from "vue3-qr-reader";
-import { Link } from "@inertiajs/inertia-vue3";
+import Card from "@/Components/Card.vue";
+import BreezeButton from "@/Components/Button.vue";
 
 export default {
   props: {
@@ -40,7 +37,9 @@ export default {
     Head,
     QrStream,
     QrCapture,
-    Link,
+    Card,
+	Link,
+	BreezeButton
   },
 
   setup() {
