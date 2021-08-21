@@ -11,6 +11,7 @@ use App\Models\Item;
 use App\Models\ItemDatabase;
 use App\Models\Service;
 use App\Models\ServiceDatabase;
+use App\Models\FireBrigadeUnit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -18,12 +19,19 @@ use Illuminate\Validation\Rule;
 class ItemController extends Controller
 {
     public function index()
-    {          
-        $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+    {
         $dbitems = ItemDatabase::all();
         $cathegories = Cathegory::with('subcathegories', 'parent', 'itemsdb')->get();
 
-        return Inertia::render('items', ['items' => $items, 'cathegories' => $cathegories, 'dbitems' => $dbitems]);
+        if (Auth::user()->privilege_id == 1) {
+            $units = FireBrigadeUnit::all();
+            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->get();
+        } else {
+            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
+            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+        }
+
+        return Inertia::render('items', ['items' => $items, 'cathegories' => $cathegories, 'dbitems' => $dbitems, 'units' => $units]);
     }
 
     public function itemDetails(Item $item)
@@ -37,10 +45,10 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $request->checked == true?
-        $date = '9999-01-01':
-        $date = $request->date;
-        
+        $request->checked == true ?
+            $date = '9999-01-01' :
+            $date = $request->date;
+
         Item::create(
             [
                 $request->validate([
@@ -48,11 +56,10 @@ class ItemController extends Controller
                 ]),
                 'expiry_date' => $date,
                 'item_database_id' => $request->item,
-                'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
+                'fire_brigade_unit_id' => $request->unit
 
             ]
         );
-
 
         return redirect()->back()
             ->with('message', 'Sukces');

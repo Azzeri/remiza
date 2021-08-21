@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FireBrigadeUnit;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\User;
@@ -13,12 +14,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        Auth::user()->privilege_id == 1 ?
-            $users = User::with('privilege', 'fireBrigadeUnit')->orderBy('name')->get()
-            :
+        if (Auth::user()->privilege_id == 1) {
+            $units = FireBrigadeUnit::all();
+            $users = User::with('privilege', 'fireBrigadeUnit')->orderBy('name')->get();
+        } else {
+            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
             $users = User::with('privilege', 'fireBrigadeUnit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('name')->get();
-
-        return Inertia::render('users', ['data' => $users]);
+        }
+        
+        return Inertia::render('users', ['data' => $users, 'units' => $units]);
     }
 
     public function store()
@@ -37,7 +41,8 @@ class UserController extends Controller
                 'phone' => Request::get('phone'),
                 'password' => Hash::make('qwerty'),
                 'privilege_id' => 3,
-                'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
+                'fire_brigade_unit_id' => Request::get('unit')
+                // 'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
             ]
         );
 
@@ -79,7 +84,7 @@ class UserController extends Controller
         ]);
 
         if (!Hash::check(Request::get('password_old'), $userPassword)) {
-            return back()->withErrors(['current_password'=>'Obecne hasło jest nieprawidłowe']);
+            return back()->withErrors(['current_password' => 'Obecne hasło jest nieprawidłowe']);
         }
 
         $user->password = Hash::make(Request::get('password'));

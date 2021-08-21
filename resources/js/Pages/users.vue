@@ -48,10 +48,21 @@
                     <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
                 </div>
                 <div class="mb-4">
-                    <BreezeLabel for="phoneField" value="Phone" />
+                    <BreezeLabel for="phoneField" value="Nr telefonu" />
                     <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                 </div> 
+                <div v-show="$page.props.auth.user.privilege_id == 1" class="mb-4">
+                    <BreezeLabel for="unitField" value="Remiza" />
+                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
+                        <template v-for="fbunit in units" :key="fbunit.id">
+                            <option :value="fbunit.id">
+                                {{fbunit.name}}
+                            </option>
+                        </template>
+                    </select>
+                </div>                     
+                <!-- <span>Selected: {{ form.unit }}</span> -->
                 <span v-if="editMode && $page.props.auth.user.id == form.id" class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <Link :href="route('password.change')">
                         <BreezeButton>
@@ -80,8 +91,8 @@ export default {
     props: {
         data: Object,
         errors: Object,
+        units: Object
     },
-
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -103,7 +114,8 @@ export default {
                 name: null,
                 surname: null,
                 email: null,
-                phone: null
+                phone: null,
+                unit: this.units[0].id
             },
             throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
         }
@@ -122,7 +134,8 @@ export default {
                 name: null,
                 surname: null,
                 email: null,
-                phone: null
+                phone: null,
+                unit: this.units[0].id
             }
         },
         save: function (data) {

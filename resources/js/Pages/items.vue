@@ -58,6 +58,17 @@
                     <BreezeLabel for="dateField" value="Data ważności" />                
                     <input id="dateField" type="date" v-model="form.date" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                 </div>
+                <div v-show="$page.props.auth.user.privilege_id == 1" class="mb-4">
+                    <BreezeLabel for="unitField" value="Remiza" />
+                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
+                        <template v-for="fbunit in units" :key="fbunit.id">
+                            <option :value="fbunit.id">
+                                {{fbunit.name}}
+                            </option>
+                        </template>
+                    </select>
+                </div>                     
+                <!-- <span>Selected: {{ form.unit }}</span> -->
                 <!-- <ul>
                     <li v-for="cathegory in cathegories" :key="cathegory">
                         {{cathegory.name}}
@@ -115,6 +126,7 @@ export default {
         cathegories: Object,
         dbitems: Object,
         errors: Object,
+        units: Object,
     },
  
     components: {
@@ -127,7 +139,7 @@ export default {
         Card,
         Table,
         Modal,
-        FloatingButton
+        FloatingButton,
     },
 
     data() {
@@ -138,7 +150,8 @@ export default {
             form: {
                 item: null,
                 date: null,
-                checked: true
+                checked: true,
+                unit: this.units[0].id
             },
             throws:['Nazwa','Kategoria','Producent', 'Remiza', 'Data ważności', 'Działania'],
         }
@@ -157,7 +170,8 @@ export default {
             this.form = {
                 item: null,
                 date: null,
-                checked: true
+                checked: true,
+                unit: this.units[0].id
             }
         },
         save: function (data) {
