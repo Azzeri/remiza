@@ -67,16 +67,11 @@ class CathegoryController extends Controller
             ->with('message', 'Sukces');
     }
 
-    // public function destroy(Cathegory $cathegory)
-    // {
-    //     $cathegory->delete();
-    //     $cathegory->subcathegories->each->delete();
-    //     $cathegory->itemsdb->each->delete();
-    //     $cathegory->items->each->delete();
-    //     $cathegory->servicesdb->each->delete();
-    //     $cathegory->services->each->delete();
+    public function destroy(Cathegory $cathegory)
+    {
+        $cathegory->delete();
 
-    //     return redirect()->back()
-    //         ->with('message', 'Sukces');
-    // }
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 }
