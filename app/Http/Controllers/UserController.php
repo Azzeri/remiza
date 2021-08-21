@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Request;
 
@@ -45,6 +46,13 @@ class UserController extends Controller
                 // 'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
             ]
         );
+
+        $details = [
+            'title' => 'Witaj w jednostce',
+        ];
+        
+        Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail($details));
+        
 
         return redirect()->back()
             ->with('message', 'Sukces');
