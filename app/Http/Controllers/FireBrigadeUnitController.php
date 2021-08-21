@@ -51,9 +51,11 @@ class FireBrigadeUnitController extends Controller
             ->with('message', 'Sukces');
     }
 
+    //Functions below have a problem locating the unit in db automatically
     public function update()
     {
         $unit = FireBrigadeUnit::find(Request::get('id'));
+
         $unit->update(
             Request::validate([
                 'name' => [ Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
@@ -61,6 +63,14 @@ class FireBrigadeUnitController extends Controller
             ])
         );
 
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
+
+    public function destroy($id)
+    {
+        $unit = FireBrigadeUnit::find($id);
+        $unit->delete();
         return redirect()->back()
             ->with('message', 'Sukces');
     }

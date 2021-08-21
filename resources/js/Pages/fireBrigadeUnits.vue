@@ -142,10 +142,8 @@ export default {
             });     
         },
         deleteRow: function (data) {
-            if (!confirm('Na pewno?')) return;
-            data._method = 'DELETE';
-            this.$inertia.post('/cathegories/' + data.id, data)
-            this.reset();
+            if (!confirm('Na pewno? Usuniesz wszystkie dane związane z jednostką!')) return;
+            this.$inertia.delete('/fireBrigadeUnits/' + data.id)
             this.closeModal();
         }
     }
