@@ -58,6 +58,12 @@ class ItemController extends Controller
             ->with('message', 'Sukces');
     }
 
+    public function destroy(Item $item)
+    {
+        $item->delete();
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
     // public function update(Request $request)
     // {
     //     if ($request->has('id'))

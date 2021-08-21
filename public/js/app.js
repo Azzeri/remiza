@@ -19275,8 +19275,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteRow: function deleteRow(data) {
-      if (!confirm('Na pewno? Wszystkie przedmioty należące do kategorii również zostaną usunięte!')) return;
-      this.$inertia["delete"]('/cathegories/' + data.id);
+      if (!confirm('Na pewno? Usuniesz również historię serwisów!')) return;
+      this.$inertia["delete"]('/items/' + data.id);
       this.reset();
       this.closeModal();
     }
@@ -19452,7 +19452,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteRow: function deleteRow(data) {
       if (!confirm('Na pewno?')) return;
-      this.$inertia["delete"]('/users/' + data.id, data);
+      this.$inertia["delete"]('/users/' + data.id);
       this.reset();
       this.closeModal();
     }

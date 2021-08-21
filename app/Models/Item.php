@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 
 class Item extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes, CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['services'];
 
     protected $fillable = [
         'expiry_date',
@@ -16,6 +19,11 @@ class Item extends Model
         'fire_brigade_unit_id',
         'activated'
     ];
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 
     public function cathegory()
     {

@@ -142,7 +142,7 @@ export default {
         },
         deleteRow: function (data) {
             if (!confirm('Na pewno?')) return;
-            this.$inertia.delete('/users/' + data.id, data)
+            this.$inertia.delete('/users/' + data.id)
             this.reset();
             this.closeModal();
         }

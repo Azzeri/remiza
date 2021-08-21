@@ -181,8 +181,8 @@ export default {
             });     
         },
         deleteRow: function (data) {
-            if (!confirm('Na pewno? Wszystkie przedmioty należące do kategorii również zostaną usunięte!')) return;
-            this.$inertia.delete('/cathegories/' + data.id)
+            if (!confirm('Na pewno? Usuniesz również historię serwisów!')) return;
+            this.$inertia.delete('/items/' + data.id)
             this.reset();
             this.closeModal();
         }
