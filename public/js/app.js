@@ -19262,18 +19262,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(data) {
       this.form = Object.assign({}, data);
-      if (data.cathegory_id != null) this.form.parent = data.cathegory_id;else this.form.parent = -1;
+      this.form.date = data.expiry_date;
       this.editMode = true;
       this.openModal();
     },
-    update: function update(data) {
-      var _this2 = this;
-
-      this.$inertia.put('/cathegories/' + data.id, data, {
-        onSuccess: function onSuccess() {
-          return _this2.closeModal();
-        }
-      });
+    update: function update(data) {// this.$inertia.put('/items/' + data.id, data,{
+      //     onSuccess: () => this.closeModal()
+      // });     
     },
     deleteRow: function deleteRow(data) {
       if (!confirm('Na pewno? Usuniesz również historię serwisów!')) return;
@@ -22698,10 +22693,13 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_4 = {
+  "class": "error"
+};
+var _hoisted_5 = {
   "class": "text-lg font-medium"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Przejdź");
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Przejdź");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -22736,7 +22734,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
           }, 8
           /* PROPS */
-          , ["onDecode"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", _hoisted_4, "Rozpoznano kod QR", 512
+          , ["onDecode"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error), 1
+          /* TEXT */
+          )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", _hoisted_5, "Rozpoznano kod QR", 512
           /* NEED_PATCH */
           ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.data]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
             href: _ctx.data
@@ -22744,7 +22744,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeButton, null, {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-                  return [_hoisted_5];
+                  return [_hoisted_6];
                 }),
                 _: 1
                 /* STABLE */

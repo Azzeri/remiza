@@ -8,6 +8,8 @@
 					<qr-stream @decode="onDecode" class="mb">
 						<div style="color: red" class="frame"></div>
 					</qr-stream>
+              <p class="error">{{ error }}</p>
+
 				</div>
 				<h1 v-show="data" class="text-lg font-medium">Rozpoznano kod QR</h1>
 				<Link v-show="data" :href="data"><BreezeButton>Przejdź</BreezeButton></Link>
@@ -53,6 +55,7 @@ export default {
       ...toRefs(state),
       onDecode,
     };
-  },
+  }
+
 };
 </script>

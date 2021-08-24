@@ -71,27 +71,29 @@ class ItemController extends Controller
         return redirect()->back()
             ->with('message', 'Sukces');
     }
-    // public function update(Request $request)
-    // {
-    //     if ($request->has('id'))
-    //         $avoid = Item::find($request->input('id'));
 
-    //     Validator::make($request->all(), [
-    //         'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore($avoid)],
-    //     ])->validate();
+    public function update(Request $request, Item $item)
+    {
+        echo $request->date;
+        // if ($item->expiry_date != NULL) {
+        //     $item->expiry_date = $request->date;
+        //     $item->save();
+        // }
 
-    //     if ($request->has('id')) {
-    //         Item::find($request->input('id'))->update($request->all());
-    //         return redirect()->back()
-    //             ->with('message', 'Sukces');
-    //     }
-    // }
+        // if ($request->has('id'))
+        //     $avoid = Item::find($request->input('id'));
 
-    // public function destroy(Request $request)
-    // {
-    //     if ($request->has('id')) {
-    //         Cathegory::find($request->input('id'))->delete();
-    //         return redirect()->back();
-    //     }
-    // }
+        // Validator::make($request->all(), [
+        //     'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore($avoid)],
+        // ])->validate();
+
+        // if ($request->has('id')) {
+        //     Item::find($request->input('id'))->update($request->all());
+        //     return redirect()->back()
+        //         ->with('message', 'Sukces');
+        // }
+
+        // return redirect()->back()
+        //     ->with('message', 'Sukces');
+    }
 }

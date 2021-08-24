@@ -22,19 +22,32 @@ class CathegoryController extends Controller
         $request->parent == -1 ?
             $parent = NULL : $parent = $request->parent;
 
-        Cathegory::create(
-            [
-                $request->validate([
-                    'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-                    'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
-                ]),
-                $imageName = time() . '.' . $request->avatar->extension(),
-                $request->avatar->move(public_path('images'), $imageName),
-                'name' => $request->name,
-                'photo_path' => '/images/' . $imageName,
-                'cathegory_id' => $parent,
-            ]
-        );
+        if ($request->avatar) {
+            Cathegory::create(
+                [
+                    $request->validate([
+                        'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
+                        // 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+                    ]),
+                    $imageName = time() . '.' . $request->avatar->extension(),
+                    $request->avatar->move(public_path('images'), $imageName),
+                    'name' => $request->name,
+                    'photo_path' => '/images/' . $imageName,
+                    'cathegory_id' => $parent,
+                ]
+            );
+        } else {
+            Cathegory::create(
+                [
+                    $request->validate([
+                        'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
+                    ]),
+
+                    'name' => $request->name,
+                    'cathegory_id' => $parent,
+                ]
+            );
+        }
 
         return redirect()->back()
             ->with('message', 'Sukces');

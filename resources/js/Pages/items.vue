@@ -182,17 +182,14 @@ export default {
         },
         edit: function (data) {
             this.form = Object.assign({}, data);
-            if(data.cathegory_id != null)
-                this.form.parent = data.cathegory_id;
-            else
-                this.form.parent = -1;
+            this.form.date = data.expiry_date;
             this.editMode = true;
             this.openModal();
         },
         update: function (data) {
-            this.$inertia.put('/cathegories/' + data.id, data,{
-                onSuccess: () => this.closeModal()
-            });     
+            // this.$inertia.put('/items/' + data.id, data,{
+            //     onSuccess: () => this.closeModal()
+            // });     
         },
         deleteRow: function (data) {
             if (!confirm('Na pewno? Usuniesz również historię serwisów!')) return;
