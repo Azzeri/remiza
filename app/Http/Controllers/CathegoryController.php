@@ -13,7 +13,7 @@ class CathegoryController extends Controller
     public function index()
     {
         $cathegories = Cathegory::with('subcathegories')->get();
-
+        // $cathegories = Cathegory::with('subcathegories')->paginate(10);
         return Inertia::render('cathegories', ['data' => $cathegories]);
     }
 
@@ -22,13 +22,13 @@ class CathegoryController extends Controller
         $request->parent == -1 ?
             $parent = NULL : $parent = $request->parent;
 
+        $request->validate([
+            'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
+            // 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
         if ($request->avatar) {
             Cathegory::create(
                 [
-                    $request->validate([
-                        'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-                        // 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
-                    ]),
                     $imageName = time() . '.' . $request->avatar->extension(),
                     $request->avatar->move(public_path('images'), $imageName),
                     'name' => $request->name,
@@ -39,10 +39,6 @@ class CathegoryController extends Controller
         } else {
             Cathegory::create(
                 [
-                    $request->validate([
-                        'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-                    ]),
-
                     'name' => $request->name,
                     'cathegory_id' => $parent,
                 ]

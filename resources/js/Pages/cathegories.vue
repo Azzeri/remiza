@@ -23,6 +23,7 @@
                     </td>
                 </tr>
             </Table>
+            <!-- <pagination class="mt-6" :links="data.links" /> -->
         </Card>
     </BreezeAuthenticatedLayout>
 
@@ -72,6 +73,7 @@ import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 export default {
     props: {
@@ -88,7 +90,8 @@ export default {
         Card,
         Table,
         Modal,
-        FloatingButton
+        FloatingButton,
+        Pagination
     },
 
     data() {
@@ -103,7 +106,7 @@ export default {
             throws:['Zdjęcie','Nazwa','Podkategorie','Działania'],
         }
     },
-    
+
     methods: {
         openModal: function () {
             this.isOpen = true;
