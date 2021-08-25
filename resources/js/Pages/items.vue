@@ -29,7 +29,7 @@
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
         <form @submit.prevent="save, update">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="mb-4">
+                <div v-if="!editMode" class="mb-4">
                     <BreezeLabel for="cathegoryField" value="Kategoria" />
                     <select class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="cathegoryField" v-model="cathegory">
                         <template v-for="row in cathegories" :key="row.id">
@@ -39,7 +39,7 @@
                         </template>                         
                     </select>
                 </div>
-                <div class="mb-4">
+                <div v-if="!editMode" class="mb-4">
                     <BreezeLabel for="itemField" value="Przedmiot" />
                     <select class="border-gray-300 focus:border-indigo-300 w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="itemField" v-model="form.item">
                         <template v-for="row in dbitems" :key="row.id">
@@ -58,7 +58,7 @@
                     <BreezeLabel for="dateField" value="Data ważności" />                
                     <input id="dateField" type="date" v-model="form.date" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                 </div>
-                <div v-show="$page.props.auth.user.privilege_id == 1" class="mb-4">
+                <div v-show="$page.props.auth.user.privilege_id == 1 && !editMode" class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
                     <select v-model="form.unit" class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
                         <template v-for="fbunit in units" :key="fbunit.id">
@@ -187,9 +187,9 @@ export default {
             this.openModal();
         },
         update: function (data) {
-            // this.$inertia.put('/items/' + data.id, data,{
-            //     onSuccess: () => this.closeModal()
-            // });     
+            this.$inertia.put('/items/' + data.id, data,{
+                onSuccess: () => this.closeModal()
+            });     
         },
         deleteRow: function (data) {
             if (!confirm('Na pewno? Usuniesz również historię serwisów!')) return;

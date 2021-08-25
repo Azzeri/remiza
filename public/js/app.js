@@ -19302,9 +19302,14 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = true;
       this.openModal();
     },
-    update: function update(data) {// this.$inertia.put('/items/' + data.id, data,{
-      //     onSuccess: () => this.closeModal()
-      // });     
+    update: function update(data) {
+      var _this2 = this;
+
+      this.$inertia.put('/items/' + data.id, data, {
+        onSuccess: function onSuccess() {
+          return _this2.closeModal();
+        }
+      });
     },
     deleteRow: function deleteRow(data) {
       if (!confirm('Na pewno? Usuniesz również historię serwisów!')) return;
@@ -22513,9 +22518,11 @@ var _hoisted_10 = {
   "class": "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
 };
 var _hoisted_11 = {
+  key: 0,
   "class": "mb-4"
 };
 var _hoisted_12 = {
+  key: 1,
   "class": "mb-4"
 };
 var _hoisted_13 = {
@@ -22526,7 +22533,7 @@ var _hoisted_14 = {
   "class": "mb-4 flex"
 };
 var _hoisted_15 = {
-  key: 0,
+  key: 2,
   "class": "mb-4"
 };
 var _hoisted_16 = {
@@ -22642,7 +22649,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
           return $options.save, $options.update;
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [!$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "cathegoryField",
         value: "Kategoria"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
@@ -22666,7 +22673,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.cathegory]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.cathegory]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "itemField",
         value: "Przedmiot"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
@@ -22692,7 +22699,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.item]]), $props.errors.item ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.item), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "checkbox",
         id: "checkbox",
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
@@ -22738,7 +22745,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]])], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == 1]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span>Selected: {{ form.unit }}</span> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ul>\n                    <li v-for=\"cathegory in cathegories\" :key=\"cathegory\">\n                        {{cathegory.name}}\n                        <span v-if=\"cathegory.subcathegories.length\">posiada</span>\n                    </li>\n                </ul> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select v-model=\"cathegory\">\n                    <template v-for=\"row in cathegories\" :key=\"row.id\">\n                        <option v-if=\"row.cathegory_id == null\" :value=\"row.id\">\n                            {{row.name}}\n                        </option> \n                    </template>                         \n                </select><br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span v-if=\"cathegory.subcathegories.length\">posiada</span> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select v-if=\"cathegory.subcathegories && cathegory.subcathegories.length\" v-model=\"cathegory\">\n                    <template v-for=\"row in cathegories\" :key=\"row.id\">\n                        <option v-if=\"row.cathegory_id == cathegory\" :value=\"row.id\">\n                            {{row.name}}\n                        </option> \n                    </template>                         \n                </select><br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select v-model=\"cathegory\">\n                    <template v-for=\"row in cathegories\" :key=\"row.id\">\n                        <option v-if=\"row.cathegory_id == cathegory\" :value=\"row.id\">\n                            {{row.name}}\n                        </option> \n                    </template>                         \n                </select><br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <br><span>Selected Cath: {{ cathegory }}</span><br> \n                \n                <span>Selected Item: {{ form.item }}</span><br> ")])], 32
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == 1 && !$data.editMode]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span>Selected: {{ form.unit }}</span> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ul>\n                    <li v-for=\"cathegory in cathegories\" :key=\"cathegory\">\n                        {{cathegory.name}}\n                        <span v-if=\"cathegory.subcathegories.length\">posiada</span>\n                    </li>\n                </ul> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select v-model=\"cathegory\">\n                    <template v-for=\"row in cathegories\" :key=\"row.id\">\n                        <option v-if=\"row.cathegory_id == null\" :value=\"row.id\">\n                            {{row.name}}\n                        </option> \n                    </template>                         \n                </select><br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span v-if=\"cathegory.subcathegories.length\">posiada</span> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select v-if=\"cathegory.subcathegories && cathegory.subcathegories.length\" v-model=\"cathegory\">\n                    <template v-for=\"row in cathegories\" :key=\"row.id\">\n                        <option v-if=\"row.cathegory_id == cathegory\" :value=\"row.id\">\n                            {{row.name}}\n                        </option> \n                    </template>                         \n                </select><br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select v-model=\"cathegory\">\n                    <template v-for=\"row in cathegories\" :key=\"row.id\">\n                        <option v-if=\"row.cathegory_id == cathegory\" :value=\"row.id\">\n                            {{row.name}}\n                        </option> \n                    </template>                         \n                </select><br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <br><span>Selected Cath: {{ cathegory }}</span><br> \n                \n                <span>Selected Item: {{ form.item }}</span><br> ")])], 32
       /* HYDRATE_EVENTS */
       )];
     }),

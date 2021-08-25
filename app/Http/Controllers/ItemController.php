@@ -74,26 +74,14 @@ class ItemController extends Controller
 
     public function update(Request $request, Item $item)
     {
-        echo $request->date;
-        // if ($item->expiry_date != NULL) {
-        //     $item->expiry_date = $request->date;
-        //     $item->save();
-        // }
+        $request->checked == true ?
+            $date = '9999-01-01' :
+            $date = $request->date;
 
-        // if ($request->has('id'))
-        //     $avoid = Item::find($request->input('id'));
+        $item->expiry_date = $date;
+        $item->save();
 
-        // Validator::make($request->all(), [
-        //     'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore($avoid)],
-        // ])->validate();
-
-        // if ($request->has('id')) {
-        //     Item::find($request->input('id'))->update($request->all());
-        //     return redirect()->back()
-        //         ->with('message', 'Sukces');
-        // }
-
-        // return redirect()->back()
-        //     ->with('message', 'Sukces');
+        return redirect()->back()
+            ->with('message', 'Sukces');
     }
 }
