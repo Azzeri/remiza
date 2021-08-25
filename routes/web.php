@@ -52,8 +52,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
 
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
+
         Route::post('services/finish/', [ServiceController::class, 'finish']);
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
+
+        Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
 
         Route::get('scanner', function () {
             return Inertia::render('scanner');

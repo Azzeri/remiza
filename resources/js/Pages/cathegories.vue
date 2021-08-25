@@ -1,7 +1,6 @@
 <template>
-    <Head title="Kategorie" />
-
     <BreezeAuthenticatedLayout>
+    <Head title="Kategorie" />
         <Card>
             <FloatingButton @openModal="openModal"></FloatingButton>
 
@@ -25,7 +24,7 @@
             </Table>
             <!-- <pagination class="mt-6" :links="data.links" /> -->
         </Card>
-    </BreezeAuthenticatedLayout>
+    
 
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
         <form @submit.prevent="save, update"> 
@@ -37,7 +36,7 @@
                 </div>    
                 <div class="mb-4">
                     <BreezeLabel for="parentField" value="Kategoria nadrzędna" />
-                    <select class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="parentField" v-model="form.parent">
+                    <select class="border-gray-300 focus:border-indigo-300 w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="parentField" v-model="form.parent">
                         <option value="-1">Brak</option>                                   
                         <template v-for="row in data" :key="row.id">
                             <option v-if="row.name != form.name && form.id != row.cathegory_id" :value="row.id">
@@ -46,9 +45,9 @@
                         </template>                         
                     </select>
                     <!-- <span>Selected: {{ form.parent }}</span> -->
-                </div> 
+                </div>
+                <BreezeButton v-if="editMode" @click="deleteAvatar(form.id)" class="mb-2"> Usuń zdjęcie </BreezeButton>
 
-                <template v-if="!editMode"> 
                 <BreezeLabel for="avatarField" value="Zdjęcie" />
                 <input class="bg-white" id="avatarField" type="file" @input="form.avatar = $event.target.files[0]" />
                 <!-- <input v-if="!editMode" type="file" @input="form.avatar = $event.target.files[0]" /> -->
@@ -57,10 +56,10 @@
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                 {{ form.progress.percentage }}%
                 </progress>  
-                </template>                                                     
             </div>
         </form>
     </Modal>
+    </BreezeAuthenticatedLayout>
 </template>
 
 <script>
@@ -135,18 +134,27 @@ export default {
                 this.form.parent = data.cathegory_id;
             else
                 this.form.parent = -1;
+            // this.data.avatar = this.form.avatar;
             this.editMode = true;
             this.openModal();
         },
         update: function (data) {
-            console.log(data)
-            this.$inertia.put('/cathegories/' + data.id, data,{
+            // data.photo_path = this.form.avatar;
+            // data.avatar = this.form.avatar;
+            console.log(data.avatar)
+            this.$inertia.put('/cathegories/' + data.id, data, {
                 onSuccess: () => this.closeModal()
             });     
         },
         deleteRow: function (data) {
             if (!confirm('Na pewno? Wszystkie przedmioty należące do kategorii również zostaną usunięte!')) return;
             this.$inertia.delete('/cathegories/' + data.id)
+            this.reset();
+            this.closeModal();
+        },
+        deleteAvatar: function(data){
+            if (!confirm('Na pewno?')) return;
+            this.$inertia.post('cathegories/deletePhoto/' + data)
             this.reset();
             this.closeModal();
         }

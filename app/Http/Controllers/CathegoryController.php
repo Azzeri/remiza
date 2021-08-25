@@ -24,7 +24,7 @@ class CathegoryController extends Controller
 
         $request->validate([
             'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-            // 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
         if ($request->avatar) {
             Cathegory::create(
@@ -51,11 +51,13 @@ class CathegoryController extends Controller
 
     public function update(Request $request, Cathegory $cathegory)
     {
+        // dd($request);
+        // echo $avatar;
         $request->parent == -1 ?
             $parent = NULL : $parent = $request->parent;
 
-        // echo($request->name);        
-        // dd($request->avatar.$request->name);
+        // echo($cathegory->photo_path);
+        // echo $request;        
 
         $cathegory->update(
             [
@@ -83,4 +85,39 @@ class CathegoryController extends Controller
         return redirect()->back()
             ->with('message', 'Sukces');
     }
+
+    public function deletePhoto($id)
+    {
+        $cathegory = Cathegory::find($id);
+        $photoName = ltrim($cathegory->photo_path, '/images/');
+
+        if ($photoName != 'default.png') {
+            unlink(public_path('images') . '/' . $photoName);
+            $cathegory->photo_path = '/images/default.png';
+            $cathegory->save();
+        }
+
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
+
+    // public function updatePhoto(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg'
+    //     ]);
+
+    //     $cathegory = Cathegory::find($id);
+    //     $photoName = ltrim($cathegory->photo_path, '/images/');
+    //     unlink(public_path('images') . '/' . $photoName);
+
+    //     $photoName = time() . '.' . $request->avatar->extension();
+    //     $request->avatar->move(public_path('images'), $photoName);
+
+    //     $cathegory->photo_path = '/images/' . $photoName;
+    //     $cathegory->save();
+
+    //     return redirect()->back()
+    //         ->with('message', 'Sukces');
+    // }
 }
