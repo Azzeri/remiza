@@ -11,6 +11,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
+use App\Http\Controllers\UsageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,6 +59,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
 
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
+
+        Route::post('usages/insertNew/', [UsageController::class, 'insertNew']);
 
         Route::get('scanner', function () {
             return Inertia::render('scanner');

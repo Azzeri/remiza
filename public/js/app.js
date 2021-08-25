@@ -19166,6 +19166,12 @@ __webpack_require__.r(__webpack_exports__);
         desc: null,
         id: null
       },
+      formUsage: {
+        id: this.item.id,
+        description: null,
+        start: '2021-08-25T11:39:00',
+        end: this.currentDateTime()
+      },
       dates: []
     };
   },
@@ -19173,9 +19179,20 @@ __webpack_require__.r(__webpack_exports__);
     currentDate: function currentDate() {
       return new Date().toISOString().split('T')[0];
     },
+    currentDateTime: function currentDateTime() {
+      var today = new Date();
+      today.setSeconds(0, 0);
+      return today.toISOString().split('.')[0];
+    },
     reset: function reset() {
       this.form = {
         desc: null
+      };
+      this.formUsage = {
+        id: this.item.id,
+        description: null,
+        start: this.currentDateTime(),
+        end: this.currentDateTime()
       };
       this.dates = [];
     },
@@ -19200,6 +19217,16 @@ __webpack_require__.r(__webpack_exports__);
         this.$inertia.post("/services/activate/" + this.item.id, data);
         this.reset();
       }
+    },
+    insertUsage: function insertUsage() {
+      var _this = this;
+
+      // console.log(this.formUsage);
+      this.$inertia.post("/usages/insertNew/", this.formUsage, {
+        onSuccess: function onSuccess() {
+          return _this.reset();
+        }
+      });
     }
   }
 });
@@ -22268,7 +22295,7 @@ var _hoisted_8 = {
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", {
-  "class": "text-xl font-semibold text-green-600"
+  "class": "text-xl font-semibold text-red-700"
 }, "Serwisy", -1
 /* HOISTED */
 );
@@ -22303,31 +22330,34 @@ var _hoisted_17 = {
 };
 
 var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", {
-  "class": "text-xl font-semibold"
-}, "Historia", -1
+  "class": "text-xl font-semibold text-red-700"
+}, "Użycie", -1
 /* HOISTED */
 );
 
 var _hoisted_19 = {
+  "class": "mb-4"
+};
+var _hoisted_20 = {
   key: 0,
-  "class": "border-b-2 mt-4"
+  "class": "text-red-500"
+};
+var _hoisted_21 = {
+  "class": "mb-4"
+};
+var _hoisted_22 = {
+  key: 0,
+  "class": "text-red-500"
+};
+var _hoisted_23 = {
+  "class": "mb-4"
+};
+var _hoisted_24 = {
+  key: 0,
+  "class": "text-red-500"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
-/* HOISTED */
-);
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Zapisz użycie ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -22436,21 +22466,74 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             , ["onClick"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
           }), 128
           /* KEYED_FRAGMENT */
-          ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.services, function (service) {
-            return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-              key: service.id
-            }, [service.is_performed == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Id: {{service.id}}<br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Nazwa serwisu: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(service.service_database.name), 1
-            /* TEXT */
-            ), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Opis: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(service.description), 1
-            /* TEXT */
-            ), _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Data: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(service.perform_date), 1
-            /* TEXT */
-            ), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Zakończono: {{service.is_performed}}<br> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Wykonawca: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(service.user.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(service.user.surname), 1
-            /* TEXT */
-            ), _hoisted_23])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
-          }), 128
-          /* KEYED_FRAGMENT */
-          ))])])]))];
+          ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+            "class": "mt-4",
+            onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+              return $options.insertUsage && $options.insertUsage.apply($options, arguments);
+            }, ["prevent"]))
+          }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+            "for": "usageDescField",
+            value: "Opis"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+            id: "usageDescField",
+            type: "textarea",
+            "class": "mt-1 block w-full",
+            modelValue: $data.formUsage.description,
+            "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+              return $data.formUsage.description = $event;
+            }),
+            placeholder: "Wprowadź opis"
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"]), $props.errors.description ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.description), 1
+          /* TEXT */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+            "for": "usageDateField",
+            value: "Rozpoczęcie użycia"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+            id: "usageDateField",
+            type: "datetime-local",
+            max: $options.currentDateTime(),
+            "class": "mt-1 block w-full",
+            modelValue: $data.formUsage.start,
+            "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+              return $data.formUsage.start = $event;
+            })
+          }, null, 8
+          /* PROPS */
+          , ["max", "modelValue"]), $props.errors.start ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.start), 1
+          /* TEXT */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+            "for": "usageMinutesField",
+            value: "Zakończenie użycia"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+            id: "usageMinutesField",
+            type: "datetime-local",
+            max: $options.currentDateTime(),
+            "class": "mt-1 block w-full",
+            modelValue: $data.formUsage.end,
+            "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+              return $data.formUsage.end = $event;
+            })
+          }, null, 8
+          /* PROPS */
+          , ["max", "modelValue"]), $props.errors.end ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.end), 1
+          /* TEXT */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeButton, {
+            "class": "mb-2",
+            onClick: _cache[8] || (_cache[8] = function ($event) {
+              return $options.insertUsage();
+            })
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_25];
+            }),
+            _: 1
+            /* STABLE */
+
+          })], 32
+          /* HYDRATE_EVENTS */
+          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h1 class=\"text-xl font-semibold\">Historia</h1>\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t<li v-for=\"service in services\" :key=\"service.id\">\n\t\t\t\t\t\t\t<template v-if=\"service.is_performed == 1\">\n\t\t\t\t\t\t\t\t<div class=\"border-b-2 mt-4\">\n\t\t\t\t\t\t\t\t\tNazwa serwisu: {{service.service_database.name}}<br>                               \n\t\t\t\t\t\t\t\t\tOpis: {{service.description}}<br>\n\t\t\t\t\t\t\t\t\tData: {{service.perform_date}}<br>\n\t\t\t\t\t\t\t\t\tWykonawca: {{service.user.name}} {{service.user.surname}}<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t</ul> ")])]))];
         }),
         _: 1
         /* STABLE */

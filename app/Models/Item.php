@@ -11,7 +11,7 @@ class Item extends Model
 {
     use HasFactory,SoftDeletes, CascadeSoftDeletes;
 
-    protected $cascadeDeletes = ['services'];
+    protected $cascadeDeletes = ['services','usages'];
 
     protected $fillable = [
         'expiry_date',
@@ -23,6 +23,11 @@ class Item extends Model
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function usages()
+    {
+        return $this->hasMany(Usage::class);
     }
 
     public function cathegory()
