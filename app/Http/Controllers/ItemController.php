@@ -12,6 +12,7 @@ use App\Models\ItemDatabase;
 use App\Models\Service;
 use App\Models\ServiceDatabase;
 use App\Models\FireBrigadeUnit;
+use App\Models\Usage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -83,5 +84,12 @@ class ItemController extends Controller
 
         return redirect()->back()
             ->with('message', 'Sukces');
+    }
+
+    public function history($id)
+    {
+        $services = Service::where('item_id', $id)->with('serviceDatabase', 'user')->get();
+        $usages = Usage::where('item_id', $id)->with('user')->get();
+        return Inertia::render('history', ['services' => $services, 'usages' => $usages]);
     }
 }

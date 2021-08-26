@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('services/finish/', [ServiceController::class, 'finish']);
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
 
+        Route::get('items/history/{id}', [ItemController::class, 'history']);
+
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
 
         Route::post('usages/insertNew/', [UsageController::class, 'insertNew']);
