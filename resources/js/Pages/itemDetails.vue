@@ -27,9 +27,11 @@
 			</div>
 
 			<div v-else class="flex flex-col md:flex-row md:justify-evenly">
-				<Link :href="'history/'+item.id" class="">
-        			<BreezeButton class="mb-2"> Historia </BreezeButton>
-      			</Link>
+				<div class="pl-6 overflow-hidden">
+					<Link :href="'history/'+item.id" class="">
+						<BreezeButton class="mb-2"> Historia </BreezeButton>
+					</Link>
+				</div>
 				<div class="p-6 overflow-hidden">
 					<h1 class="text-xl font-semibold text-red-700">Serwisy</h1>
 					<ul>
