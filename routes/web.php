@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\UsageController;
 
 /*
@@ -34,7 +35,7 @@ Route::get('/', function () {
 
     return redirect('/dashboard');
 });
-
+Route::get('savehistory', [HistoryController::class, 'store'])->name('savehistory');
 Route::group(['middleware' => 'auth'], function () {
 
     // Route::get('/dashboard', function () {
@@ -72,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
 
         Route::get('items/history/{id}', [ItemController::class, 'history']);
+
+        Route::get('loginhistory/{id}', [HistoryController::class, 'index']);
 
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
 
