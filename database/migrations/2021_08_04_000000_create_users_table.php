@@ -20,10 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->text('google2fa_secret')->nullable();
             $table->string('password');
             $table->foreignId('privilege_id')->constrained();
             $table->foreignId('fire_brigade_unit_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('first_time_login')->default(true);
+            $table->boolean('mfaverified')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

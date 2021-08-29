@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
         'FirstTimeLogin' => \App\Http\Middleware\FirstTimeLogin::class,
         'isGlobalAdmin' => \App\Http\Middleware\IsGlobalAdmin::class,
-
+        '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
+        'mfaconfirmed' => \App\Http\Middleware\MfaConfirmed::class,
     ];
 }

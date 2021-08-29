@@ -22,27 +22,32 @@ class UserController extends Controller
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
             $users = User::with('privilege', 'fireBrigadeUnit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('name')->get();
         }
-        
+
         return Inertia::render('users', ['data' => $users, 'units' => $units]);
     }
 
     public function store()
     {
+        Request::validate([
+            'name' => 'required|string|min:3|max:32',
+            'surname' => 'required|string|min:3|max:32',
+            'email' => 'unique:users|required|email',
+            'phone' => 'nullable|size:9',
+        ]);
+
+        $google2fa = app('pragmarx.google2fa');
+        $key = $google2fa->generateSecretKey();
+
         User::create(
             [
-                Request::validate([
-                    'name' => 'required|string|min:3|max:32',
-                    'surname' => 'required|string|min:3|max:32',
-                    'email' => 'unique:users|required|email',
-                    'phone' => 'nullable|size:9',
-                ]),
                 'name' => Request::get('name'),
                 'surname' => Request::get('surname'),
                 'email' => Request::get('email'),
                 'phone' => Request::get('phone'),
                 'password' => Hash::make('qwerty'),
                 'privilege_id' => 3,
-                'fire_brigade_unit_id' => Request::get('unit')
+                'fire_brigade_unit_id' => Request::get('unit'),
+                'google2fa_secret' => $key
                 // 'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
             ]
         );
@@ -50,9 +55,9 @@ class UserController extends Controller
         $details = [
             'title' => 'Witaj w jednostce',
         ];
-        
+
         Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail($details));
-        
+
 
         return redirect()->back()
             ->with('message', 'Sukces');
@@ -101,5 +106,28 @@ class UserController extends Controller
 
         return redirect()->back()
             ->with('message', 'Sukces');
+    }
+
+    public function mfa()
+    {
+        $google2fa = app('pragmarx.google2fa');
+        $key = Auth::user()->google2fa_secret;
+
+        $QR_Image = $google2fa->getQRCodeInline(
+            config('app.name'),
+            Auth::user()->email,
+            $key
+        );
+
+        return Inertia::render('Mfa', ['QR_Image' => $QR_Image, 'secretkey' => $key]);
+    }
+
+    public function mfaconfirm()
+    {
+        $user = Auth::user();
+        $user->mfaverified = true;
+        $user->save();
+
+        return redirect('dashboard');
     }
 }

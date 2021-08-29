@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.admin',
             'password' => Hash::make('qwerty'),
             'privilege_id' => 1,
+            'first_time_login' => false,
+            'mfaverified' => true
         ]);
 
         DB::table('users')->insert([

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FirstTimeLogin
+class MfaConfirmed
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,11 @@ class FirstTimeLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->first_time_login == false) {
+        if (Auth::user()->mfaverified == true) {
             return $next($request);
         }
 
-        return redirect('/password-change');
+        return redirect('/mfa');
         // return $next($request);
     }
 }

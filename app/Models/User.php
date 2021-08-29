@@ -25,7 +25,9 @@ class User extends Authenticatable
         'password',
         'privilege_id',
         'fire_brigade_unit_id',
-        'first_time_login'
+        'first_time_login',
+        'google2fa_secret',
+        'mfaverified'
     ];
 
     /**
@@ -36,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'google2fa_secret'
     ];
 
     /**

@@ -59,7 +59,7 @@ export default {
     methods: {
         submit() {
             this.form.post(this.route('password.change.store'), {
-                onSuccess: () => this.$inertia.get('/dashboard')
+                onSuccess: () => this.$inertia.get('dashboard')
             })
         }
     }
