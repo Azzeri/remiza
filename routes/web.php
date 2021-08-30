@@ -12,7 +12,9 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
+use App\Models\Set;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,12 +64,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
         Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
+        Route::resource('sets', SetController::class, ['names' => ['index' => 'sets.index']]);
         Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
         Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
 
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
+        Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details');
 
         Route::post('services/finish/', [ServiceController::class, 'finish']);
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);

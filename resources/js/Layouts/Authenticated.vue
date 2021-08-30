@@ -34,6 +34,11 @@
                                     Sprzęt
                                 </BreezeNavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('set.details',id=1)" :active="route().current('set.details')">
+                                    Zestawy
+                                </BreezeNavLink>
+                            </div>
                             <div v-if="$page.props.auth.user.privilege_id == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
                                     Remizy
@@ -99,6 +104,9 @@
                             Sprzęt
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == 1" :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
+                            Remizy
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('sets.index')" :active="route().current('sets.index')">
                             Remizy
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('scanner')" :active="route().current('scanner')">

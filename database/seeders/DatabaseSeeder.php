@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ItemSeeder::class,
             ServiceDatabaseSeeder::class,
             ServiceSeeder::class,
+            SetSeeder::class
         ]);
     }
 }
