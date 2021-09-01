@@ -15,19 +15,19 @@ module.exports = {
             },
             colors: {
                 primary: {
-                    100: '#e05652',
-                    200: '#db3a34'
+                    100: '#5C3D2E',
+                    200: '#5C3D2E'
                 },
                 secondary : {
-                    50: '#ffffff',
-                    100: '#ffc857',
-                    200: '#ffbb33'
+                    50: '#c3623c',
+                    100: '#c3623c',
+                    200: '#c3623c'
                 },
                 
-                'tertiary':'#f2f2f2',
+                'tertiary':'#f3e7d8',
                 text: {
-                    100: '#413e40',
-                    200: '#323031'
+                    100: '#2D2424',
+                    200: '#2D2424'
                 }
             }
         },
@@ -41,3 +41,20 @@ module.exports = {
 
     plugins: [require('@tailwindcss/forms')],
 };
+// colors: {
+//     primary: {
+//         100: '#e05652',
+//         200: '#db3a34'
+//     },
+//     secondary : {
+//         50: '#ffffff',
+//         100: '#ffc857',
+//         200: '#ffbb33'
+//     },
+    
+//     'tertiary':'#f2f2f2',
+//     text: {
+//         100: '#413e40',
+//         200: '#323031'
+//     }
+// }

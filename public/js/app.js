@@ -21657,7 +21657,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "py-12"
+  "class": "py-12 text-text-200"
 };
 var _hoisted_2 = {
   "class": "mx-auto sm:px-6 lg:px-8 max-w-7xl"
@@ -21672,7 +21672,7 @@ var _hoisted_5 = {
   "class": "p-6 text-center bg-gradient-to-br from-secondary-200 to-primary-200 sm:rounded-l-lg sm:w-1/3"
 };
 var _hoisted_6 = {
-  "class": "font-semibold text-lg"
+  "class": "font-bold text-lg text-tertiary"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Skanuj");
@@ -21681,7 +21681,7 @@ var _hoisted_8 = {
   "class": "bg-secondary-100 p-6 mt-12 sm:mt-0 sm:rounded-r-lg sm:w-2/3"
 };
 var _hoisted_9 = {
-  "class": "text-center font-semibold text-lg mb-4 sm:text-left sm:pl-5"
+  "class": "text-center text-tertiary font-bold text-lg mb-4 sm:text-left sm:pl-5"
 };
 var _hoisted_10 = {
   key: 0
