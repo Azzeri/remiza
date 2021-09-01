@@ -51,4 +51,9 @@ class Item extends Model
         return $this->databaseItems()->with('manufacturer');
     }
 
+    public function sets()
+    {
+        return $this->belongsToMany(Set::class);
+    }
+
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\FireBrigadeUnitController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
+use App\Models\Item;
 use App\Models\Set;
 
 /*
@@ -85,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('usages/insertNew/', [UsageController::class, 'insertNew']);
 
         Route::get('scanner', function () {
-            return Inertia::render('scanner');
+            return Inertia::render('scanner',['items' => Item::with('sets')->get()]);
         })->name('scanner');
     });
 

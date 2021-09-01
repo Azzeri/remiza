@@ -24,10 +24,11 @@ import { reactive, toRefs } from "vue";
 import { QrStream, QrCapture } from "vue3-qr-reader";
 import Card from "@/Components/Card.vue";
 import BreezeButton from "@/Components/Button.vue";
-
+// http://localhost:3000/items/1
 export default {
   props: {
     user: Object,
+    items: Object
   },
   data() {
     return {
@@ -42,6 +43,11 @@ export default {
     Card,
 	Link,
 	BreezeButton
+  },
+  methods: {
+    hasSet() {
+
+    }
   },
 
   setup() {

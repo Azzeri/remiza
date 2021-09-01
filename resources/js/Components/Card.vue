@@ -1,8 +1,8 @@
 <template>
   <div class="py-12">
     <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-      <div class="bg-white shadow-sm sm:rounded-lg">
-        <div class="p-6 bg-white border-b border-gray-200">
+      <div class="bg-secondary shadow-sm sm:rounded-lg">
+        <div class="p-6 bg-secondary-100 border-b border-secondary-200">
             <slot></slot>
         </div>
       </div>
