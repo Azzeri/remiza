@@ -46,9 +46,14 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $request->checked == true ?
-            $date = '9999-01-01' :
+        if ($request->checked == true)
+            $date = '9999-01-01';
+        else {
+            $request->validate([
+                'date' => ['required'],
+            ]);
             $date = $request->date;
+        };
 
         Item::create(
             [
@@ -75,9 +80,15 @@ class ItemController extends Controller
 
     public function update(Request $request, Item $item)
     {
-        $request->checked == true ?
-            $date = '9999-01-01' :
+        if ($request->checked == true)
+            $date = '9999-01-01';
+        else {
+            $request->validate([
+                'date' => ['required'],
+            ]);
             $date = $request->date;
+        };
+
 
         $item->expiry_date = $date;
         $item->save();

@@ -3,21 +3,21 @@
 
     <BreezeAuthenticatedLayout>
         <Card>
+            <Message>
+                {{ $page.props.flash.message }}
+            </Message>
+
             <FloatingButton @openModal="openModal"></FloatingButton>
 
-            <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
-                {{ $page.props.flash.message }}
-            </div>
-
             <Table :data="items" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
-                <tr v-for="row in items" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-gray-100">
-                    <td class="h-10 sm:h-auto border-grey-light border p-3">{{ row.database_items.name }}</td>
-                    <td class="h-10 sm:h-auto border-grey-light border p-3">{{ row.cathegory.cathegory.name }}</td>
-                    <td class="h-10 sm:h-auto border-grey-light border p-3">{{ row.manufacturer.manufacturer.name }}</td>
-                    <td class="h-10 sm:h-auto border-grey-light border p-3">{{ row.fire_brigade_unit.name }}</td>
-                    <td v-if="row.expiry_date != '9999-01-01'" class="h-10 sm:h-auto border-grey-light border p-3">{{ row.expiry_date}}</td>
-                    <td v-else class="h-10 sm:h-auto border-grey-light border p-3">Ważny bezterminowo</td>
-                    <td class="h-10 sm:h-auto border-grey-light border text-center p-3">
+                <tr v-for="row in items" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.database_items.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.cathegory.cathegory.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.manufacturer.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.fire_brigade_unit.name }}</td>
+                    <td v-if="row.expiry_date != '9999-01-01'" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.expiry_date}}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">Ważny bezterminowo</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
                         <Link :href="'items/'+row.id"><i class="far fa-eye fa-lg ml-2"></i></Link>
@@ -31,7 +31,7 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div v-if="!editMode" class="mb-4">
                     <BreezeLabel for="cathegoryField" value="Kategoria" />
-                    <select class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="cathegoryField" v-model="cathegory">
+                    <select class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="cathegoryField" v-model="cathegory">
                         <template v-for="row in cathegories" :key="row.id">
                             <option v-if="row.itemsdb.length" :value="row.id">
                                 {{row.name}}
@@ -41,7 +41,7 @@
                 </div>
                 <div v-if="!editMode" class="mb-4">
                     <BreezeLabel for="itemField" value="Przedmiot" />
-                    <select class="border-gray-300 focus:border-indigo-300 w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="itemField" v-model="form.item">
+                    <select class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="itemField" v-model="form.item">
                         <template v-for="row in dbitems" :key="row.id">
                             <option v-if="row.cathegory_id == cathegory" :value="row.id">
                                 {{row.name}}
@@ -51,59 +51,23 @@
                     <div class="text-red-500" v-if="errors.item">{{ errors.item }}</div>
                 </div>
                 <div class="mb-4 flex">
-                    <input type="checkbox" id="checkbox" v-model="form.checked" />              
+                    <input type="checkbox" id="checkbox" v-model="form.checked" class="rounded" />              
                     <BreezeLabel for="checkbox" value="Ważny bezterminowo" class="ml-2"/>  
                 </div>
                 <div class="mb-4" v-if="!form.checked">
                     <BreezeLabel for="dateField" value="Data ważności" />                
-                    <input id="dateField" type="date" v-model="form.date" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <input id="dateField" type="date" v-model="form.date" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
                 </div>
                 <div v-show="$page.props.auth.user.privilege_id == 1 && !editMode" class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
-                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
+                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
                         <template v-for="fbunit in units" :key="fbunit.id">
                             <option :value="fbunit.id">
                                 {{fbunit.name}}
                             </option>
                         </template>
                     </select>
-                </div>                     
-                <!-- <span>Selected: {{ form.unit }}</span> -->
-                <!-- <ul>
-                    <li v-for="cathegory in cathegories" :key="cathegory">
-                        {{cathegory.name}}
-                        <span v-if="cathegory.subcathegories.length">posiada</span>
-                    </li>
-                </ul> -->
-
-                <!-- <select v-model="cathegory">
-                    <template v-for="row in cathegories" :key="row.id">
-                        <option v-if="row.cathegory_id == null" :value="row.id">
-                            {{row.name}}
-                        </option> 
-                    </template>                         
-                </select><br> -->
-<!-- <span v-if="cathegory.subcathegories.length">posiada</span> -->
-                <!-- <select v-if="cathegory.subcathegories && cathegory.subcathegories.length" v-model="cathegory">
-                    <template v-for="row in cathegories" :key="row.id">
-                        <option v-if="row.cathegory_id == cathegory" :value="row.id">
-                            {{row.name}}
-                        </option> 
-                    </template>                         
-                </select><br> -->
-
-                <!-- <select v-model="cathegory">
-                    <template v-for="row in cathegories" :key="row.id">
-                        <option v-if="row.cathegory_id == cathegory" :value="row.id">
-                            {{row.name}}
-                        </option> 
-                    </template>                         
-                </select><br> -->
-
-                <!-- <br><span>Selected Cath: {{ cathegory }}</span><br> 
-                
-                <span>Selected Item: {{ form.item }}</span><br> -->
-                
+                </div>                           
             </div>    
         </form>
     </Modal>
@@ -119,6 +83,7 @@ import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
+import Message from "@/Components/Message.vue";
 
 export default {
     props: {
@@ -140,6 +105,7 @@ export default {
         Table,
         Modal,
         FloatingButton,
+        Message
     },
 
     data() {

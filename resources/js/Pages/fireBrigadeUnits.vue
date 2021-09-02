@@ -101,7 +101,7 @@ export default {
     data() {
         return {
             editMode: false,
-            isOpen: true,
+            isOpen: false,
             form: {
                 name: null,
                 address: null,
