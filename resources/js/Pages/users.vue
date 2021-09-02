@@ -3,11 +3,11 @@
 
     <BreezeAuthenticatedLayout>
         <Card>
-            <FloatingButton @openModal="openModal"></FloatingButton>
-
-            <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
+            <Message>
                 {{ $page.props.flash.message }}
-            </div>
+            </Message>
+            
+            <FloatingButton @openModal="openModal"></FloatingButton>
 
             <Table :data="data.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in data.data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
@@ -53,7 +53,7 @@
                     <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                 </div> 
-                <div v-show="$page.props.auth.user.privilege_id == 1" class="mb-4">
+                <div v-show="$page.props.auth.user.privilege_id == 1 && !editMode" class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
                     <select v-model="form.unit" class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
                         <template v-for="fbunit in units" :key="fbunit.id">
@@ -84,6 +84,7 @@ import BreezeInput from '@/Components/Input.vue'
 import BreezeLabel from '@/Components/Label.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import Card from "@/Components/Card.vue";
+import Message from "@/Components/Message.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
@@ -106,7 +107,8 @@ export default {
         Table,
         Modal,
         FloatingButton,
-        Pagination
+        Pagination,
+        Message
     },
 //     setup(){
 // console.log(this.data);
