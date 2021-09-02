@@ -5,25 +5,25 @@
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
+        <div class="w-full inline-block align-bottom bg-white rounded-lg text-left overflow-hidden my-auto shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
             <slot></slot>
 
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">          
-                <BreezeButton v-show="!editMode" @click="save()">
-                    Zapisz
-                </BreezeButton>
-            </span>
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">                         
-                <BreezeButton  v-show="editMode" @click="update()">
-                    Edytuj
-                </BreezeButton>
-            </span>
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <BreezeButton  @click="closeModal()">
-                    Zamknij
-                </BreezeButton>
-            </span>
+            <div class="bg-secondary-100 px-6 py-3 flex flex-row-reverse">
+                <span class="flex rounded-md shadow-sm ml-3 w-auto">          
+                    <BreezeButton v-show="!editMode" @click="save()">
+                        Zapisz
+                    </BreezeButton>
+                </span>
+                <span class="flex rounded-md shadow-sm ml-3 w-auto">                         
+                    <BreezeButton  v-show="editMode" @click="update()">
+                        Edytuj
+                    </BreezeButton>
+                </span>
+                <span class="flex rounded-md shadow-sm mt-0 w-auto">
+                    <BreezeButton  @click="closeModal()">
+                        Zamknij
+                    </BreezeButton>
+                </span>
             </div>
         </div>
     </div>

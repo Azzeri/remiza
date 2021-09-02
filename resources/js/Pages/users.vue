@@ -6,7 +6,7 @@
             <Message>
                 {{ $page.props.flash.message }}
             </Message>
-            
+
             <FloatingButton @openModal="openModal"></FloatingButton>
 
             <Table :data="data.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
@@ -55,7 +55,7 @@
                 </div> 
                 <div v-show="$page.props.auth.user.privilege_id == 1 && !editMode" class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
-                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
+                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
                         <template v-for="fbunit in units" :key="fbunit.id">
                             <option :value="fbunit.id">
                                 {{fbunit.name}}
@@ -63,7 +63,6 @@
                         </template>
                     </select>
                 </div>                     
-                <!-- <span>Selected: {{ form.unit }}</span> -->
                 <span v-if="editMode && $page.props.auth.user.id == form.id" class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <Link :href="route('password.change')">
                         <BreezeButton>
@@ -110,14 +109,11 @@ export default {
         Pagination,
         Message
     },
-//     setup(){
-// console.log(this.data);
-        
-//     },
+
     data() {
         return {
             editMode: false,
-            isOpen: false,
+            isOpen: true,
             form: {
                 name: null,
                 surname: null,
