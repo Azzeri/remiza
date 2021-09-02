@@ -3,30 +3,30 @@
 
     <BreezeAuthenticatedLayout>
         <Card>
-
             <FloatingButton @openModal="openModal"></FloatingButton>
 
             <div v-if="$page.props.flash.message" class="mt-2 font-xl text-green-600 font-semibold">
                 {{ $page.props.flash.message }}
             </div>
 
-            <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
-                <tr v-for="row in data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-gray-100 justify-center">
-                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.name}}</td>
-                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.surname}}</td>
-                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.email}}</td>
-                    <td v-if="row.phone" class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.phone}}</td>
-                    <td v-else class="h-10 sm:h-auto border-grey-light border  p-3"> Brak danych</td>
-                    <td class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.privilege.name}}</td>
-                    <td v-if="row.fire_brigade_unit" class="h-10 sm:h-auto border-grey-light border  p-3"> {{row.fire_brigade_unit.name}}</td>
-                    <td v-else class="h-10 sm:h-auto border-grey-light border  p-3"> - </td>
-                    <td class="h-10 sm:h-auto border-grey-light border text-center p-3">
+            <Table :data="data.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
+                <tr v-for="row in data.data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.name}}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.surname}}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.email}}</td>
+                    <td v-if="row.phone" class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.phone}}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3"> Brak danych</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.privilege.name}}</td>
+                    <td v-if="row.fire_brigade_unit" class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.fire_brigade_unit.name}}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3"> - </td>
+                    <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i v-if="row.privilege_id == 3" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
                         <Link :href="'loginhistory/'+row.id"><i class="far fa-eye fa-lg ml-2"></i></Link>
                     </td>
                 </tr>
             </Table>
+            <pagination class="mt-6 mx-auto" :links="data.links" />
         </Card>
     </BreezeAuthenticatedLayout>
 
@@ -87,6 +87,7 @@ import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 export default {
     props: {
@@ -104,9 +105,13 @@ export default {
         Card,
         Table,
         Modal,
-        FloatingButton
+        FloatingButton,
+        Pagination
     },
-
+//     setup(){
+// console.log(this.data);
+        
+//     },
     data() {
         return {
             editMode: false,

@@ -8,7 +8,7 @@
                 {{ $page.props.flash.message }}
             </div>
 
-            <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-16" margin="mb-4">
+            <Table :data="data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-16" margin="mb-4">
                 <tr v-for="row in data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-gray-100">
                     <td class="h-16 sm:h-auto border-grey-light border p-1 flex justify-center"><img class="w-14 h-14 sm:w-20 sm:h-20" :src="row.photo_path"></td>
                     <td class="h-16 sm:h-auto border-grey-light border p-3">{{ row.name }}</td>

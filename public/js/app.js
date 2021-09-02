@@ -18280,7 +18280,7 @@ __webpack_require__.r(__webpack_exports__);
     links: Array
   },
   components: {
-    InertiaLink: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.InertiaLink
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
   }
 });
 
@@ -19743,6 +19743,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Table_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/Table.vue */ "./resources/js/Components/Table.vue");
 /* harmony import */ var _Components_Modal_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Modal.vue */ "./resources/js/Components/Modal.vue");
 /* harmony import */ var _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Components/FloatingButton.vue */ "./resources/js/Components/FloatingButton.vue");
+/* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
+
 
 
 
@@ -19768,8 +19770,12 @@ __webpack_require__.r(__webpack_exports__);
     Card: _Components_Card_vue__WEBPACK_IMPORTED_MODULE_5__.default,
     Table: _Components_Table_vue__WEBPACK_IMPORTED_MODULE_6__.default,
     Modal: _Components_Modal_vue__WEBPACK_IMPORTED_MODULE_7__.default,
-    FloatingButton: _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_8__.default
+    FloatingButton: _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_8__.default,
+    Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_9__.default
   },
+  //     setup(){
+  // console.log(this.data);
+  //     },
   data: function data() {
     return {
       editMode: false,
@@ -20073,7 +20079,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.openModal();
     }),
-    "class": "fixed right-10 bottom-10 sm:right-0 sm:bottom-0 sm:relative text-white hover:bg-gray-700 bg-gray-800 rounded-full sm:rounded-md h-12 w-12 sm:w-12 sm:h-8 flex items-center justify-center transition ease-in-out duration-150"
+    "class": "fixed right-10 bottom-10 sm:right-0 sm:bottom-0 sm:relative text-tertiary hover:bg-primary-100 bg-primary-200 rounded-full h-16 w-16 sm:w-12 sm:h-12 flex items-center justify-center transition ease-in-out duration-150"
   }, [_hoisted_1]);
 }
 
@@ -20294,7 +20300,7 @@ var _hoisted_2 = {
   "class": "flex flex-wrap justify-center"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
+  var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
 
   return $props.links.length > 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.links, function (link, p) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
@@ -20305,10 +20311,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       innerHTML: link.label
     }, null, 8
     /* PROPS */
-    , ["innerHTML"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inertia_link, {
+    , ["innerHTML"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Link, {
       key: 1,
-      "class": ["mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded text-sec hover:bg-prim hover:text-third focus:border-prim focus:text-third", {
-        'bg-prim text-third': link.active
+      "class": ["mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded text-text-200 hover:bg-primary-200 hover:text-tertiary focus:border-primary-200 focus:text-tertiary", {
+        'bg-tertiary text-text-200 focus:text-text-200': link.active
       }],
       href: link.url,
       innerHTML: link.label
@@ -20449,7 +20455,7 @@ var _hoisted_3 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("table", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data, function (r) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
-      "class": [$props.margin, "flex flex-col flex-no wrap sm:table-row bg-gray-800 rounded-l-lg sm:rounded-none sm:mb-0 text-white"],
+      "class": [$props.margin, "flex flex-col flex-no-wrap sm:table-row bg-primary-200 rounded-l-lg sm:rounded-none sm:mb-0 text-tertiary"],
       key: r
     }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props["throws"], function (row) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("th", {
@@ -22341,7 +22347,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           , ["onOpenModal"]), _ctx.$page.props.flash.message ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.flash.message), 1
           /* TEXT */
           )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
-            data: $props.data,
+            data: $props.data.length,
             "throws": $data["throws"],
             onEdit: $options.edit,
             onDeleteRow: $options.deleteRow,
@@ -23922,35 +23928,35 @@ var _hoisted_1 = {
   "class": "mt-2 font-xl text-green-600 font-semibold"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_3 = {
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_4 = {
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_5 = {
   key: 0,
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
 };
 var _hoisted_6 = {
   key: 1,
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
 };
 var _hoisted_7 = {
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
 };
 var _hoisted_8 = {
   key: 2,
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
 };
 var _hoisted_9 = {
   key: 3,
-  "class": "h-10 sm:h-auto border-grey-light border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
 };
 var _hoisted_10 = {
-  "class": "h-10 sm:h-auto border-grey-light border text-center p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border text-center p-3"
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
@@ -24009,6 +24015,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Table = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Table");
 
+  var _component_pagination = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("pagination");
+
   var _component_Card = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Card");
 
   var _component_BreezeAuthenticatedLayout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeAuthenticatedLayout");
@@ -24034,7 +24042,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           , ["onOpenModal"]), _ctx.$page.props.flash.message ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.flash.message), 1
           /* TEXT */
           )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
-            data: $props.data,
+            data: $props.data.data.length,
             "throws": $data["throws"],
             onEdit: $options.edit,
             onDeleteRow: $options.deleteRow,
@@ -24042,10 +24050,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             margin: "mb-4"
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data, function (row) {
+              return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data.data, function (row) {
                 return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
                   key: row,
-                  "class": "flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-gray-100 justify-center"
+                  "class": "flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200"
                 }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.surname), 1
@@ -24094,7 +24102,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
           }, 8
           /* PROPS */
-          , ["data", "throws", "onEdit", "onDeleteRow"])];
+          , ["data", "throws", "onEdit", "onDeleteRow"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
+            "class": "mt-6 mx-auto",
+            links: $props.data.links
+          }, null, 8
+          /* PROPS */
+          , ["links"])];
         }),
         _: 1
         /* STABLE */
