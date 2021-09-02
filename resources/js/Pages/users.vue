@@ -73,7 +73,6 @@
             </div>
         </form>
     </Modal>
-
 </template>
 
 <script>
@@ -113,7 +112,7 @@ export default {
     data() {
         return {
             editMode: false,
-            isOpen: true,
+            isOpen: false,
             form: {
                 name: null,
                 surname: null,
