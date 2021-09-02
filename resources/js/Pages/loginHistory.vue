@@ -3,21 +3,28 @@
 
   <BreezeAuthenticatedLayout>
     <Card> 
-        <ul>
-            <li v-for="row in history" :key="row.id">
-                {{row.created_at}}
-            </li>
-        </ul>
+		<Table v-if="history.data.length" :data="history.data.length" :throws="throws" height="h-10" margin="mb-4">
+			<tr v-for="row in history.data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
+				<td class="h-10 sm:h-auto border-primary-200 border p-3"> {{convertDate(row.created_at)}}</td>
+				<td v-if="row.success" class="h-10 sm:h-auto border-primary-200 border p-3"> Tak</td>
+				<td v-else class="h-10 sm:h-auto border-primary-200 border p-3"> Nie</td>
+				<td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.ip}}</td>
+				<td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.browser}}</td>
+			</tr>
+		</Table>
+		<h1 v-else class="text-lg font-semibold text-center text-text-200">Brak danych logowania</h1>
+        <pagination class="mt-6 mx-auto" :links="history.links" />
     </Card>
   </BreezeAuthenticatedLayout>
 
-  {{ history }}
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import Card from "@/Components/Card.vue";
+import Pagination from "@/Components/Pagination.vue";
+import Table from "@/Components/Table.vue";
 
 export default {
   props: {
@@ -27,7 +34,22 @@ export default {
     BreezeAuthenticatedLayout,
     Head,
     Card,
+    Pagination,
+    Table
   },
+	data() {
+        return {
+          throws:['Data i godzina','Sukces','Adres IP','Przeglądarka'],
+        }
+    },
+	methods: {
+		convertDate(date){
+			let convertedDate = date.split('T')[0];
+			let convertedHour = date.split('T')[1].split('.')[0];
+
+			return convertedDate + ', ' + convertedHour;
+		}
+	}
 };
 </script>
 

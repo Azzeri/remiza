@@ -17,10 +17,10 @@ class UserController extends Controller
     {
         if (Auth::user()->privilege_id == 1) {
             $units = FireBrigadeUnit::all();
-            $users = User::with('privilege', 'fireBrigadeUnit')->orderBy('name')->paginate(2);
+            $users = User::with('privilege', 'fireBrigadeUnit')->orderBy('name')->paginate(10);
         } else {
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
-            $users = User::with('privilege', 'fireBrigadeUnit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('name')->paginate(2);
+            $users = User::with('privilege', 'fireBrigadeUnit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('name')->paginate(10);
         }
         return Inertia::render('users',['data' => $users, 'units' => $units]);
     } 

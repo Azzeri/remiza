@@ -1,5 +1,5 @@
 <template>
-    <Head title="Log in" />
+    <Head title="Logowanie" />
 
     <BreezeValidationErrors class="mb-4" />
 
@@ -78,7 +78,9 @@ export default {
         submit() {
             this.form.post(this.route('login'), {
                 onFinish: () => this.form.reset('password'),
-            })
+                onError: () => this.$inertia.post('saveHistoryFail/', this.form, this.errors)
+            },
+            )
         }
     }
 }

@@ -38,7 +38,8 @@ Route::get('/', function () {
 
     return redirect('/dashboard');
 });
-Route::get('savehistory', [HistoryController::class, 'store'])->name('savehistory');
+Route::get('saveHistorySuccess/', [HistoryController::class, 'storeSuccess'])->name('saveHistorySuccess');
+Route::post('saveHistoryFail/', [HistoryController::class, 'storeFail'])->name('saveHistoryFail');
 Route::group(['middleware' => 'auth'], function () {
 
     // Route::get('/dashboard', function () {
