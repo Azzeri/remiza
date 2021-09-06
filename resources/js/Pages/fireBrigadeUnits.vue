@@ -9,7 +9,7 @@
 
             <FloatingButton @openModal="openModal"></FloatingButton>
 
-            <Table :data="data" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
+            <Table :data="data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.address }}</td>

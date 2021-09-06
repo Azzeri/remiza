@@ -79,19 +79,6 @@
 								Zapisz użycie
 							</BreezeButton>
 						</form>
-					<!-- <h1 class="text-xl font-semibold">Historia</h1>
-					<ul>
-						<li v-for="service in services" :key="service.id">
-							<template v-if="service.is_performed == 1">
-								<div class="border-b-2 mt-4">
-									Nazwa serwisu: {{service.service_database.name}}<br>                               
-									Opis: {{service.description}}<br>
-									Data: {{service.perform_date}}<br>
-									Wykonawca: {{service.user.name}} {{service.user.surname}}<br>
-								</div>
-							</template>
-						</li>
-					</ul> -->
 				</div>
 			</div>
 		</Card>
@@ -183,7 +170,6 @@ export default {
 		}
     },
 	insertUsage: function() {
-		// console.log(this.formUsage);
 		this.$inertia.post("/usages/insertNew/", this.formUsage,{
 			onSuccess: () => this.reset(),
 		});
