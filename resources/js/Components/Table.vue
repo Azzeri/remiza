@@ -15,7 +15,7 @@
 <script>
 export default {
     props:{
-        data:Object,
+        data:Number,
         throws:Array,
         height:String,
         margin:String

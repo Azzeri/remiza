@@ -9,8 +9,8 @@
 
             <FloatingButton @openModal="openModal"></FloatingButton>
 
-            <Table :data="items" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
-                <tr v-for="row in items" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
+            <Table :data="items.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
+                <tr v-for="row in items.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.database_items.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.cathegory.cathegory.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.manufacturer.name }}</td>
@@ -24,6 +24,7 @@
                     </td>
                 </tr>
             </Table>
+            <pagination class="mt-6" :links="items.links" />
         </Card>
     </BreezeAuthenticatedLayout>
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
@@ -84,6 +85,7 @@ import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
 import Message from "@/Components/Message.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 export default {
     props: {
@@ -105,7 +107,8 @@ export default {
         Table,
         Modal,
         FloatingButton,
-        Message
+        Message,
+        Pagination
     },
 
     data() {

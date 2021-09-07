@@ -26,10 +26,10 @@ class ItemController extends Controller
 
         if (Auth::user()->privilege_id == 1) {
             $units = FireBrigadeUnit::all();
-            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->get();
+            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->paginate(10);
         } else {
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
-            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->paginate(10);
         }
 
         return Inertia::render('items', ['items' => $items, 'cathegories' => $cathegories, 'dbitems' => $dbitems, 'units' => $units]);
