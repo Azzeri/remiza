@@ -1,37 +1,41 @@
 <template>
-  <BreezeAuthenticatedLayout>
-    <Head title="Historia" />
-    <div class="flex flex-col md:flex-row md:justify-evenly">
-      <Card>
-        <h1 class="text-xl font-semibold">Serwisy</h1>
-        <ul>
-          <li v-for="service in services" :key="service.id">     
-            <template v-if="service.is_performed == 1">
-              <div class="border-b-2 mt-4">
-                Nazwa serwisu: {{ service.service_database.name }}<br />
-                Opis: {{ service.description }}<br />
-                Data: {{ service.perform_date }}<br />
-                Wykonawca: {{ service.user.name }} {{ service.user.surname }}<br />
-              </div>
-            </template>
-          </li>
-        </ul>
-      </Card>
-      <Card>
-        <h1 class="text-xl font-semibold">Użycia</h1>
-        <ul>
-          <li v-for="usage in usages" :key="usage.id">     
-            <div class="border-b-2 mt-4">
-              Użytkownik: {{ usage.user.name }}<br />
-              Data i godzina: {{ usage.usage_date }}<br />
-              Czas trwania: {{ usage.usage_minutes }} minut<br />
-              Opis: {{ usage.description }}<br />
-            </div>
-          </li>
-        </ul> 
-      </Card>
-    </div>
-  </BreezeAuthenticatedLayout>
+	<BreezeAuthenticatedLayout>
+    	<Head title="Historia" />
+		<Card>
+			<div class="flex flex-col">
+				<div class="flex w-full bg-primary-200 mb-4 justify-evenly p-3 rounded-lg flex-wrap">
+					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 1">Serwisy</button>
+					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 0">Użycia</button>
+				</div>
+				<div v-if="tabSwitch" class="p-6 text-text-200 bg-tertiary rounded-lg shadow-lg">
+					<div class="text-left text-secondary-200 font-bold text-xl mb-4">
+						<h1>Serwisy</h1>
+					</div>
+					<div v-for="service in services" :key="service.id">     
+						<div class="mb-5">
+							<div class="font-bold text-primary-200">{{ service.service_database.name }}</div>
+							<div v-if="service.description">Opis: {{ service.description }}</div>
+							<div>Data: {{ service.perform_date }}</div>
+							<div>Wykonawca: {{ service.user.name }} {{ service.user.surname }}</div>
+						</div>
+					</div>
+				</div>
+				<div v-if="!tabSwitch" class="p-6 text-text-200 bg-tertiary rounded-lg shadow-lg">
+					<div class="text-left text-secondary-200 font-bold text-xl mb-4">
+						<h1>Użycia</h1>
+					</div>
+					<div v-for="usage in usages" :key="usage.id">     
+						<div class="mb-5">
+							<div class="font-bold text-primary-200">Użytkownik: {{ usage.user.name }}</div>
+							<div>Data i godzina: {{ usage.usage_date }}</div>
+							<div>Czas trwania: {{ usage.usage_minutes }} minut</div>
+							<div v-if="usage.description">Opis: {{ usage.description }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Card>
+  	</BreezeAuthenticatedLayout>
 </template>
 
 <script>
@@ -54,5 +58,11 @@ export default {
     Card,
     Pagination,
   },
+
+  data() {
+	  return {
+		  tabSwitch: 1
+	  }
+  }
 };
 </script>

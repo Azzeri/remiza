@@ -99,8 +99,8 @@ class ItemController extends Controller
 
     public function history($id)
     {
-        $services = Service::where('item_id', $id)->with('serviceDatabase', 'user')->get();
-        $usages = Usage::where('item_id', $id)->with('user')->get();
+        $services = Service::where('item_id', $id)->where('is_performed',1)->with('serviceDatabase', 'user')->orderBy('perform_date','desc')->get();
+        $usages = Usage::where('item_id', $id)->with('user')->orderBy('usage_date','desc')->get();
         return Inertia::render('history', ['services' => $services, 'usages' => $usages]);
     }
 }

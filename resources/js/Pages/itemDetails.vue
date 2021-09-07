@@ -128,7 +128,7 @@ export default {
 	  formUsage:{
 		  id:this.item.id,
 		  description: null,
-		  start: '2021-08-25T11:39:00',
+		  start: this.currentDateTime(),
 		  end: this.currentDateTime()
 	  },
       dates: [],

@@ -14,28 +14,28 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('services')->insert([
-            'perform_date' => '2020-08-07',
-            'item_id' => 2,
-            'service_database_id' => 2
-        ]);
+        // DB::table('services')->insert([
+        //     'perform_date' => '2020-08-07',
+        //     'item_id' => 2,
+        //     'service_database_id' => 2
+        // ]);
 
-        DB::table('services')->insert([
-            'perform_date' => '2020-08-07',
-            'item_id' => 2,
-            'service_database_id' => 3
-        ]);
+        // DB::table('services')->insert([
+        //     'perform_date' => '2020-08-07',
+        //     'item_id' => 2,
+        //     'service_database_id' => 3
+        // ]);
 
-        DB::table('services')->insert([
-            'perform_date' => '2020-08-07',
-            'item_id' => 2,
-            'service_database_id' => 2
-        ]);
+        // DB::table('services')->insert([
+        //     'perform_date' => '2020-08-07',
+        //     'item_id' => 2,
+        //     'service_database_id' => 2
+        // ]);
 
-        DB::table('services')->insert([
-            'perform_date' => '2020-08-07',
-            'item_id' => 2,
-            'service_database_id' => 3
-        ]);
+        // DB::table('services')->insert([
+        //     'perform_date' => '2020-08-07',
+        //     'item_id' => 2,
+        //     'service_database_id' => 3
+        // ]);
     }
 }
