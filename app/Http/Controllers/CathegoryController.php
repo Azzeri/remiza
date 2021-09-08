@@ -24,26 +24,15 @@ class CathegoryController extends Controller
 
         $request->validate([
             'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
-        if ($request->avatar) {
-            Cathegory::create(
-                [
-                    $imageName = time() . '.' . $request->avatar->extension(),
-                    $request->avatar->move(public_path('images'), $imageName),
-                    'name' => $request->name,
-                    'photo_path' => '/images/' . $imageName,
-                    'cathegory_id' => $parent,
-                ]
-            );
-        } else {
-            Cathegory::create(
-                [
-                    'name' => $request->name,
-                    'cathegory_id' => $parent,
-                ]
-            );
-        }
+
+        Cathegory::create(
+            [
+                'name' => $request->name,
+                'cathegory_id' => $parent,
+            ]
+        );
+        
 
         return redirect()->back()
             ->with('message', 'Sukces');
@@ -51,24 +40,15 @@ class CathegoryController extends Controller
 
     public function update(Request $request, Cathegory $cathegory)
     {
-        // dd($request);
-        // echo $avatar;
         $request->parent == -1 ?
             $parent = NULL : $parent = $request->parent;
-
-        // echo($cathegory->photo_path);
-        // echo $request;        
 
         $cathegory->update(
             [
                 $request->validate([
                     'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id)),],
-                    // 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
                 ]),
-                // $imageName = time() . '.' . $request->avatar->extension(),
-                // $request->avatar->move(public_path('images'), $imageName),
                 'name' => $request->name,
-                // 'photo_path' => '/images/' . $imageName,
                 'cathegory_id' => $parent
             ]
 
@@ -80,6 +60,10 @@ class CathegoryController extends Controller
 
     public function destroy(Cathegory $cathegory)
     {
+        $photoName = ltrim($cathegory->photo_path, '/images/');
+        if ($photoName != 'default.png') 
+            unlink(public_path('images') . '/' . $photoName);     
+
         $cathegory->delete();
 
         return redirect()->back()
@@ -101,23 +85,23 @@ class CathegoryController extends Controller
             ->with('message', 'Sukces');
     }
 
-    // public function updatePhoto(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg'
-    //     ]);
+    public function insertPhoto(Request $request, $id)
+    {
+        $request->validate([
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
 
-    //     $cathegory = Cathegory::find($id);
-    //     $photoName = ltrim($cathegory->photo_path, '/images/');
-    //     unlink(public_path('images') . '/' . $photoName);
+        $cathegory = Cathegory::find($id);
+        $photoName = ltrim($cathegory->photo_path, '/images/');
+        if ($photoName != 'default.png')
+            unlink(public_path('images') . '/' . $photoName);
 
-    //     $photoName = time() . '.' . $request->avatar->extension();
-    //     $request->avatar->move(public_path('images'), $photoName);
+        $imageName = time() . '.' . $request->avatar->extension();
+        $request->avatar->move(public_path('images'), $imageName);
+        $cathegory->photo_path = '/images/' . $imageName;
+        $cathegory->save();
 
-    //     $cathegory->photo_path = '/images/' . $photoName;
-    //     $cathegory->save();
-
-    //     return redirect()->back()
-    //         ->with('message', 'Sukces');
-    // }
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 }

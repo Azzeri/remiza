@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('loginhistory/{id}', [HistoryController::class, 'index']);
 
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
+        Route::post('cathegories/insertPhoto/{id}', [CathegoryController::class, 'insertPhoto']);
 
         Route::post('usages/insertNew/', [UsageController::class, 'insertNew']);
 

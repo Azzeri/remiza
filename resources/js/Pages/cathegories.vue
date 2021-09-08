@@ -10,7 +10,9 @@
 
             <Table :data="data.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-16" margin="mb-4">
                 <tr v-for="row in data.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
-                    <td class="h-16 sm:h-auto border-primary-200 border p-1 flex justify-center"><img class="w-14 h-14 sm:w-20 sm:h-20" :src="row.photo_path"></td>
+                    <td class="h-16 sm:h-auto border-primary-200 border p-1 flex justify-center cursor-pointer">
+                        <img class="w-14 h-14 sm:w-20 sm:h-20" :src="row.photo_path" @click="openPhotoModal(row)">
+                    </td>
                     <td class="h-16 sm:h-auto border-primary-200 border p-3">{{ row.name }}</td>
                     <td v-if="row.subcathegories.length" class="h-16 sm:h-auto border-primary-200 border p-3">                       
                         <span v-for="subcat in row.subcathegories" :key="subcat.id">{{subcat.name}} <span class="text-red-700"> | </span></span>
@@ -25,7 +27,6 @@
             <pagination class="mt-6" :links="data.links" />
         </Card>
     
-
         <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
             <form @submit.prevent="save, update"> 
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -44,21 +45,11 @@
                                 </option> 
                             </template>                         
                         </select>
-                        <!-- <span>Selected: {{ form.parent }}</span> -->
                     </div>
-                    <BreezeButton v-if="editMode" @click="deleteAvatar(form.id)" class="mb-2"> Usuń zdjęcie </BreezeButton>
-
-                    <BreezeLabel for="avatarField" value="Zdjęcie" />
-                    <input class="bg-white" id="avatarField" type="file" @input="form.avatar = $event.target.files[0]" />
-                    <!-- <input v-if="!editMode" type="file" @input="form.avatar = $event.target.files[0]" /> -->
-                    <!-- <input v-else type="file" @input="form.avatar" /> -->
-                    <div class="text-red-500" v-if="errors.avatar">{{ errors.avatar }}</div>
-                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                    {{ form.progress.percentage }}%
-                    </progress>  
                 </div>
             </form>
         </Modal>
+        <PhotoForm :cathegory="cathegory" v-if="isPhotoOpen" @closePhotoModal="closePhotoModal"></PhotoForm>
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -74,6 +65,7 @@ import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Message from "@/Components/Message.vue";
+import PhotoForm from "@/Components/PhotoForm.vue";
 
 export default {
     props: {
@@ -92,13 +84,16 @@ export default {
         Modal,
         FloatingButton,
         Pagination,
-        Message
+        Message,
+        PhotoForm
     },
 
     data() {
         return {
             editMode: false,
             isOpen: false,
+            isPhotoOpen: false,
+            cathegory: this.data.data[0],
             form: {
                 name: null,
                 avatar: null,
@@ -116,6 +111,13 @@ export default {
             this.isOpen = false;
             this.reset();
             this.editMode=false;
+        },
+        openPhotoModal: function (cathegory) {
+            this.cathegory = cathegory
+            this.isPhotoOpen = true;
+        },
+        closePhotoModal: function () {
+            this.isPhotoOpen = false;
         },
         reset: function () {
             this.form = {
@@ -154,12 +156,6 @@ export default {
             this.reset();
             this.closeModal();
         },
-        deleteAvatar: function(data){
-            if (!confirm('Na pewno?')) return;
-            this.$inertia.post('cathegories/deletePhoto/' + data)
-            this.reset();
-            this.closeModal();
-        }
     }
 }
 </script>
