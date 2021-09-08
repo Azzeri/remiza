@@ -1,26 +1,22 @@
 <template>
-  <Head title="Zestawy" />
-  <div class="flex justify-evenly min-h-screen">
-    <Card class="w-1/3 min-h-screen">
-      <ul>
-        <li v-for="row in sets" :key="row.id">
-          <Link :href="route('set.details', id=row.id)">{{row.name}}</Link>
-        </li>
-      </ul>
-    </Card>
-    <Card> <slot></slot></Card>
-  </div>
+	<Head title="Zestawy" />
+	<Card>
+		<div class="text-tertiary font-bold text-lg mb-4 pl-1">
+			<h3>Zestawy przedmiotów</h3>
+		</div>
+    <div class="bg-tertiary rounded p-2 text-text-200">
+      <div class="font-bold hover:bg-primary-200 hover:text-tertiary p-1 rounded transition duration-500 ease-in-out" v-for="row in sets" :key="row.id">
+        <Link :href="route('set.details', id=row.id)">{{row.name}}</Link>
+      </div>
+    </div>
+		
+		<slot></slot>
+	</Card>
 </template>
 
 <script>
-import BreezeButton from "@/Components/Button.vue";
-import BreezeInput from "@/Components/Input.vue";
-import BreezeLabel from "@/Components/Label.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Card from "@/Components/Card.vue";
-import Table from "@/Components/Table.vue";
-import Modal from "@/Components/Modal.vue";
-import FloatingButton from "@/Components/FloatingButton.vue";
 
 export default {
   props: {
@@ -29,14 +25,8 @@ export default {
 
   components: {
     Head,
-    BreezeButton,
-    BreezeInput,
-    BreezeLabel,
     Link,
     Card,
-    Table,
-    Modal,
-    FloatingButton,
   },
 
   data() {

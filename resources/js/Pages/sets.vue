@@ -1,26 +1,36 @@
 <template>
-  <Head title="Zestawy" />
+  	<Head title="Zestawy" />
 
-  <BreezeAuthenticatedLayout>
-  <FloatingButton @openModal="openModal"></FloatingButton>
-    <SetsNav :sets="sets" v-if="set != null">
-	  <i @click="edit()" class="far fa-edit fa-lg "></i>
-	  <i @click="deleteRow()" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
-      <h1>{{set.name}}</h1>
-      <hr>
-      <ul>
-        <li v-for="row in set.itemsdb" :key="row.id">
-          {{row.database_items.name}}
-          <Link :href="route('item.details', id=row.id)"><i class="far fa-eye fa-lg ml-2"></i></Link>
-        </li>
-      </ul>
-    </SetsNav>
+	<BreezeAuthenticatedLayout>
+	<FloatingButton class="sm:absolute sm:top-28 sm:left-64" @openModal="openModal"></FloatingButton>
+	<SetsNav :sets="sets" v-if="set != null">
+		<div class="mt-6 border-t-2 rounded">
+			<div class="flex">
+				<div class="text-tertiary font-bold text-lg my-4">
+					<h3>{{set.name}}</h3>
+				</div>
+				<div class="my-4 ml-4">
+					<i @click="edit()" class="far fa-edit fa-lg"></i>
+				</div>
+				<div class="my-4 ml-4">
+					<i @click="deleteRow()" class="far fa-trash-alt fa-lg text-red-700"></i>
+				</div>
+			</div>
+			<div class="text-text-200" v-for="row in set.itemsdb" :key="row.id">
+				{{row.database_items.name}}
+				<Link :href="route('item.details', id=row.id)"><i class="far fa-eye fa-lg ml-2"></i></Link>
+			</div>
+		</div>
+	</SetsNav>
 	<Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
 		<form @submit.prevent="save, update">
 			<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+				<div class="text-text-200 font-bold text-lg mb-4">
+					<h3>Nowy zestaw</h3>
+				</div>
 				<div class="mb-4">
-					<BreezeLabel for="nameField" value="Nazwa" />                
-					<input id="nameField" type="text" v-model="form.name" class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+					<BreezeLabel for="nameField" value="Nazwa" /> 
+					<BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />               
 					<div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
 				</div>
 				<div class="flex justify-between">
