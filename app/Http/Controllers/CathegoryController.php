@@ -13,7 +13,7 @@ class CathegoryController extends Controller
     public function index()
     {
         // $cathegories = Cathegory::with('subcathegories')->get();
-        $cathegories = Cathegory::with('subcathegories')->paginate(70);
+        $cathegories = Cathegory::with('subcathegories')->paginate(10);
         return Inertia::render('cathegories', ['data' => $cathegories]);
     }
 

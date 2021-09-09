@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class FireBrigadeUnitController extends Controller
 {
@@ -32,6 +33,10 @@ class FireBrigadeUnitController extends Controller
             'phone' => 'nullable|size:9',
         ])->validate();
 
+
+        $google2fa = app('pragmarx.google2fa');
+        $key = $google2fa->generateSecretKey();
+
         $unit = new FireBrigadeUnit();
         $unit['name'] = Request::get('name');
         $unit['address'] = Request::get('address');
@@ -45,10 +50,18 @@ class FireBrigadeUnitController extends Controller
         $user['password'] = Hash::make('qwerty');
         $user['privilege_id'] = 2;
         $user['fire_brigade_unit_id'] = $unit->id;
+        $user['google2fa_secret'] = $key;
         $user->save();
+
+        $details = [
+            'title' => 'Witaj w jednostce',
+        ];
+
+        Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail($details));
 
         return redirect()->back()
             ->with('message', 'Sukces');
+            
     }
 
     //Functions below have a problem locating the unit in db automatically
