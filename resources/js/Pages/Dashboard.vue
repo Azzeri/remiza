@@ -52,6 +52,7 @@ export default {
     Card,
     BreezeButton,
   },
+	
 };
 </script>
 					

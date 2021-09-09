@@ -12,6 +12,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
 use App\Models\Item;
@@ -87,9 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('usages/insertNew/', [UsageController::class, 'insertNew']);
 
-        Route::get('scanner', function () {
-            return Inertia::render('scanner',['items' => Item::with('sets')->get()]);
-        })->name('scanner');
+        Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
     });
 
     Route::get('/mfa', [UserController::class, 'mfa'])->name('mfa');
