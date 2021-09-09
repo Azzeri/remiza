@@ -22,22 +22,41 @@ class SetController extends Controller
     {
         $set = null;
 
-        if ($id != 0) {
-            if (Set::with('itemsdb')->where('id', $id)->first())
-                $set = Set::with('items','itemsdb')->where('id', $id)->first();
-            else {
-                if (Set::first())
-                    return Redirect::route('set.details', Set::first()->id);
-                else
-                    return Redirect::route('set.details', 0);
-            };
+        if (Auth::user()->privilege_id == 1)
+        {
+            if ($id != 0) {
+                if (Set::with('itemsdb')->where('id', $id)->first())
+                    $set = Set::with('items','itemsdb')->where('id', $id)->first();
+                else {
+                    if (Set::first())
+                        return Redirect::route('set.details', Set::first()->id);
+                    else
+                        return Redirect::route('set.details', 0);
+                };
+            }
+
+            $sets = Set::all();
+            $items = Item::with('databaseItems')->get();
+
         }
+        else
+        {
+            if ($id != 0) {
+                if (Set::with('itemsdb')->where('id', $id)->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->first())
+                    $set = Set::with('items','itemsdb')->where('id', $id)->first();
+                else {
+                    if (Set::where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->first())
+                        return Redirect::route('set.details', Set::where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->first());
+                    else
+                        return Redirect::route('set.details', 0);
+                };
+            }
 
-        $sets = Set::all();
-
-        Auth::user()->privilege_id == 1 ?
-            $items = Item::with('databaseItems')->get() :
+            $sets = Set::where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
             $items = Item::where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->with('databaseItems')->get();
+
+        }
+      
         return Inertia::render('sets', ['set' => $set, 'sets' => $sets, 'items' => $items],);
     }
 
