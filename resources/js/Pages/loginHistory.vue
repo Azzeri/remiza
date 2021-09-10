@@ -5,7 +5,8 @@
     <Card> 
 		<Table v-if="history.data.length" :data="history.data.length" :throws="throws" height="h-10" margin="mb-4">
 			<tr v-for="row in history.data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
-				<td class="h-10 sm:h-auto border-primary-200 border p-3"> {{convertDate(row.created_at)}}</td>
+				<td class="h-10 sm:h-auto border-primary-200 border p-3"> {{convertDate(row.created_at, 1)}}</td>
+        <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{convertDate(row.created_at, 2)}}</td>
 				<td v-if="row.success" class="h-10 sm:h-auto border-primary-200 border p-3"> Tak</td>
 				<td v-else class="h-10 sm:h-auto border-primary-200 border p-3"> Nie</td>
 				<td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.ip}}</td>
@@ -39,15 +40,18 @@ export default {
   },
 	data() {
         return {
-          throws:['Data i godzina','Sukces','Adres IP','Przeglądarka'],
+          throws:['Data','Godzina', 'Sukces','Adres IP','Przeglądarka'],
         }
     },
 	methods: {
-		convertDate(date){
+		convertDate(date, type){
 			let convertedDate = date.split('T')[0];
 			let convertedHour = date.split('T')[1].split('.')[0];
+      let returnData
 
-			return convertedDate + ', ' + convertedHour;
+      type == 1 ? returnData = convertedDate : returnData = convertedHour;
+
+      return returnData
 		}
 	}
 };

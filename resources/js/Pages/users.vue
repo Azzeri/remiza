@@ -20,8 +20,8 @@
                     <td v-if="row.fire_brigade_unit" class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.fire_brigade_unit.name}}</td>
                     <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3"> - </td>
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
-                        <i @click="edit(row)" class="far fa-edit fa-lg "></i>
-                        <i v-if="row.privilege_id == 3" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
+                        <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer"></i>
+                        <i v-if="row.privilege_id == 3" @click="deleteRow(row)" class="cursor-pointer far fa-trash-alt fa-lg text-red-700 ml-2"></i>
                         <Link :href="'loginhistory/'+row.id"><i class="far fa-eye fa-lg ml-2"></i></Link>
                     </td>
                 </tr>

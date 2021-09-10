@@ -19,8 +19,8 @@
                     <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">Ważny bezterminowo</td>
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
-                        <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2"></i>
-                        <Link :href="'items/'+row.id"><i class="far fa-eye fa-lg ml-2"></i></Link>
+                        <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
+                        <Link :href="'items/'+row.id"><i class="far fa-eye fa-lg ml-2 cursor-pointer"></i></Link>
                     </td>
                 </tr>
             </Table>

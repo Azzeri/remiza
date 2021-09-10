@@ -19628,14 +19628,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      "throws": ['Data i godzina', 'Sukces', 'Adres IP', 'Przeglądarka']
+      "throws": ['Data', 'Godzina', 'Sukces', 'Adres IP', 'Przeglądarka']
     };
   },
   methods: {
-    convertDate: function convertDate(date) {
+    convertDate: function convertDate(date, type) {
       var convertedDate = date.split('T')[0];
       var convertedHour = date.split('T')[1].split('.')[0];
-      return convertedDate + ', ' + convertedHour;
+      var returnData;
+      type == 1 ? returnData = convertedDate : returnData = convertedHour;
+      return returnData;
     }
   }
 });
@@ -22723,14 +22725,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   onClick: function onClick($event) {
                     return $options.edit(row);
                   },
-                  "class": "far fa-edit fa-lg "
+                  "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
                     return $options.deleteRow(row);
                   },
-                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2"
+                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"])])]);
@@ -22971,14 +22973,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   onClick: function onClick($event) {
                     return $options.edit(row);
                   },
-                  "class": "far fa-edit fa-lg "
+                  "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
                     return $options.deleteRow(row);
                   },
-                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2"
+                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"])])]);
@@ -23633,7 +23635,7 @@ var _hoisted_7 = {
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "far fa-eye fa-lg ml-2"
+  "class": "far fa-eye fa-lg ml-2 cursor-pointer"
 }, null, -1
 /* HOISTED */
 );
@@ -23737,7 +23739,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   onClick: function onClick($event) {
                     return $options.deleteRow(row);
                   },
-                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2"
+                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
@@ -23919,20 +23921,23 @@ var _hoisted_1 = {
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_2 = {
-  key: 0,
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_3 = {
-  key: 1,
+  key: 0,
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_4 = {
+  key: 1,
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_5 = {
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_6 = {
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_7 = {
   key: 1,
   "class": "text-lg font-semibold text-center text-text-200"
 };
@@ -23965,11 +23970,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
                   key: row,
                   "class": "flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200"
-                }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.convertDate(row.created_at)), 1
+                }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.convertDate(row.created_at, 1)), 1
                 /* TEXT */
-                ), row.success ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_2, " Tak")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_3, " Nie")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.ip), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.convertDate(row.created_at, 2)), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.browser), 1
+                ), row.success ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_3, " Tak")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_4, " Nie")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.ip), 1
+                /* TEXT */
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.browser), 1
                 /* TEXT */
                 )]);
               }), 128
@@ -23981,7 +23988,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
           }, 8
           /* PROPS */
-          , ["data", "throws"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("h1", _hoisted_6, "Brak danych logowania")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
+          , ["data", "throws"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("h1", _hoisted_7, "Brak danych logowania")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
             "class": "mt-6 mx-auto",
             links: $props.history.links
           }, null, 8
@@ -24560,7 +24567,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   onClick: function onClick($event) {
                     return $options.edit(row);
                   },
-                  "class": "far fa-edit fa-lg "
+                  "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"]), row.privilege_id == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", {
@@ -24568,7 +24575,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   onClick: function onClick($event) {
                     return $options.deleteRow(row);
                   },
-                  "class": "far fa-trash-alt fa-lg text-red-700 ml-2"
+                  "class": "cursor-pointer far fa-trash-alt fa-lg text-red-700 ml-2"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
