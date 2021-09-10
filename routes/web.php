@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
         Route::post('cathegories/insertPhoto/{id}', [CathegoryController::class, 'insertPhoto']);
 
-        Route::post('usages/insertNew/', [UsageController::class, 'insertNew']);
+        Route::post('usages/insertNew/', [UsageController::class, 'insertNew'])->name('usage.new');;
 
         Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
     });

@@ -19465,7 +19465,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     insertUsage: function insertUsage() {
-      this.$inertia.post("/usages/insertNew/", this.formUsage);
+      this.$inertia.post("/usages/insertNew", this.formUsage);
     }
   }
 });

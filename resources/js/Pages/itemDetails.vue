@@ -179,7 +179,7 @@ export default {
 		}
     },
 	insertUsage: function() {
-		this.$inertia.post("/usages/insertNew/", this.formUsage);
+		this.$inertia.post("/usages/insertNew", this.formUsage);
 	}
   },
 };
