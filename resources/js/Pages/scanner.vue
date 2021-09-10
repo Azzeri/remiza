@@ -3,7 +3,7 @@
 
 		<BreezeAuthenticatedLayout>
 			<Card class="text-center">
-				<div class="text-center text-tertiary font-bold text-lg mb-4 sm:text-left">
+				<div class="text-center text-tertiary font-bold text-lg mb-4">
 						<h3>Zeskanuj kod QR</h3>
 				</div>
 				<div class="w-52 h-52 border-2 mx-auto mt-5">

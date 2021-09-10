@@ -24018,7 +24018,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "text-center text-tertiary font-bold text-lg mb-4 sm:text-left"
+  "class": "text-center text-tertiary font-bold text-lg mb-4"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "Zeskanuj kod QR")], -1
 /* HOISTED */
 );
