@@ -19465,13 +19465,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     insertUsage: function insertUsage() {
-      var _this = this;
-
-      this.$inertia.post("/usages/insertNew/", this.formUsage, {
-        onSuccess: function onSuccess() {
-          return _this.reset();
-        }
-      });
+      this.$inertia.post("/usages/insertNew/", this.formUsage);
     }
   }
 });
