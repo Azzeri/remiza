@@ -68,5 +68,8 @@ class Kernel extends HttpKernel
         'isGlobalAdmin' => \App\Http\Middleware\IsGlobalAdmin::class,
         '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
         'mfaconfirmed' => \App\Http\Middleware\MfaConfirmed::class,
+        'belongsToUnit' => \App\Http\Middleware\BelongsToUnit::class,
+        'belongsToUnitId' => \App\Http\Middleware\BelongsToUnitId::class,
+
     ];
 }

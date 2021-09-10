@@ -73,8 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
 
-        Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
-        Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details');
+        Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details')->middleware('belongsToUnit:item');
+        Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details')->middleware('belongsToUnitId');
 
         Route::post('services/finish/', [ServiceController::class, 'finish']);
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
