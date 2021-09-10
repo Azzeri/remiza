@@ -78,7 +78,7 @@ export default {
         submit() {
             this.form.post(this.route('login'), {
                 onFinish: () => this.form.reset('password'),
-                onError: () => this.$inertia.post('saveHistoryFail/', this.form, this.errors)
+                onError: () => this.$inertia.post('saveHistoryFail', this.form, this.errors)
             },
             )
         }

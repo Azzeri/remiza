@@ -18738,7 +18738,7 @@ __webpack_require__.r(__webpack_exports__);
           return _this.form.reset('password');
         },
         onError: function onError() {
-          return _this.$inertia.post('saveHistoryFail/', _this.form, _this.errors);
+          return _this.$inertia.post('saveHistoryFail', _this.form, _this.errors);
         }
       });
     }
