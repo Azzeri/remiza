@@ -7,7 +7,7 @@
                 {{ $page.props.flash.message }}
             </Message>
 
-            <FloatingButton @openModal="openModal"></FloatingButton>
+            <FloatingButton v-if="units.length" @openModal="openModal"></FloatingButton>
 
             <Table :data="data.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in data.data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
@@ -118,9 +118,15 @@ export default {
                 surname: null,
                 email: null,
                 phone: null,
-                unit: this.units[0].id
+                unit: this.defaultUnit
             },
             throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
+        }
+    },
+    computed: {
+        defaultUnit(){
+            if (this.units.length)
+                return this.units[0].id
         }
     },
     methods: {
@@ -138,7 +144,7 @@ export default {
                 surname: null,
                 email: null,
                 phone: null,
-                unit: this.units[0].id
+                unit: this.defaultUnit
             }
         },
         save: function (data) {

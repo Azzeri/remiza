@@ -55,6 +55,10 @@ class ItemController extends Controller
             $date = $request->date;
         };
 
+        Auth::user()->privilege_id == 1 ? 
+            $unit = $request->unit:
+            $unit = Auth::user()->fire_brigade_unit_id;
+
         Item::create(
             [
                 $request->validate([
@@ -62,7 +66,7 @@ class ItemController extends Controller
                 ]),
                 'expiry_date' => $date,
                 'item_database_id' => $request->item,
-                'fire_brigade_unit_id' => $request->unit
+                'fire_brigade_unit_id' => $unit
 
             ]
         );

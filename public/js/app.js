@@ -19465,7 +19465,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     insertUsage: function insertUsage() {
-      this.$inertia.post("/usages/insertNew", this.formUsage);
+      var _this = this;
+
+      this.$inertia.post("/usages/insertNew", this.formUsage, {
+        onSuccess: function onSuccess() {
+          return _this.reset();
+        }
+      });
     }
   }
 });
@@ -19536,10 +19542,15 @@ __webpack_require__.r(__webpack_exports__);
         item: null,
         date: null,
         checked: true,
-        unit: this.units[0].id
+        unit: this.defaultUnit
       },
       "throws": ['Nazwa', 'Kategoria', 'Producent', 'Remiza', 'Data ważności', 'Działania']
     };
+  },
+  computed: {
+    defaultUnit: function defaultUnit() {
+      if (this.units.length) return this.units[0].id;
+    }
   },
   methods: {
     openModal: function openModal() {
@@ -19555,7 +19566,7 @@ __webpack_require__.r(__webpack_exports__);
         item: null,
         date: null,
         checked: true,
-        unit: this.units[0].id
+        unit: this.defaultUnit
       };
     },
     save: function save(data) {
@@ -19953,10 +19964,15 @@ __webpack_require__.r(__webpack_exports__);
         surname: null,
         email: null,
         phone: null,
-        unit: this.units[0].id
+        unit: this.defaultUnit
       },
       "throws": ['Imię', 'Nazwisko', 'Email', 'Telefon', 'Rola', 'Remiza', 'Działania']
     };
+  },
+  computed: {
+    defaultUnit: function defaultUnit() {
+      if (this.units.length) return this.units[0].id;
+    }
   },
   methods: {
     openModal: function openModal() {
@@ -19973,7 +19989,7 @@ __webpack_require__.r(__webpack_exports__);
         surname: null,
         email: null,
         phone: null,
-        unit: this.units[0].id
+        unit: this.defaultUnit
       };
     },
     save: function save(data) {
@@ -23701,11 +23717,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1
             /* STABLE */
 
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FloatingButton, {
+          }), $props.units.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FloatingButton, {
+            key: 0,
             onOpenModal: $options.openModal
           }, null, 8
           /* PROPS */
-          , ["onOpenModal"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
+          , ["onOpenModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
             data: $props.items.data.length,
             "throws": $data["throws"],
             onEdit: $options.edit,
@@ -24534,11 +24551,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             _: 1
             /* STABLE */
 
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FloatingButton, {
+          }), $props.units.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FloatingButton, {
+            key: 0,
             onOpenModal: $options.openModal
           }, null, 8
           /* PROPS */
-          , ["onOpenModal"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
+          , ["onOpenModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
             data: $props.data.data.length,
             "throws": $data["throws"],
             onEdit: $options.edit,

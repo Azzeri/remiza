@@ -37,6 +37,10 @@ class UserController extends Controller
         $google2fa = app('pragmarx.google2fa');
         $key = $google2fa->generateSecretKey();
 
+        Auth::user()->privilege_id == 1 ? 
+            $unit = Request::get('unit'):
+            $unit = Auth::user()->fire_brigade_unit_id;
+
         User::create(
             [
                 'name' => Request::get('name'),
@@ -45,7 +49,7 @@ class UserController extends Controller
                 'phone' => Request::get('phone'),
                 'password' => Hash::make('qwerty'),
                 'privilege_id' => 3,
-                'fire_brigade_unit_id' => Request::get('unit'),
+                'fire_brigade_unit_id' => $unit,
                 'google2fa_secret' => $key
                 // 'fire_brigade_unit_id' => Auth::user()->fire_brigade_unit_id
             ]

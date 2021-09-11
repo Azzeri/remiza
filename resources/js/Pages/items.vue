@@ -7,7 +7,7 @@
                 {{ $page.props.flash.message }}
             </Message>
 
-            <FloatingButton @openModal="openModal"></FloatingButton>
+            <FloatingButton v-if="units.length" @openModal="openModal"></FloatingButton>
 
             <Table :data="items.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in items.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
@@ -120,12 +120,17 @@ export default {
                 item: null,
                 date: null,
                 checked: true,
-                unit: this.units[0].id
+                unit: this.defaultUnit
             },
             throws:['Nazwa','Kategoria','Producent', 'Remiza', 'Data ważności', 'Działania'],
         }
     },
-    
+        computed: {
+        defaultUnit(){
+            if (this.units.length)
+                return this.units[0].id
+        }
+    },
     methods: {
         openModal: function () {
             this.isOpen = true;
@@ -140,7 +145,7 @@ export default {
                 item: null,
                 date: null,
                 checked: true,
-                unit: this.units[0].id
+                unit: this.defaultUnit
             }
         },
         save: function (data) {
