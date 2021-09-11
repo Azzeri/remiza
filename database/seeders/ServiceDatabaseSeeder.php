@@ -16,45 +16,39 @@ class ServiceDatabaseSeeder extends Seeder
     {
 
         DB::table('service_databases')->insert([
-            'name' => 'Wymiana w hełmie 1',
-            'days_to_next' => 68,
-            'cathegory_id' => 1,
-        ]);
-
-        DB::table('service_databases')->insert([
-            'name' => 'Wymiana w hełmie 2',
-            'days_to_next' => 354,
-            'cathegory_id' => 1,
-        ]);
-
-        DB::table('service_databases')->insert([
-            'name' => 'Wymiana w kamerze 1',
-            'days_to_next' => 123,
+            'name' => 'Serwis kamery termowizyjnej 1',
+            'days_to_next' => 30,
             'cathegory_id' => 2,
         ]);
 
         DB::table('service_databases')->insert([
-            'name' => 'Wymiana w kamerze 2',
-            'days_to_next' => 3456,
+            'name' => 'Serwis kamery termowizyjnej 2',
+            'days_to_next' => 14,
             'cathegory_id' => 2,
         ]);
 
         DB::table('service_databases')->insert([
-            'name' => 'Wymiana w latarce 1',
+            'name' => 'Serwis gaśnicy proszkowej',
             'days_to_next' => 30,
             'cathegory_id' => 5,
         ]);
 
         DB::table('service_databases')->insert([
-            'name' => 'Wymiana w toporku 1',
-            'days_to_next' => 76,
+            'name' => 'Serwis gaśnicy pianowej',
+            'days_to_next' => 60,
+            'cathegory_id' => 6,
+        ]);
+
+        DB::table('service_databases')->insert([
+            'name' => 'Serwis gaśnicy śniegowej',
+            'days_to_next' => 30,
             'cathegory_id' => 7,
         ]);
 
         DB::table('service_databases')->insert([
-            'name' => 'Wymiana w toporku 2',
-            'days_to_next' => 99,
-            'cathegory_id' => 7,
-        ]);   
+            'name' => 'Serwis gaśnicy wodnej',
+            'days_to_next' => 60,
+            'cathegory_id' => 8,
+        ]);
     }
 }

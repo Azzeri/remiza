@@ -27,31 +27,26 @@ class CathegorySeeder extends Seeder
         ]);
 
         DB::table('cathegories')->insert([
-            'name' => 'Sprzęt pomocniczy',
+            'name' => 'Gaśnice',
         ]);
 
         DB::table('cathegories')->insert([
-            'name' => 'Latarki Streamlight',
-            'cathegory_id' => 3
-        ]);
-
-        DB::table('cathegories')->insert([
-            'name' => 'Latarki Nightstick',
-            'cathegory_id' => 3
-        ]); 
-
-        DB::table('cathegories')->insert([
-            'name' => 'Hydronetki',
+            'name' => 'Gaśnice proszkowe',
             'cathegory_id' => 4
         ]);
 
         DB::table('cathegories')->insert([
-            'name' => 'Toporki strażackie',
+            'name' => 'Gaśnice pianowe',
             'cathegory_id' => 4
         ]); 
 
         DB::table('cathegories')->insert([
-            'name' => 'Bosaki strażackie',
+            'name' => 'Gaśnice śniegowe',
+            'cathegory_id' => 4
+        ]);
+
+        DB::table('cathegories')->insert([
+            'name' => 'Gaśnice wodne',
             'cathegory_id' => 4
         ]); 
 

@@ -15,7 +15,15 @@ class ManufacturerSeeder extends Seeder
     public function run()
     {
         DB::table('manufacturers')->insert([
-            'name' => 'Stihl',
+            'name' => 'OgnioChron',
+        ]);
+
+        DB::table('manufacturers')->insert([
+            'name' => 'Calisia Vulcan',
+        ]);
+
+        DB::table('manufacturers')->insert([
+            'name' => 'Flir',
         ]);
     }
 }

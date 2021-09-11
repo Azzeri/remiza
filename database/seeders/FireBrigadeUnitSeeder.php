@@ -14,14 +14,14 @@ class FireBrigadeUnitSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('fire_brigade_units')->insert([
-            'name' => 'OSP Krapkowice',
-            'address' => 'Krapkowice 3, 48-100 Opole'
-        ]);
+        // DB::table('fire_brigade_units')->insert([
+        //     'name' => 'OSP Krapkowice',
+        //     'address' => 'Krapkowice 3, 48-100 Opole'
+        // ]);
 
-        DB::table('fire_brigade_units')->insert([
-            'name' => 'OSP Opole',
-            'address' => 'Opole 3, 48-100 Opole'
-        ]);
+        // DB::table('fire_brigade_units')->insert([
+        //     'name' => 'OSP Opole',
+        //     'address' => 'Opole 3, 48-100 Opole'
+        // ]);
     }
 }
