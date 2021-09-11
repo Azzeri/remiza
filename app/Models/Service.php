@@ -38,4 +38,9 @@ class Service extends Model
     {
         return $this->user()->with('fireBrigadeUnit');
     }
+
+    public function unitFromItem()
+    {
+        return $this->item()->with('fireBrigadeUnit');
+    }
 }           

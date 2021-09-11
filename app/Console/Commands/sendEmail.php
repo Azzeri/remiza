@@ -42,12 +42,16 @@ class sendEmail extends Command
      */
     public function handle()
     {
-        $services = Service::where('is_performed', 0)->get();
+        $services = Service::with('unitFromItem')->where('is_performed', 0)->get();
         $units = FireBrigadeUnit::all();
         $servicesToNotify = [];
+
         foreach ($units as $unit) {
+            Log::info($unit->name);
             foreach ($services as $service) {
-                if ($service->unit->id == $unit->id) {
+                // Log::info($service);
+                if ($service->unitFromItem->fire_brigade_unit_id == $unit->id) {
+                    
                     $date = Carbon::createFromFormat('Y-m-d', $service->perform_date)->format('Y-m-d');
                     $now = Carbon::now();
 
@@ -59,8 +63,13 @@ class sendEmail extends Command
                         'services' => $servicesToNotify,
                     ];
                     foreach ($unit->users as $user) {
-                        if ($user->privilege_id == 3)
+                        if ($user->privilege_id == 3){
                             Mail::to($user->email)->send(new \App\Mail\ServiceNotification($details));
+                            // Log::info('Wysłano do: '.$user->email);
+                            // foreach ($servicesToNotify as $s)
+                            //     Log::info($s);
+                        }
+
                     }
                     $servicesToNotify = [];
                 }
