@@ -30,7 +30,7 @@ class UserController extends Controller
         Request::validate([
             'name' => 'required|string|min:3|max:32',
             'surname' => 'required|string|min:3|max:32',
-            'email' => 'unique:users|required|email',
+            'email' => 'unique:users|required|email:filter',
             'phone' => 'nullable|size:9',
         ]);
 
