@@ -15,8 +15,8 @@ class DashboardController extends Controller
         $services_to_send = [];
 
         foreach ($services as $service) {
-            if ($service->item->fire_brigade_unit_id == Auth::user()->fire_brigade_unit_id &&
-                $service->perform_date < Carbon::now() || $service->perform_date < Carbon::now()->addDays(7)) {
+            if ($service->item->fire_brigade_unit_id == Auth::user()->fire_brigade_unit_id && (
+                $service->perform_date < Carbon::now() || $service->perform_date < Carbon::now()->addDays(7))) {
                 array_push($services_to_send, $service);
                 
             };
