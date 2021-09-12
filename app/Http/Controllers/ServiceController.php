@@ -35,6 +35,16 @@ class ServiceController extends Controller
 
     public function activate(Request $request, $id)
     {
+        // dd(!$request[0]);
+        if (!$request[0]) {
+            $item = Item::find($id);
+            $item->activated = 1;
+            $item->save();
+
+            return redirect()->back()
+                ->with('message', 'Sukces');
+        };
+
         $today = Carbon::now();
         $dates = [];
         $index = 0;
