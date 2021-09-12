@@ -110,6 +110,9 @@ export default {
         Message,
         Pagination
     },
+    created(){
+        this.reset();
+    },
 
     data() {
         return {

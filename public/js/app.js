@@ -19533,6 +19533,9 @@ __webpack_require__.r(__webpack_exports__);
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__.default,
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__.default
   },
+  created: function created() {
+    this.reset();
+  },
   data: function data() {
     return {
       editMode: false,
@@ -19968,6 +19971,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       "throws": ['Imię', 'Nazwisko', 'Email', 'Telefon', 'Rola', 'Remiza', 'Działania']
     };
+  },
+  created: function created() {
+    this.reset();
   },
   computed: {
     defaultUnit: function defaultUnit() {

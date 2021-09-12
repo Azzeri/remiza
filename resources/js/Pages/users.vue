@@ -123,6 +123,10 @@ export default {
             throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
         }
     },
+        created(){
+        this.reset();
+    },
+
     computed: {
         defaultUnit(){
             if (this.units.length)
