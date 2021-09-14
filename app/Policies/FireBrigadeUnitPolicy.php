@@ -21,7 +21,6 @@ class FireBrigadeUnitPolicy
     {
         // return $user->privilege_id == Privilege::IS_GLOBAL_ADMIN || ($user->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN);
         return in_array($user->privilege_id, [Privilege::IS_GLOBAL_ADMIN, Privilege::IS_SUPERIOR_UNIT_ADMIN]);
-
     }
 
     /**
@@ -44,7 +43,8 @@ class FireBrigadeUnitPolicy
      */
     public function update(User $user, FireBrigadeUnit $fireBrigadeUnit)
     {
-        //
+        return $user->privilege_id == Privilege::IS_GLOBAL_ADMIN ||
+            ($user->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN && ($fireBrigadeUnit->id == $user->fire_brigade_unit_id || $fireBrigadeUnit->superior_unit_id == $user->fire_brigade_unit_id));
     }
 
     /**
