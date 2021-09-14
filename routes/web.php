@@ -59,10 +59,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/dashboardconfirmed', [DashboardController::class, 'index'])->middleware('verified')->name('dashboardconfirmed');
 
 
-    Route::group(['middleware' => ['FirstTimeLogin', 'mfaconfirmed', '2fa']], function () {
-        Route::post('/2fa', function () {
-            return redirect('dashboard');
-        })->name('2fa');
+    Route::group(['middleware' => ['FirstTimeLogin']], function () {
+        // Route::post('/2fa', function () {
+        //     return redirect('dashboard');
+        // })->name('2fa');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
@@ -91,8 +91,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
     });
 
-    Route::get('/mfa', [UserController::class, 'mfa'])->name('mfa');
-    Route::get('/mfa/confirm', [UserController::class, 'mfaconfirm'])->name('mfa.confirm');
+    // Route::get('/mfa', [UserController::class, 'mfa'])->name('mfa');
+    // Route::get('/mfa/confirm', [UserController::class, 'mfaconfirm'])->name('mfa.confirm');
 
     Route::get('/password-change', function () {
         return Inertia::render('PasswordChange');
