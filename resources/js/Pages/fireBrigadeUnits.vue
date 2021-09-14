@@ -16,7 +16,7 @@
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ superiorUnit(row) }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3 text-center">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer"></i>
-                        <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
+                        <i v-if="row.id != $page.props.auth.user.fire_brigade_unit_id" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
                     </td>
                 </tr>
             </Table>

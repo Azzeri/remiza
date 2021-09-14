@@ -23018,14 +23018,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
                 /* PROPS */
-                , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+                , ["onClick"]), row.id != _ctx.$page.props.auth.user.fire_brigade_unit_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", {
+                  key: 0,
                   onClick: function onClick($event) {
                     return $options.deleteRow(row);
                   },
                   "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
                 /* PROPS */
-                , ["onClick"])])]);
+                , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
               }), 128
               /* KEYED_FRAGMENT */
               ))];

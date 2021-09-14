@@ -87,13 +87,12 @@ class FireBrigadeUnitController extends Controller
             ->with('message', 'Sukces');
     }
 
-    // public function destroy($id)
-    // {
-    //     // $this->authorize('fireBrigadeUnits');
+    public function destroy(FireBrigadeUnit $fireBrigadeUnit)
+    {
+        $this->authorize('delete', $fireBrigadeUnit, FireBrigadeUnit::class);
 
-    //     $unit = FireBrigadeUnit::find($id);
-    //     $unit->delete();
-    //     return redirect()->back()
-    //         ->with('message', 'Sukces');
-    // }
+        $fireBrigadeUnit->delete();
+        return redirect()->back()
+            ->with('message', 'Sukces');
+    }
 }

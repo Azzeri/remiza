@@ -56,30 +56,7 @@ class FireBrigadeUnitPolicy
      */
     public function delete(User $user, FireBrigadeUnit $fireBrigadeUnit)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FireBrigadeUnit  $fireBrigadeUnit
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, FireBrigadeUnit $fireBrigadeUnit)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\FireBrigadeUnit  $fireBrigadeUnit
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, FireBrigadeUnit $fireBrigadeUnit)
-    {
-        //
+        return $user->privilege_id == Privilege::IS_GLOBAL_ADMIN ||
+            ($user->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN && $fireBrigadeUnit->superior_unit_id == $user->fire_brigade_unit_id);
     }
 }
