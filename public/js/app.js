@@ -21087,7 +21087,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href", "active"])]), _ctx.$page.props.auth.user.privilege_id == 1 || _ctx.$page.props.auth.user.privilege_id == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeNavLink, {
+  , ["href", "active"])]), _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_LOWLY_UNIT_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeNavLink, {
     href: _ctx.route('users.index'),
     active: _ctx.route().current('users.index')
   }, {
@@ -21099,7 +21099,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href", "active"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$page.props.auth.user.privilege_id == 1 || _ctx.$page.props.auth.user.privilege_id == 4 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeNavLink, {
+  , ["href", "active"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeNavLink, {
     href: _ctx.route('fireBrigadeUnits.index'),
     active: _ctx.route().current('fireBrigadeUnits.index')
   }, {
@@ -21248,7 +21248,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href", "active"]), _ctx.$page.props.auth.user.privilege_id == 1 || _ctx.$page.props.auth.user.privilege_id == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BreezeResponsiveNavLink, {
+  , ["href", "active"]), _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_LOWLY_UNIT_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BreezeResponsiveNavLink, {
     key: 0,
     href: _ctx.route('users.index'),
     active: _ctx.route().current('users.index')
@@ -21285,7 +21285,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href", "active"]), _ctx.$page.props.auth.user.privilege_id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BreezeResponsiveNavLink, {
+  , ["href", "active"]), _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BreezeResponsiveNavLink, {
     key: 1,
     href: _ctx.route('fireBrigadeUnits.index'),
     active: _ctx.route().current('fireBrigadeUnits.index')
@@ -24784,7 +24784,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]])], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == 1 && !$data.editMode]]), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN && !$data.editMode]]), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: _ctx.route('password.change')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

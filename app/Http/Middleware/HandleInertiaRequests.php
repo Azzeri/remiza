@@ -40,6 +40,12 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
             ],
+            'privileges' => [
+                'IS_GLOBAL_ADMIN' => 1,
+                'IS_LOWLY_UNIT_ADMIN' => 2,
+                'IS_COORDINATOR' => 3,
+                'IS_SUPERIOR_UNIT_ADMIN' => 4,
+            ],
         ]);
 
     }

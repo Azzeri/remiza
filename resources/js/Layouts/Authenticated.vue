@@ -19,12 +19,12 @@
                                     Strona główna
                                 </BreezeNavLink>
                             </div>
-                            <div v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 2" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_LOWLY_UNIT_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Użytkownicy
                                 </BreezeNavLink>
                             </div>
-                            <div v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 4" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
                                     Jednostki
                                 </BreezeNavLink>
@@ -110,7 +110,7 @@
                         <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Strona główna
                         </BreezeResponsiveNavLink>
-                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 2" :href="route('users.index')" :active="route().current('users.index')">
+                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_LOWLY_UNIT_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN" :href="route('users.index')" :active="route().current('users.index')">
                             Użytkownicy
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('cathegories.index')" :active="route().current('cathegories.index')">
@@ -119,7 +119,7 @@
                         <BreezeResponsiveNavLink :href="route('items.index')" :active="route().current('items.index')">
                             Sprzęt
                         </BreezeResponsiveNavLink>
-                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == 1" :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
+                        <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN" :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
                             Jednostki
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('set.details',id=1)" :active="route().current('set.details')">
