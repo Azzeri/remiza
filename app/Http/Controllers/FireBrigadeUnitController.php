@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FireBrigadeUnit;
 use App\Models\User;
+use App\Models\Privilege;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Validation\Rule;
@@ -16,13 +17,18 @@ class FireBrigadeUnitController extends Controller
 {
     public function index()
     {
-        $units = FireBrigadeUnit::all();
+        $this->authorize('viewAny', FireBrigadeUnit::class);
+
+        Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
+            ? $units = FireBrigadeUnit::with('superiorUnit')->get()
+            : $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
 
         return Inertia::render('fireBrigadeUnits', ['data' => $units]);
     }
 
     public function store()
     {
+        // $this->authorize('fireBrigadeUnits');
 
         Validator::make(Request::all(), [
             'name' => ['unique:fire_brigade_units', 'required', 'string', 'min:3', 'max:32'],
@@ -61,17 +67,18 @@ class FireBrigadeUnitController extends Controller
 
         return redirect()->back()
             ->with('message', 'Sukces');
-            
     }
 
     //Functions below have a problem locating the unit in db automatically
     public function update()
     {
+        // $this->authorize('fireBrigadeUnits');
+
         $unit = FireBrigadeUnit::find(Request::get('id'));
 
         $unit->update(
             Request::validate([
-                'name' => [ Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
+                'name' => [Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
                 'address' => ['required'],
             ])
         );
@@ -82,6 +89,8 @@ class FireBrigadeUnitController extends Controller
 
     public function destroy($id)
     {
+        // $this->authorize('fireBrigadeUnits');
+
         $unit = FireBrigadeUnit::find($id);
         $unit->delete();
         return redirect()->back()

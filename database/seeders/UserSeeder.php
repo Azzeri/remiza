@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        User::create([
             'name' => 'admin',
             'surname' => 'admin',
             'email' => 'admin@admin.admin',
@@ -25,14 +26,27 @@ class UserSeeder extends Seeder
             'mfaverified' => true
         ]);
 
-        // DB::table('users')->insert([
-        //     'name' => 'Jan',
-        //     'surname' => 'Nowak',
-        //     'email' => 'jn@remiza.com',
-        //     'password' => Hash::make('qwerty'),
-        //     'privilege_id' => 2,
-        //     'fire_brigade_unit_id' => 1
-        // ]);
+        User::create([
+            'name' => 'Jan',
+            'surname' => 'Nowak',
+            'email' => 'jn@remiza.com',
+            'password' => Hash::make('qwerty'),
+            'privilege_id' => 4,
+            'fire_brigade_unit_id' => 1,
+            'first_time_login' => false,
+            'mfaverified' => true
+        ]);
+
+        User::create([
+            'name' => 'Adam',
+            'surname' => 'Ciesla',
+            'email' => 'ac@remiza.com',
+            'password' => Hash::make('qwerty'),
+            'privilege_id' => 2,
+            'fire_brigade_unit_id' => 2,
+            'first_time_login' => false,
+            'mfaverified' => true
+        ]);
 
         // DB::table('users')->insert([
         //     'name' => 'Arek',
@@ -41,15 +55,6 @@ class UserSeeder extends Seeder
         //     'password' => Hash::make('qwerty'),
         //     'privilege_id' => 3,
         //     'fire_brigade_unit_id' => 1
-        // ]);
-
-        // DB::table('users')->insert([
-        //     'name' => 'Adam',
-        //     'surname' => 'Ciesla',
-        //     'email' => 'ac@remiza.com',
-        //     'password' => Hash::make('qwerty'),
-        //     'privilege_id' => 2,
-        //     'fire_brigade_unit_id' => 2
         // ]);
 
         // DB::table('users')->insert([

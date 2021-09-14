@@ -24,7 +24,7 @@
                                     Użytkownicy
                                 </BreezeNavLink>
                             </div>
-                            <div v-if="$page.props.auth.user.privilege_id == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div v-if="$page.props.auth.user.privilege_id == 1 || $page.props.auth.user.privilege_id == 4" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <BreezeNavLink :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
                                     Jednostki
                                 </BreezeNavLink>

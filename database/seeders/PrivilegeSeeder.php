@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Privilege;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,16 +15,9 @@ class PrivilegeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('privileges')->insert([
-            'name' => 'Administrator'
-        ]);
-
-        DB::table('privileges')->insert([
-            'name' => 'Administrator jednostki'
-        ]);
-
-        DB::table('privileges')->insert([
-            'name' => 'Koordynator sprzętu'
-        ]);
+        Privilege::create(['name' => 'Administrator']);
+        Privilege::create(['name' => 'Administrator jednostki podrzędnej']);
+        Privilege::create(['name' => 'Koordynator sprzętu']);
+        Privilege::create(['name' => 'Administrator jednostki nadrzędnej']);
     }
 }

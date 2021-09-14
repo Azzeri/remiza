@@ -16,6 +16,7 @@ class FireBrigadeUnit extends Model
     protected $fillable = [
         'name',
         'address',
+        'superior_unit_id'
     ];
 
     public function users()
@@ -26,5 +27,10 @@ class FireBrigadeUnit extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function superiorUnit()
+    {
+        return $this->belongsTo(FireBrigadeUnit::class);
     }
 }

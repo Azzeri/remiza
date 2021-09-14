@@ -30,34 +30,18 @@ use App\Models\Set;
 */
 
 Route::get('/', function () {
-    // return Inertia::render('Welcome', [
-    //     'canLogin' => Route::has('login'),
-    //     'canRegister' => Route::has('register'),
-    //     'laravelVersion' => Application::VERSION,
-    //     'phpVersion' => PHP_VERSION,
-    // ]);
-
     return redirect('/dashboard');
 });
 Route::get('saveHistorySuccess/', [HistoryController::class, 'storeSuccess'])->name('saveHistorySuccess');
 Route::post('saveHistoryFail/', [HistoryController::class, 'storeFail'])->name('saveHistoryFail');
+
 Route::group(['middleware' => 'auth'], function () {
 
-    // Route::get('/dashboard', function () {
-    //     if (Auth::user()->first_time_login == false && Auth::user()->mfaverified == true)
-    //         return redirect('/dashboardconfirmed');
-    //     else if (Auth::user()->first_time_login == true)
-    //         return redirect('/password-change');
-    //     else if (Auth::user()->mfaverified == false)
-    //         return redirect('mfa');
-    //     // if (Auth::user()->first_time_login == false)
-    //     //     return redirect('/dashboardconfirmed');
-    //     // else
-    //     //     return redirect('/password-change');
-    // })->middleware('verified', '2fa')->name('dashboard');
+    Route::get('/password-change', function () {
+        return Inertia::render('PasswordChange');
+    })->name('password.change');
 
-    // Route::get('/dashboardconfirmed', [DashboardController::class, 'index'])->middleware('verified')->name('dashboardconfirmed');
-
+    Route::post('password-change-store', [UserController::class, 'changePassword'])->name('password.change.store');
 
     Route::group(['middleware' => ['FirstTimeLogin']], function () {
         // Route::post('/2fa', function () {
@@ -66,12 +50,14 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
-        Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
+        Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']]);
+        // Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
         Route::resource('sets', SetController::class, ['names' => ['index' => 'sets.index']]);
         Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
         Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
-        Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
+        Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']]);
+        // Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
 
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details')->middleware('belongsToUnit:item');
         Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details')->middleware('belongsToUnitId');
@@ -93,12 +79,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Route::get('/mfa', [UserController::class, 'mfa'])->name('mfa');
     // Route::get('/mfa/confirm', [UserController::class, 'mfaconfirm'])->name('mfa.confirm');
-
-    Route::get('/password-change', function () {
-        return Inertia::render('PasswordChange');
-    })->name('password.change');
-
-    Route::post('password-change-store', [UserController::class, 'changePassword'])->name('password.change.store');
 });
 
 

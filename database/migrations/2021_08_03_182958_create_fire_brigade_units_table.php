@@ -17,7 +17,7 @@ class CreateFireBrigadeUnitsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            // $table->foreignId('marshal')->constrained('users')->nullable();
+            $table->foreignId('superior_unit_id')->nullable()->constrained('fire_brigade_units')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
