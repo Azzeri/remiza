@@ -32,7 +32,7 @@ class FireBrigadeUnitPolicy
      */
     public function create(User $user)
     {
-        //
+        return in_array($user->privilege_id, [Privilege::IS_GLOBAL_ADMIN, Privilege::IS_SUPERIOR_UNIT_ADMIN]);
     }
 
     /**

@@ -19,81 +19,84 @@ class FireBrigadeUnitController extends Controller
     {
         $this->authorize('viewAny', FireBrigadeUnit::class);
 
-        Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
-            ? $units = FireBrigadeUnit::with('superiorUnit')->get()
-            : $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
+        $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
+            ? FireBrigadeUnit::with('superiorUnit')->get()
+            : FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
 
         return Inertia::render('fireBrigadeUnits', ['data' => $units]);
     }
 
     public function store()
     {
-        // $this->authorize('fireBrigadeUnits');
+        $this->authorize('create', FireBrigadeUnit::class);
 
-        Validator::make(Request::all(), [
+        Request::validate([
             'name' => ['unique:fire_brigade_units', 'required', 'string', 'min:3', 'max:32'],
             'address' => ['required', 'min:3', 'max:255'],
             'username' => 'required|string|min:3|max:32',
             'surname' => 'required|string|min:3|max:32',
-            'email' => 'unique:users|required|email',
+            'email' => 'unique:users|required|email:filter',
             'phone' => 'nullable|size:9',
-        ])->validate();
+            'superior' => 'required'
+        ]);
 
+        $superior = Request::get('superior') ? Request::get('superior') : NULL;
+        $user_id = Request::get('superior') ? 2 : 4;
 
-        $google2fa = app('pragmarx.google2fa');
-        $key = $google2fa->generateSecretKey();
+        // $google2fa = app('pragmarx.google2fa');
+        // $key = $google2fa->generateSecretKey();
+        // // $user['google2fa_secret'] = $key;
 
-        $unit = new FireBrigadeUnit();
-        $unit['name'] = Request::get('name');
-        $unit['address'] = Request::get('address');
-        $unit->save();
+        $unit = FireBrigadeUnit::create([
+            'name' => Request::get('name'),
+            'address' => Request::get('address'),
+            'superior_unit_id' => $superior,
+        ]);
 
-        $user = new User();
-        $user['name'] = Request::get('username');
-        $user['surname'] = Request::get('surname');
-        $user['email'] = Request::get('email');
-        $user['phone'] = Request::get('phone');
-        $user['password'] = Hash::make('qwerty');
-        $user['privilege_id'] = 2;
-        $user['fire_brigade_unit_id'] = $unit->id;
-        $user['google2fa_secret'] = $key;
-        $user->save();
+        $user = User::create([
+            'name' => Request::get('username'),
+            'surname' => Request::get('surname'),
+            'email' => Request::get('email'),
+            'phone' => Request::get('phone'),
+            'password' => Hash::make('qwerty'),
+            'privilege_id' => $user_id,
+            'fire_brigade_unit_id' => $unit->id,
+        ]);
 
-        $details = [
+        Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail([
             'title' => 'Witaj w jednostce',
-        ];
-
-        Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail($details));
-
-        return redirect()->back()
-            ->with('message', 'Sukces');
-    }
-
-    //Functions below have a problem locating the unit in db automatically
-    public function update()
-    {
-        // $this->authorize('fireBrigadeUnits');
-
-        $unit = FireBrigadeUnit::find(Request::get('id'));
-
-        $unit->update(
-            Request::validate([
-                'name' => [Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
-                'address' => ['required'],
-            ])
-        );
+            'password' => $user->password
+        ]));
 
         return redirect()->back()
             ->with('message', 'Sukces');
     }
 
-    public function destroy($id)
-    {
-        // $this->authorize('fireBrigadeUnits');
+    // //Functions below have a problem locating the unit in db automatically
+    // public function update()
+    // {
+    //     // $this->authorize('fireBrigadeUnits');
 
-        $unit = FireBrigadeUnit::find($id);
-        $unit->delete();
-        return redirect()->back()
-            ->with('message', 'Sukces');
-    }
+    //     $unit = FireBrigadeUnit::find(Request::get('id'));
+
+    //     $unit->update(
+    //         Request::validate([
+    //             'name' => [Rule::unique('fire_brigade_units')->ignore(FireBrigadeUnit::find($unit->id)), 'required', 'string', 'min:3', 'max:32'],
+    //             'address' => ['required'],
+    //         ])
+    //     );
+
+    //     return redirect()->back()
+    //         ->with('message', 'Sukces');
+    // }
+
+    // public function destroy($id)
+    // {
+    //     // $this->authorize('fireBrigadeUnits');
+
+    //     $unit = FireBrigadeUnit::find($id);
+    //     $unit->delete();
+    //     return redirect()->back()
+    //         ->with('message', 'Sukces');
+    // }
 }

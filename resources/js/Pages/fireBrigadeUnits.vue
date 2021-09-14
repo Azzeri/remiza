@@ -38,6 +38,17 @@
                     <BreezeInput id="addressField" type="text" class="mt-1 block w-full" v-model="form.address" placeholder="Wprowadź adres" />
                     <div class="text-red-500" v-if="errors.address">{{ errors.address }}</div>
                 </div>
+                 <div class="mb-4">
+                        <BreezeLabel for="parentField" value="Jednostka nadrzędna" />
+                        <select id="parentField" v-model="form.superior" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option value=null>Brak</option>                                   
+                            <template v-for="row in data" :key="row.id">
+                                <option v-if="!row.superior_unit_id" :value="row.id">
+                                    {{row.name}}
+                                </option> 
+                            </template>                         
+                        </select>
+                </div>
                 <div v-show="!editMode">
                     <div class="mb-2 text-secondary-200 font-semibold">
                         Komendant
@@ -109,7 +120,8 @@ export default {
                 username: null,
                 surname: null,
                 email: null,
-                phone: null
+                phone: null,
+                superior: null
             },
             throws:['Nazwa','Adres','Jednostka nadrzędna', 'Działania'],
         }
@@ -138,7 +150,8 @@ export default {
                 username: null,
                 surname: null,
                 email: null,
-                phone: null
+                phone: null,
+                superior: null
             }
         },
         save: function (data) {
