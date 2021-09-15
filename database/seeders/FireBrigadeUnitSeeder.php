@@ -25,5 +25,10 @@ class FireBrigadeUnitSeeder extends Seeder
             'address' => 'Opole 3, 48-100 Opole',
             'superior_unit_id' => 1
         ]);
+
+        FireBrigadeUnit::create([
+            'name' => 'OSP Sucha Kamienica',
+            'address' => 'Sucha Kamienica 3, 48-100 Głuchołazy'
+        ]);
     }
 }

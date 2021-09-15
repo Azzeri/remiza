@@ -57,12 +57,13 @@ class UserController extends Controller
             'name' => 'required|string|min:3|max:32',
             'surname' => 'required|string|min:3|max:32',
             'phone' => 'nullable|size:9',
+            'unit' => 'nullable'
         ]);
 
         // $google2fa = app('pragmarx.google2fa');
         // $key = $google2fa->generateSecretKey();
 
-        $unit = Request::get('unit') ? $unit = Request::get('unit') : $unit = Auth::user()->fire_brigade_unit_id;
+        // $unit = Request::get('unit') ? $unit = Request::get('unit') : $unit = Auth::user()->fire_brigade_unit_id;
 
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN || Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN)
             $unit = Request::get('unit');
