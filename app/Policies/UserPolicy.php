@@ -67,6 +67,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return in_array($user->privilege_id, [Privilege::IS_GLOBAL_ADMIN, Privilege::IS_SUPERIOR_UNIT_ADMIN, Privilege::IS_LOWLY_UNIT_ADMIN,]) && $model->privilege_id == Privilege::IS_COORDINATOR;
+
     }
 }
