@@ -33,10 +33,10 @@ class FireBrigadeUnitController extends Controller
         Request::validate([
             'name' => ['unique:fire_brigade_units', 'required', 'string', 'min:3', 'max:32'],
             'address' => ['required', 'min:3', 'max:255'],
-            'username' => 'required|string|min:3|max:32',
-            'surname' => 'required|string|min:3|max:32',
+            'username' => 'required|string|alpha|min:3|max:32',
+            'surname' => 'required|string|alpha|min:3|max:32',
             'email' => 'unique:users|required|email:filter',
-            'phone' => 'nullable|size:9',
+            'phone' => 'nullable|digits:9',
             'superior' => 'nullable'
         ]);
 
@@ -57,8 +57,8 @@ class FireBrigadeUnitController extends Controller
         ]);
 
         $user = User::create([
-            'name' => Request::get('username'),
-            'surname' => Request::get('surname'),
+            'name' => ucfirst(Request::get('username')),
+            'surname' => ucfirst(Request::get('surname')),
             'email' => Request::get('email'),
             'phone' => Request::get('phone'),
             'password' => Hash::make('qwerty'),

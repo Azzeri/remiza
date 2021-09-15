@@ -54,9 +54,10 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         Request::validate([
-            'name' => 'required|string|min:3|max:32',
-            'surname' => 'required|string|min:3|max:32',
-            'phone' => 'nullable|size:9',
+            'name' => 'required|string|alpha|min:3|max:32',
+            'surname' => 'required|string|alpha|min:3|max:32',
+            'phone' => 'nullable|digits:9',
+            'email' => 'unique:users|required|email:filter',
             'unit' => 'nullable'
         ]);
 
@@ -72,8 +73,8 @@ class UserController extends Controller
 
         User::create(
             [
-                'name' => Request::get('name'),
-                'surname' => Request::get('surname'),
+                'name' => ucfirst(Request::get('name')),
+                'surname' => ucfirst(Request::get('surname')),
                 'email' => Request::get('email'),
                 'phone' => Request::get('phone'),
                 'password' => Hash::make('qwerty'),
@@ -99,7 +100,7 @@ class UserController extends Controller
             Request::validate([
                 'name' => 'required|string|min:3|max:32',
                 'surname' => 'required|string|min:3|max:32',
-                'email' => ['required', 'email', Rule::unique('users')->ignore(User::find($user->id))],
+                'email' => ['required', 'email:filter', Rule::unique('users')->ignore(User::find($user->id))],
                 'phone' => 'nullable|size:9',
             ])
         );
