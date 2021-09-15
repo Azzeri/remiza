@@ -62,8 +62,11 @@ class UserController extends Controller
         // $google2fa = app('pragmarx.google2fa');
         // $key = $google2fa->generateSecretKey();
 
-        Auth::user()->privilege_id == 1 ?
-            $unit = Request::get('unit') :
+        $unit = Request::get('unit') ? $unit = Request::get('unit') : $unit = Auth::user()->fire_brigade_unit_id;
+
+        if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN || Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN)
+            $unit = Request::get('unit');
+        else
             $unit = Auth::user()->fire_brigade_unit_id;
 
         User::create(

@@ -24784,7 +24784,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]])], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN && !$data.editMode]]), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$data.editMode]]), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: _ctx.route('password.change')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
