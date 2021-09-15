@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Manufacturer;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,16 +15,32 @@ class ManufacturerSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('manufacturers')->insert([
+        Manufacturer::create([
             'name' => 'OgnioChron',
         ]);
 
-        DB::table('manufacturers')->insert([
+        Manufacturer::create([
             'name' => 'Calisia Vulcan',
         ]);
 
-        DB::table('manufacturers')->insert([
+        Manufacturer::create([
             'name' => 'Flir',
+        ]);
+
+        Manufacturer::create([
+            'name' => 'HONEYWELL',
+        ]);
+
+        Manufacturer::create([
+            'name' => 'BIOMASK',
+        ]);
+
+        Manufacturer::create([
+            'name' => 'OPTI-PRO',
+        ]);
+
+        Manufacturer::create([
+            'name' => 'Aeris',
         ]);
     }
 }

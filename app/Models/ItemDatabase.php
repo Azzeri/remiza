@@ -14,9 +14,16 @@ class ItemDatabase extends Model
     protected $cascadeDeletes = ['items'];
 
     protected $fillable = [
+        'construction_number',
+        'inventory_number',
+        'identification_number',
+        'date_expiry',
+        'date_legalisation',
+        'date_legalisation_due',
+        'date_production',
         'name',
-        'cathegory_id',
-        'manufacturer_id'
+        'manufacturer',
+        'vehicle'
     ];
 
     public function cathegory()
@@ -24,10 +31,10 @@ class ItemDatabase extends Model
         return $this->belongsTo(Cathegory::class);
     }
 
-    public function manufacturer()
-    {
-        return $this->belongsTo(Manufacturer::class);
-    }
+    // public function manufacturer()
+    // {
+    //     return $this->belongsTo(Manufacturer::class);
+    // }
 
     public function items()
     {

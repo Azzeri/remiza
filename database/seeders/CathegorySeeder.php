@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cathegory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -49,6 +50,28 @@ class CathegorySeeder extends Seeder
             'name' => 'Gaśnice wodne',
             'cathegory_id' => 4
         ]); 
+
+        Cathegory::create([//9
+            'name' => 'Butle'
+        ]);
+
+        Cathegory::create([//10
+            'name' => 'Butle kompozytowe',
+            'cathegory_id' => 9
+        ]);
+
+        Cathegory::create([//11
+            'name' => 'Butle stalowe',
+            'cathegory_id' => 9
+        ]);
+
+        Cathegory::create([//12
+            'name' => 'Maski',
+        ]);
+
+        Cathegory::create([//13
+            'name' => 'Aparaty powietrzne',
+        ]);
 
     }
 }

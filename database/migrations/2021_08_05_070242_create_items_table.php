@@ -15,11 +15,22 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->date('expiry_date');
+            $table->string('construction_number')->nullable();
+            $table->string('inventory_number')->nullable();
+            $table->string('identification_number')->nullable();
+            $table->date('date_expiry')->nullable();
+            $table->date('date_legalisation')->nullable();
+            $table->date('date_legalisation_due')->nullable();
+            $table->date('date_production')->nullable();
+            $table->string('name')->nullable();
+            
             $table->foreignId('item_database_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('fire_brigade_unit_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreignId('set_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('manufacturer_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('vehicle_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+
             $table->boolean('activated')->default(false);
+
             $table->timestamps();
             $table->softDeletes();
         });

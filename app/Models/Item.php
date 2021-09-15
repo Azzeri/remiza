@@ -17,7 +17,6 @@ class Item extends Model
         'expiry_date',
         'item_database_id',
         'fire_brigade_unit_id',
-        // 'set_id',
         'activated'
     ];
 
