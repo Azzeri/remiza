@@ -111,6 +111,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user, User::class);
+
         $user->delete();
         return redirect()->back()
             ->with('message', 'Sukces');
