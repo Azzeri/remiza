@@ -19,6 +19,8 @@ class CathegoryController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Cathegory::class);
+
         $request->parent == -1 ?
             $parent = NULL : $parent = $request->parent;
 
@@ -40,6 +42,8 @@ class CathegoryController extends Controller
 
     public function update(Request $request, Cathegory $cathegory)
     {
+        $this->authorize('update', $cathegory, Cathegory::class);
+
         $request->parent == -1 ?
             $parent = NULL : $parent = $request->parent;
 
@@ -60,6 +64,8 @@ class CathegoryController extends Controller
 
     public function destroy(Cathegory $cathegory)
     {
+        $this->authorize('delete', $cathegory, Cathegory::class);
+
         $photoName = ltrim($cathegory->photo_path, '/images/');
         if ($photoName != 'default.png') 
             unlink(public_path('images') . '/' . $photoName);     
@@ -72,6 +78,8 @@ class CathegoryController extends Controller
 
     public function deletePhoto($id)
     {
+        $this->authorize('update', Cathegory::find($id), Cathegory::class);
+
         $cathegory = Cathegory::find($id);
         $photoName = ltrim($cathegory->photo_path, '/images/');
 
@@ -87,6 +95,8 @@ class CathegoryController extends Controller
 
     public function insertPhoto(Request $request, $id)
     {
+        $this->authorize('update', Cathegory::find($id), Cathegory::class);
+
         $request->validate([
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
