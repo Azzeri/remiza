@@ -7,7 +7,7 @@
 						<h3>Zeskanuj kod QR</h3>
 				</div>
 				<div class="w-52 h-52 border-2 mx-auto mt-5">
-					<qr-stream @decode="onDecode" class="mb">
+					<qr-stream id="QR_Stream" @decode="onDecode" class="mb">
 						<div style="color: red" class="frame"></div>
 					</qr-stream>
               <p class="error">{{ error }}</p>
