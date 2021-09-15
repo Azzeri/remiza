@@ -18437,6 +18437,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var _Components_Card_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Card.vue */ "./resources/js/Components/Card.vue");
+/* harmony import */ var _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/FloatingButton.vue */ "./resources/js/Components/FloatingButton.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -18446,12 +18448,17 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Head,
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
-    Card: _Components_Card_vue__WEBPACK_IMPORTED_MODULE_1__.default
+    Card: _Components_Card_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    FloatingButton: _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return {};
   },
-  methods: {}
+  methods: {
+    open: function open() {
+      this.$emit('open-modal');
+    }
+  }
 });
 
 /***/ }),
@@ -20761,6 +20768,8 @@ var _hoisted_2 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
+  var _component_FloatingButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FloatingButton");
+
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
 
   var _component_Card = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Card");
@@ -20769,7 +20778,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "Zestawy"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Card, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.sets, function (row) {
+      return [_ctx.$page.props.auth.user.privilege_id != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FloatingButton, {
+        key: 0,
+        onClick: _cache[1] || (_cache[1] = function ($event) {
+          return $options.open();
+        }),
+        "class": "mb-4"
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.sets, function (row) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           "class": "font-bold hover:bg-primary-200 hover:text-tertiary p-1 rounded transition duration-500 ease-in-out",
           key: row.id
@@ -24320,8 +24335,6 @@ var _hoisted_16 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
-  var _component_FloatingButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FloatingButton");
-
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
 
   var _component_SetsNav = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SetsNav");
@@ -24338,15 +24351,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "Zestawy"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeAuthenticatedLayout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_ctx.$page.props.auth.user.privilege_id != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FloatingButton, {
+      return [$props.set != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_SetsNav, {
         key: 0,
-        "class": "sm:absolute sm:top-28 sm:left-64",
+        sets: $props.sets,
         onOpenModal: $options.openModal
-      }, null, 8
-      /* PROPS */
-      , ["onOpenModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.set != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_SetsNav, {
-        key: 1,
-        sets: $props.sets
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.set.name), 1
@@ -24388,7 +24396,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["sets"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
+      , ["sets", "onOpenModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
         isOpen: $data.isOpen,
         editMode: $data.editMode,
         form: $data.form,

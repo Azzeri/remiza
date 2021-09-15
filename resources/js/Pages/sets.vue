@@ -2,9 +2,9 @@
   	<Head title="Zestawy" />
 
 	<BreezeAuthenticatedLayout>
-	<FloatingButton v-if="$page.props.auth.user.privilege_id  != 1" class="sm:absolute sm:top-28 sm:left-64" @openModal="openModal"></FloatingButton>
-	<SetsNav :sets="sets" v-if="set != null">
+	<SetsNav :sets="sets" v-if="set != null" @openModal="openModal">
 		<div class="mt-6 border-t-2 rounded">
+
 			<div class="flex">
 				<div class="text-tertiary font-bold text-lg my-4">
 					<h3>{{set.name}}</h3>

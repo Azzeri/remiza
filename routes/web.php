@@ -3,7 +3,6 @@
 // use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CathegoryController;
@@ -15,8 +14,6 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
-use App\Models\Item;
-use App\Models\Set;
 
 /*
 |--------------------------------------------------------------------------

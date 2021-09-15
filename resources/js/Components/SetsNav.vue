@@ -1,6 +1,8 @@
 <template>
 	<Head title="Zestawy" />
 	<Card>
+		<FloatingButton v-if="$page.props.auth.user.privilege_id  != 1" @click="open()" class="mb-4"></FloatingButton>
+
 		<div class="text-tertiary font-bold text-lg mb-4 pl-1">
 			<h3>Zestawy przedmiotów</h3>
 		</div>
@@ -17,6 +19,7 @@
 <script>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Card from "@/Components/Card.vue";
+import FloatingButton from "@/Components/FloatingButton.vue";
 
 export default {
   props: {
@@ -27,12 +30,17 @@ export default {
     Head,
     Link,
     Card,
+    FloatingButton
   },
 
   data() {
     return {};
   },
 
-  methods: {},
+  methods: {
+    open(){
+      this.$emit('open-modal');
+    }
+  },
 };
 </script>
