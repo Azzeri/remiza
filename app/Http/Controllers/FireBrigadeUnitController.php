@@ -37,11 +37,14 @@ class FireBrigadeUnitController extends Controller
             'surname' => 'required|string|min:3|max:32',
             'email' => 'unique:users|required|email:filter',
             'phone' => 'nullable|size:9',
-            'superior' => 'required'
+            'superior' => 'nullable'
         ]);
 
         $superior = Request::get('superior') ? Request::get('superior') : NULL;
         $user_id = Request::get('superior') ? 2 : 4;
+
+        if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN)
+            $superior = Auth::user()->fire_brigade_unit_id;
 
         // $google2fa = app('pragmarx.google2fa');
         // $key = $google2fa->generateSecretKey();
@@ -73,7 +76,7 @@ class FireBrigadeUnitController extends Controller
     }
 
     public function update(FireBrigadeUnit $fireBrigadeUnit)
-    {   
+    {
         $this->authorize('update', $fireBrigadeUnit, FireBrigadeUnit::class);
 
         $fireBrigadeUnit->update(
