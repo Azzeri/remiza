@@ -53,7 +53,9 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->privilege_id == Privilege::IS_GLOBAL_ADMIN ||
+            ($user->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN && ($model->fire_brigade_unit_id == $user->fire_brigade_unit_id || ($model->fireBrigadeUnit->superior_unit_id && $model->fireBrigadeUnit->superior_unit_id == $user->fire_brigade_unit_id))) ||
+            $user->privilege_id == Privilege::IS_LOWLY_UNIT_ADMIN && ($model->fire_brigade_unit_id == $user->fire_brigade_unit_id);
     }
 
     /**

@@ -93,6 +93,8 @@ class UserController extends Controller
 
     public function update(User $user)
     {
+        $this->authorize('update', $user, User::class);
+
         $user->update(
             Request::validate([
                 'name' => 'required|string|min:3|max:32',
