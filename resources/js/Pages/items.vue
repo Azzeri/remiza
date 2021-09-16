@@ -227,9 +227,12 @@ export default {
             this.editMode=false;
         },
         reset: function () {
-            this.stencil = this.defaultStencil
-            this.resetForm()
-            this.checkFields
+            if(this.items.data.length)
+            {
+                this.stencil = this.defaultStencil
+                this.resetForm()
+                this.checkFields
+            }
         },
         resetForm: function () {
           this.form = {

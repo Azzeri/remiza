@@ -56,6 +56,9 @@
                                             <BreezeDropdownLink :href="route('set.details',id=1)" method="get" as="button">
                                                 Zestawy
                                             </BreezeDropdownLink>
+                                            <BreezeDropdownLink :href="route('stencils.index')" method="get" as="button">
+                                                Szablony
+                                            </BreezeDropdownLink>
                                         </template>
                                     </BreezeDropdown>
                                 </div>
@@ -124,6 +127,9 @@
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('set.details',id=1)" :active="route().current('set.details')">
                             Zestawy
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('stencils.index')" :active="route().current('stencils.index')">
+                            Szablony
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('scanner')" :active="route().current('scanner')">
                             Skanuj

@@ -11,6 +11,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\ItemDatabaseController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
@@ -54,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']]);
+        Route::resource('stencils', ItemDatabaseController::class, ['names' => ['index' => 'stencils.index']]);
+
         // Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
 
         // Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details')->middleware('belongsToUnit:item');
