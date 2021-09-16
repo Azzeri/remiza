@@ -14,9 +14,18 @@ class Item extends Model
     protected $cascadeDeletes = ['services','usages'];
 
     protected $fillable = [
-        'expiry_date',
+        'construction_number',
+        'inventory_number',
+        'identification_number',
+        'name',
+        'date_expiry',
+        'date_legalisation',
+        'date_legalisation_due',
+        'date_production',
         'item_database_id',
         'fire_brigade_unit_id',
+        'manufacturer_id',
+        'vehicle_id',
         'activated'
     ];
 
@@ -40,6 +49,11 @@ class Item extends Model
         return $this->belongsTo(ItemDatabase::class, 'item_database_id');
     }
 
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
     public function fireBrigadeUnit()
     {
         return $this->belongsTo(FireBrigadeUnit::class);
@@ -47,7 +61,7 @@ class Item extends Model
 
     public function manufacturer()
     {
-        return $this->databaseItems()->with('manufacturer');
+        return $this->belongsTo(Manufacturer::class);
     }
 
     public function sets()

@@ -11,12 +11,23 @@
 
             <Table :data="items.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in items.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.database_items.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.cathegory.cathegory.name }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.manufacturer.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.construction_number }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.inventory_number }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.identification_number }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_production }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_expiry }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation_due }}</td>
+                    <td v-if="row.manufacturer" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.name }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3"></td>
+                    <td v-if="row.vehicle" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.vehicle.name }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3"></td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.fire_brigade_unit.name }}</td>
-                    <td v-if="row.expiry_date != '9999-01-01'" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.expiry_date}}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">Ważny bezterminowo</td>
+                     <!--<td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.manufacturer.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.fire_brigade_unit.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.expiry_date}}</td> -->
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
@@ -30,17 +41,65 @@
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
         <form @submit.prevent="save, update">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+
+                <div class="text-text-200 font-bold text-lg mb-4">
+					<h3>Dodawanie przedmiotu</h3>
+				</div>
+
                 <div v-if="!editMode" class="mb-4">
-                    <BreezeLabel for="cathegoryField" value="Kategoria" />
-                    <select class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="cathegoryField" v-model="cathegory">
-                        <template v-for="row in cathegories" :key="row.id">
-                            <option v-if="row.itemsdb.length" :value="row.id">
-                                {{row.name}}
-                            </option> 
+                    <BreezeLabel for="stencilField" value="Szablon" />
+                    <select @change="checkFields" id="stencilField" v-model="stencil" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        <template v-for="row in dbitems" :key="row.id">
+                            <option :value="row">
+                                {{row.stencil_name}}
+                            </option>
                         </template>                         
                     </select>
+                    <div class="text-red-500" v-if="errors.stencil">{{ errors.stencil }}</div>
                 </div>
-                <div v-if="!editMode" class="mb-4">
+
+                <template v-for="row in textFields" :key="row.value">
+                    <div class="mb-4">                 
+                        <BreezeLabel :for="row.value" :value="row.name" />
+                        <BreezeInput :id="row.value" type="text" class="mt-1 block w-full" v-model="form[row.value]" :placeholder="row.name" />  
+                        <div class="text-red-500" v-if="errors[row.value]">{{ errors[row.value] }}</div>
+                    </div>
+                </template> 
+
+                <template v-for="row in dateFields" :key="row.value">
+                    <div class="mb-4">                 
+                        <BreezeLabel :for="row.value" :value="row.name" />
+                        <BreezeInput :id="row.value" type="date" class="mt-1 block w-full" v-model="form[row.value]" :placeholder="row.name" /> 
+                        <div class="text-red-500" v-if="errors[row.value]">{{ errors[row.value] }}</div>
+                    </div>
+                </template> 
+
+                <template v-for="row in selectFields" :key="row.value">
+                    <div class="mb-4">                 
+                        <BreezeLabel :for="row.value" :value="row.name" />
+                        <select :id="row.value" v-model="form[row.value]" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <template v-for="row_data in row.data" :key="row_data.id">
+                                <option :value="row_data.id">
+                                    {{row_data.name}}
+                                </option>
+                            </template>
+                        </select>
+                        <div class="text-red-500" v-if="errors[row.value]">{{ errors[row.value] }}</div>
+                    </div>
+                </template>
+
+                <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
+                    <BreezeLabel for="unitField" value="Remiza" />
+                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
+                        <template v-for="fbunit in units" :key="fbunit.id">
+                            <option :value="fbunit.id">
+                                {{fbunit.name}}
+                            </option>
+                        </template>
+                    </select>
+                    <div class="text-red-500" v-if="errors.unit">{{ errors.unit }}</div>
+                </div> 
+                <!-- <div v-if="!editMode" class="mb-4">
                     <BreezeLabel for="itemField" value="Przedmiot" />
                     <select class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="itemField" v-model="form.item">
                         <template v-for="row in dbitems" :key="row.id">
@@ -58,19 +117,12 @@
                 <div class="mb-4" v-if="!form.checked">
                     <BreezeLabel for="dateField" value="Data ważności" />                
                     <input id="dateField" type="date" v-model="form.date" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                </div>
-                <div v-show="$page.props.auth.user.privilege_id == 1 && !editMode" class="mb-4">
-                    <BreezeLabel for="unitField" value="Remiza" />
-                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
-                        <template v-for="fbunit in units" :key="fbunit.id">
-                            <option :value="fbunit.id">
-                                {{fbunit.name}}
-                            </option>
-                        </template>
-                    </select>
-                </div>                           
+                </div> -->
+                                          
             </div>    
         </form>
+        <!-- {{form}} -->
+        <!-- {{stencil}} -->
     </Modal>
 </template>
 
@@ -90,7 +142,8 @@ import Pagination from "@/Components/Pagination.vue";
 export default {
     props: {
         items: Object,
-        cathegories: Object,
+        manufacturers: Object,
+        vehicles: Object,
         dbitems: Object,
         errors: Object,
         units: Object,
@@ -118,23 +171,73 @@ export default {
         return {
             editMode: false,
             isOpen: false,
-            cathegory: null,
+            stencil: this.defaultStencil,
             form: {
-                item: null,
-                date: null,
-                checked: true,
-                unit: this.defaultUnit
+                construction_number: null,
+                inventory_number: null,
+                identification_number: null,
+                name:null,
+                date_production:null,
+                date_expiry:null,
+                date_legalisation:null,
+                date_legalisation_due:null,
+                manufacturer:this.defaultManufacturer,
+                vehicle: this.defaultVehicle,
+                unit: this.defaultUnit,
+                stencil:null
             },
-            throws:['Nazwa','Kategoria','Producent', 'Remiza', 'Data ważności', 'Działania'],
+            throws:['Kategoria','Nazwa','Nr fabryczny', 'Nr inwentarzowy','Nr ewidencyjny', 'Data produkcji',
+            'Data ważności', 'Data Legalizacji','Termin Legalizacji','Producent', 'Samochód', 'Remiza', 'Działania'],
+            selectFields: [],
+            textFields: [],
+            dateFields: []
         }
     },
-        computed: {
-        defaultUnit(){
+    computed: {
+        defaultUnit() {
             if (this.units.length)
                 return this.units[0].id
+        },
+        defaultStencil() {
+            if (this.dbitems.length)
+                return this.dbitems[0]
+        },
+        defaultManufacturer() {
+            if (this.manufacturers.length && this.fieldIsTrue(this.stencil.manufacturer))
+                return this.manufacturers[0].id
+            else return null
+        },
+        defaultVehicle() {
+            if (this.vehicles.length && this.fieldIsTrue(this.stencil.vehicle))
+                return this.vehicles[0].id
+            else return null
+        },
+        checkFields() {
+            this.textFields = []
+            this.selectFields = []
+            this.dateFields = []
+            this.resetForm()
+            this.form.stencil = this.stencil.id
+
+            this.fieldIsTrue(this.stencil.construction_number) ? this.textFields.push({value:'construction_number', name:'Numer fabryczny'}):true;
+            this.fieldIsTrue(this.stencil.inventory_number) ? this.textFields.push({value:'inventory_number', name:'Numer inwentarzowy'}):true;
+            this.fieldIsTrue(this.stencil.identification_number) ? this.textFields.push({value:'identification_number', name:'Numer ewidencyjny'}):true;
+            this.fieldIsTrue(this.stencil.name) ? this.textFields.push({value:'name', name:'Nazwa'}):true;
+
+            this.fieldIsTrue(this.stencil.date_production) ? this.dateFields.push({value:'date_production', name:'Data produkcji'}):true;
+            this.fieldIsTrue(this.stencil.date_expiry) ? this.dateFields.push({value:'date_expiry', name:'Data ważności'}):true;
+            this.fieldIsTrue(this.stencil.date_legalisation) ? this.dateFields.push({value:'date_legalisation', name:'Data legalizacji'}):true;
+            this.fieldIsTrue(this.stencil.date_legalisation_due) ? this.dateFields.push({value:'date_legalisation_due', name:'Termin legalizacji'}):true;
+
+            this.fieldIsTrue(this.stencil.manufacturer) ? this.selectFields.push({value:'manufacturer', name:'Producent', data:this.manufacturers}):true;
+            this.fieldIsTrue(this.stencil.vehicle) ? this.selectFields.push({value:'vehicle', name:'Samochód', data:this.vehicles}):true;
+
         }
     },
     methods: {
+        fieldIsTrue: function(field){
+            return field ? true:false;
+        },
         openModal: function () {
             this.isOpen = true;
         },
@@ -144,11 +247,24 @@ export default {
             this.editMode=false;
         },
         reset: function () {
-            this.form = {
-                item: null,
-                date: null,
-                checked: true,
-                unit: this.defaultUnit
+            this.stencil = this.defaultStencil
+            this.resetForm()
+            this.checkFields
+        },
+        resetForm: function () {
+          this.form = {
+                construction_number: null,
+                inventory_number: null,
+                identification_number: null,
+                name:null,
+                date_production:null,
+                date_expiry:null,
+                date_legalisation:null,
+                date_legalisation_due:null,
+                manufacturer:this.defaultManufacturer,
+                vehicle: this.defaultVehicle,
+                unit: this.defaultUnit,
+                stencil:null
             }
         },
         save: function (data) {

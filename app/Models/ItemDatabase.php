@@ -14,6 +14,7 @@ class ItemDatabase extends Model
     protected $cascadeDeletes = ['items'];
 
     protected $fillable = [
+        'stencil_name',
         'construction_number',
         'inventory_number',
         'identification_number',
@@ -23,7 +24,8 @@ class ItemDatabase extends Model
         'date_production',
         'name',
         'manufacturer',
-        'vehicle'
+        'vehicle',
+        'cathegory_id'
     ];
 
     public function cathegory()

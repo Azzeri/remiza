@@ -19527,7 +19527,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     items: Object,
-    cathegories: Object,
+    manufacturers: Object,
+    vehicles: Object,
     dbitems: Object,
     errors: Object,
     units: Object
@@ -19553,22 +19554,94 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editMode: false,
       isOpen: false,
-      cathegory: null,
+      stencil: this.defaultStencil,
       form: {
-        item: null,
-        date: null,
-        checked: true,
-        unit: this.defaultUnit
+        construction_number: null,
+        inventory_number: null,
+        identification_number: null,
+        name: null,
+        date_production: null,
+        date_expiry: null,
+        date_legalisation: null,
+        date_legalisation_due: null,
+        manufacturer: this.defaultManufacturer,
+        vehicle: this.defaultVehicle,
+        unit: this.defaultUnit,
+        stencil: null
       },
-      "throws": ['Nazwa', 'Kategoria', 'Producent', 'Remiza', 'Data ważności', 'Działania']
+      "throws": ['Kategoria', 'Nazwa', 'Nr fabryczny', 'Nr inwentarzowy', 'Nr ewidencyjny', 'Data produkcji', 'Data ważności', 'Data Legalizacji', 'Termin Legalizacji', 'Producent', 'Samochód', 'Remiza', 'Działania'],
+      selectFields: [],
+      textFields: [],
+      dateFields: []
     };
   },
   computed: {
     defaultUnit: function defaultUnit() {
       if (this.units.length) return this.units[0].id;
+    },
+    defaultStencil: function defaultStencil() {
+      if (this.dbitems.length) return this.dbitems[0];
+    },
+    defaultManufacturer: function defaultManufacturer() {
+      if (this.manufacturers.length && this.fieldIsTrue(this.stencil.manufacturer)) return this.manufacturers[0].id;else return null;
+    },
+    defaultVehicle: function defaultVehicle() {
+      if (this.vehicles.length && this.fieldIsTrue(this.stencil.vehicle)) return this.vehicles[0].id;else return null;
+    },
+    checkFields: function checkFields() {
+      this.textFields = [];
+      this.selectFields = [];
+      this.dateFields = [];
+      this.resetForm();
+      this.form.stencil = this.stencil.id;
+      this.fieldIsTrue(this.stencil.construction_number) ? this.textFields.push({
+        value: 'construction_number',
+        name: 'Numer fabryczny'
+      }) : true;
+      this.fieldIsTrue(this.stencil.inventory_number) ? this.textFields.push({
+        value: 'inventory_number',
+        name: 'Numer inwentarzowy'
+      }) : true;
+      this.fieldIsTrue(this.stencil.identification_number) ? this.textFields.push({
+        value: 'identification_number',
+        name: 'Numer ewidencyjny'
+      }) : true;
+      this.fieldIsTrue(this.stencil.name) ? this.textFields.push({
+        value: 'name',
+        name: 'Nazwa'
+      }) : true;
+      this.fieldIsTrue(this.stencil.date_production) ? this.dateFields.push({
+        value: 'date_production',
+        name: 'Data produkcji'
+      }) : true;
+      this.fieldIsTrue(this.stencil.date_expiry) ? this.dateFields.push({
+        value: 'date_expiry',
+        name: 'Data ważności'
+      }) : true;
+      this.fieldIsTrue(this.stencil.date_legalisation) ? this.dateFields.push({
+        value: 'date_legalisation',
+        name: 'Data legalizacji'
+      }) : true;
+      this.fieldIsTrue(this.stencil.date_legalisation_due) ? this.dateFields.push({
+        value: 'date_legalisation_due',
+        name: 'Termin legalizacji'
+      }) : true;
+      this.fieldIsTrue(this.stencil.manufacturer) ? this.selectFields.push({
+        value: 'manufacturer',
+        name: 'Producent',
+        data: this.manufacturers
+      }) : true;
+      this.fieldIsTrue(this.stencil.vehicle) ? this.selectFields.push({
+        value: 'vehicle',
+        name: 'Samochód',
+        data: this.vehicles
+      }) : true;
     }
   },
   methods: {
+    fieldIsTrue: function fieldIsTrue(field) {
+      return field ? true : false;
+    },
     openModal: function openModal() {
       this.isOpen = true;
     },
@@ -19578,11 +19651,24 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = false;
     },
     reset: function reset() {
+      this.stencil = this.defaultStencil;
+      this.resetForm();
+      this.checkFields;
+    },
+    resetForm: function resetForm() {
       this.form = {
-        item: null,
-        date: null,
-        checked: true,
-        unit: this.defaultUnit
+        construction_number: null,
+        inventory_number: null,
+        identification_number: null,
+        name: null,
+        date_production: null,
+        date_expiry: null,
+        date_legalisation: null,
+        date_legalisation_due: null,
+        manufacturer: this.defaultManufacturer,
+        vehicle: this.defaultVehicle,
+        unit: this.defaultUnit,
+        stencil: null
       };
     },
     save: function save(data) {
@@ -23707,47 +23793,85 @@ var _hoisted_4 = {
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_5 = {
-  key: 0,
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_6 = {
-  key: 1,
   "class": "h-10 sm:h-auto border-primary-200 border p-3"
 };
 var _hoisted_7 = {
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_8 = {
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_9 = {
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_10 = {
+  key: 0,
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_11 = {
+  key: 1,
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_12 = {
+  key: 2,
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_13 = {
+  key: 3,
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_14 = {
+  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+};
+var _hoisted_15 = {
   "class": "h-10 sm:h-auto border-primary-200 border text-center p-3"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "far fa-eye fa-lg ml-2 cursor-pointer"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_9 = {
+var _hoisted_17 = {
   "class": "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
 };
-var _hoisted_10 = {
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "text-text-200 font-bold text-lg mb-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "Dodawanie przedmiotu")], -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
   key: 0,
   "class": "mb-4"
 };
-var _hoisted_11 = {
-  key: 1,
-  "class": "mb-4"
-};
-var _hoisted_12 = {
+var _hoisted_20 = {
   key: 0,
   "class": "text-red-500"
 };
-var _hoisted_13 = {
-  "class": "mb-4 flex"
+var _hoisted_21 = {
+  key: 0,
+  "class": "text-red-500"
 };
-var _hoisted_14 = {
-  key: 2,
+var _hoisted_22 = {
+  key: 0,
+  "class": "text-red-500"
+};
+var _hoisted_23 = {
+  key: 0,
+  "class": "text-red-500"
+};
+var _hoisted_24 = {
   "class": "mb-4"
 };
-var _hoisted_15 = {
-  "class": "mb-4"
+var _hoisted_25 = {
+  key: 0,
+  "class": "text-red-500"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -23767,6 +23891,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BreezeAuthenticatedLayout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeAuthenticatedLayout");
 
   var _component_BreezeLabel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeLabel");
+
+  var _component_BreezeInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeInput");
 
   var _component_Modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Modal");
 
@@ -23803,17 +23929,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
                   key: row.id,
                   "class": "flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20"
-                }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.database_items.name), 1
+                }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.cathegory.cathegory.name), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.cathegory.cathegory.name), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.manufacturer.manufacturer.name), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.construction_number), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.fire_brigade_unit.name), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.inventory_number), 1
                 /* TEXT */
-                ), row.expiry_date != '9999-01-01' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.expiry_date), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.identification_number), 1
                 /* TEXT */
-                )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_6, "Ważny bezterminowo")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.date_production), 1
+                /* TEXT */
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.date_expiry), 1
+                /* TEXT */
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.date_legalisation), 1
+                /* TEXT */
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.date_legalisation_due), 1
+                /* TEXT */
+                ), row.manufacturer ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.manufacturer.name), 1
+                /* TEXT */
+                )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_11)), row.vehicle ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.vehicle.name), 1
+                /* TEXT */
+                )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_13)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.fire_brigade_unit.name), 1
+                /* TEXT */
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<td class=\"h-10 sm:h-auto border-primary-200 border p-3\">{{ row.manufacturer.manufacturer.name }}</td>\n                    <td class=\"h-10 sm:h-auto border-primary-200 border p-3\">{{ row.fire_brigade_unit.name }}</td>\n                    <td class=\"h-10 sm:h-auto border-primary-200 border p-3\">{{ row.expiry_date}}</td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
                     return $options.edit(row);
                   },
@@ -23831,7 +23971,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   href: 'items/' + row.id
                 }, {
                   "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-                    return [_hoisted_8];
+                    return [_hoisted_16];
                   }),
                   _: 2
                   /* DYNAMIC */
@@ -23873,89 +24013,120 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-        onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
           return $options.save, $options.update;
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [!$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
-        "for": "cathegoryField",
-        value: "Kategoria"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [_hoisted_18, !$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+        "for": "stencilField",
+        value: "Szablon"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
-        id: "cathegoryField",
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.cathegory = $event;
-        })
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.cathegories, function (row) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-          key: row.id
-        }, [row.itemsdb.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: 0,
-          value: row.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 9
-        /* TEXT, PROPS */
-        , ["value"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
-        /* STABLE_FRAGMENT */
-        );
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.cathegory]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
-        "for": "itemField",
-        value: "Przedmiot"
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
-        id: "itemField",
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.form.item = $event;
-        })
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.dbitems, function (row) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-          key: row.id
-        }, [row.cathegory_id == $data.cathegory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: 0,
-          value: row.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 9
-        /* TEXT, PROPS */
-        , ["value"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
-        /* STABLE_FRAGMENT */
-        );
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.item]]), $props.errors.item ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.item), 1
-      /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-        type: "checkbox",
-        id: "checkbox",
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.form.checked = $event;
+        onChange: _cache[1] || (_cache[1] = function () {
+          return $options.checkFields && $options.checkFields.apply($options, arguments);
         }),
-        "class": "rounded"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.form.checked]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
-        "for": "checkbox",
-        value: "Ważny bezterminowo",
-        "class": "ml-2"
-      })]), !$data.form.checked ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
-        "for": "dateField",
-        value: "Data ważności"
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-        id: "dateField",
-        type: "date",
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-          return $data.form.date = $event;
+        id: "stencilField",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $data.stencil = $event;
         }),
         "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.date]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.dbitems, function (row) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+          key: row.id,
+          value: row
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.stencil_name), 9
+        /* TEXT, PROPS */
+        , ["value"]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.stencil]]), $props.errors.stencil ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.stencil), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.textFields, function (row) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+          key: row.value,
+          "class": "mb-4"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+          "for": row.value,
+          value: row.name
+        }, null, 8
+        /* PROPS */
+        , ["for", "value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+          id: row.value,
+          type: "text",
+          "class": "mt-1 block w-full",
+          modelValue: $data.form[row.value],
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return $data.form[row.value] = $event;
+          },
+          placeholder: row.name
+        }, null, 8
+        /* PROPS */
+        , ["id", "modelValue", "onUpdate:modelValue", "placeholder"]), $props.errors[row.value] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors[row.value]), 1
+        /* TEXT */
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.dateFields, function (row) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+          key: row.value,
+          "class": "mb-4"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+          "for": row.value,
+          value: row.name
+        }, null, 8
+        /* PROPS */
+        , ["for", "value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+          id: row.value,
+          type: "date",
+          "class": "mt-1 block w-full",
+          modelValue: $data.form[row.value],
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return $data.form[row.value] = $event;
+          },
+          placeholder: row.name
+        }, null, 8
+        /* PROPS */
+        , ["id", "modelValue", "onUpdate:modelValue", "placeholder"]), $props.errors[row.value] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors[row.value]), 1
+        /* TEXT */
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.selectFields, function (row) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+          key: row.value,
+          "class": "mb-4"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+          "for": row.value,
+          value: row.name
+        }, null, 8
+        /* PROPS */
+        , ["for", "value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+          id: row.value,
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return $data.form[row.value] = $event;
+          },
+          "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm"
+        }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(row.data, function (row_data) {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+            key: row_data.id,
+            value: row_data.id
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row_data.name), 9
+          /* TEXT, PROPS */
+          , ["value"]);
+        }), 128
+        /* KEYED_FRAGMENT */
+        ))], 8
+        /* PROPS */
+        , ["id", "onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form[row.value]]]), $props.errors[row.value] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors[row.value]), 1
+        /* TEXT */
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "unitField",
         value: "Remiza"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $data.form.unit = $event;
         }),
         "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
@@ -23971,11 +24142,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]])], 512
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]]), $props.errors.unit ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.unit), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == 1 && !$data.editMode]])])], 32
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$data.editMode]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-if=\"!editMode\" class=\"mb-4\">\n                    <BreezeLabel for=\"itemField\" value=\"Przedmiot\" />\n                    <select class=\"border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm\" id=\"itemField\" v-model=\"form.item\">\n                        <template v-for=\"row in dbitems\" :key=\"row.id\">\n                            <option v-if=\"row.cathegory_id == cathegory\" :value=\"row.id\">\n                                {{row.name}}\n                            </option> \n                        </template>                         \n                    </select>\n                    <div class=\"text-red-500\" v-if=\"errors.item\">{{ errors.item }}</div>\n                </div>\n                <div class=\"mb-4 flex\">\n                    <input type=\"checkbox\" id=\"checkbox\" v-model=\"form.checked\" class=\"rounded\" />              \n                    <BreezeLabel for=\"checkbox\" value=\"Ważny bezterminowo\" class=\"ml-2\"/>  \n                </div>\n                <div class=\"mb-4\" v-if=\"!form.checked\">\n                    <BreezeLabel for=\"dateField\" value=\"Data ważności\" />                \n                    <input id=\"dateField\" type=\"date\" v-model=\"form.date\" class=\"border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm\">\n                </div> ")])], 32
       /* HYDRATE_EVENTS */
-      )];
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{form}} "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{stencil}} ")];
     }),
     _: 1
     /* STABLE */
