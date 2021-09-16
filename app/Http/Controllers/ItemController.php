@@ -130,13 +130,17 @@ class ItemController extends Controller
 
     public function history($id)
     {
+        $this->authorize('view', Item::find($id), Item::class);
+
         $services = Service::where('item_id', $id)->where('is_performed', 1)->with('serviceDatabase', 'user')->orderBy('perform_date', 'desc')->get();
         $usages = Usage::where('item_id', $id)->with('user')->orderBy('usage_date', 'desc')->get();
+
         return Inertia::render('history', ['services' => $services, 'usages' => $usages]);
     }
 
     public function itemDetails(Item $item)
     {
+        $this->authorize('view', $item, Item::class);
 
         $dbservices = ServiceDatabase::where('cathegory_id', $item->databaseItems->cathegory_id)->get();
         $services = Service::where('item_id', $item->id)->with('serviceDatabase', 'user')->get();
