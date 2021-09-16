@@ -53,6 +53,22 @@ class ItemDatabaseSeeder extends Seeder
             'vehicle'=> true,
             'cathegory_id' => 13
         ]);
+
+        ItemDatabase::create([
+            'stencil_name'=> 'One To Rule Them All',
+            'construction_number'=> true,
+            'identification_number'=> true,
+            'date_legalisation_due'=> true,
+            'date_production'=> true,
+            'manufacturer'=> true,
+            'vehicle'=> true,
+            'cathegory_id' => 13,
+            'inventory_number'=> true,
+            'date_expiry'=> true,
+            'date_legalisation'=> true,
+            'name'=> true,
+        ]);
+
         // DB::table('item_databases')->insert([
         //     'name' => 'Hełm Strażacki Biały',
         //     'cathegory_id' => 1,

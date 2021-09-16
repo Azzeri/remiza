@@ -19636,6 +19636,9 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Samochód',
         data: this.vehicles
       }) : true;
+    },
+    title: function title() {
+      return !this.editMode ? 'Dodawanie przedmiotu' : 'Edycja przedmiotu';
     }
   },
   methods: {
@@ -19679,11 +19682,13 @@ __webpack_require__.r(__webpack_exports__);
           return _this.closeModal();
         }
       });
-      this.reset();
     },
     edit: function edit(data) {
+      this.stencil = data.database_items;
+      this.checkFields;
       this.form = Object.assign({}, data);
-      this.form.date = data.expiry_date;
+      if (data.manufacturer) this.form.manufacturer = data.manufacturer.id;
+      if (data.vehicle) this.form.vehicle = data.vehicle.id;
       this.editMode = true;
       this.openModal();
     },
@@ -23839,13 +23844,9 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_17 = {
   "class": "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
 };
-
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_18 = {
   "class": "text-text-200 font-bold text-lg mb-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, "Dodawanie przedmiotu")], -1
-/* HOISTED */
-);
-
+};
 var _hoisted_19 = {
   key: 0,
   "class": "mb-4"
@@ -23953,7 +23954,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* TEXT */
                 )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_13)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.fire_brigade_unit.name), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<td class=\"h-10 sm:h-auto border-primary-200 border p-3\">{{ row.manufacturer.manufacturer.name }}</td>\n                    <td class=\"h-10 sm:h-auto border-primary-200 border p-3\">{{ row.fire_brigade_unit.name }}</td>\n                    <td class=\"h-10 sm:h-auto border-primary-200 border p-3\">{{ row.expiry_date}}</td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
                     return $options.edit(row);
                   },
@@ -24016,7 +24017,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
           return $options.save, $options.update;
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [_hoisted_18, !$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.title), 1
+      /* TEXT */
+      )]), !$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "stencilField",
         value: "Szablon"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
@@ -24146,7 +24149,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$data.editMode]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-if=\"!editMode\" class=\"mb-4\">\n                    <BreezeLabel for=\"itemField\" value=\"Przedmiot\" />\n                    <select class=\"border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm\" id=\"itemField\" v-model=\"form.item\">\n                        <template v-for=\"row in dbitems\" :key=\"row.id\">\n                            <option v-if=\"row.cathegory_id == cathegory\" :value=\"row.id\">\n                                {{row.name}}\n                            </option> \n                        </template>                         \n                    </select>\n                    <div class=\"text-red-500\" v-if=\"errors.item\">{{ errors.item }}</div>\n                </div>\n                <div class=\"mb-4 flex\">\n                    <input type=\"checkbox\" id=\"checkbox\" v-model=\"form.checked\" class=\"rounded\" />              \n                    <BreezeLabel for=\"checkbox\" value=\"Ważny bezterminowo\" class=\"ml-2\"/>  \n                </div>\n                <div class=\"mb-4\" v-if=\"!form.checked\">\n                    <BreezeLabel for=\"dateField\" value=\"Data ważności\" />                \n                    <input id=\"dateField\" type=\"date\" v-model=\"form.date\" class=\"border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm\">\n                </div> ")])], 32
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$data.editMode]])])], 32
       /* HYDRATE_EVENTS */
       ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{form}} "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{stencil}} ")];
     }),

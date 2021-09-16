@@ -49,15 +49,6 @@ class ItemController extends Controller
         return Inertia::render('items', ['items' => $items, 'manufacturers' => $manufacturers, 'dbitems' => $dbitems, 'units' => $units, 'vehicles' => $vehicles]);
     }
 
-    public function itemDetails(Item $item)
-    {
-
-        $dbservices = ServiceDatabase::where('cathegory_id', $item->databaseItems->cathegory_id)->get();
-        $services = Service::where('item_id', $item->id)->with('serviceDatabase', 'user')->get();
-
-        return Inertia::render('itemDetails', ['item' => $item, 'services' => $services, 'dbservices' => $dbservices]);
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -79,7 +70,7 @@ class ItemController extends Controller
 
         Item::create([
             'construction_number' => $request->construction_number,
-            'inventory_number' => $request->construction_number,
+            'inventory_number' => $request->inventory_number,
             'identification_number' => $request->identification_number,
             'name' => $request->name,
             'date_expiry' => $request->date_expiry,
@@ -96,28 +87,43 @@ class ItemController extends Controller
             ->with('message', 'Sukces');
     }
 
-    public function destroy(Item $item)
+    public function update(Request $request, Item $item)
     {
-        $item->delete();
+        $this->authorize('update', $item, Item::class);
+
+        $request->validate([
+            'construction_number' => 'nullable|string|min:3|max:32',
+            'inventory_number' => 'nullable|string|min:3|max:32',
+            'identification_number' => 'nullable|string|min:3|max:32',
+            'name' => 'nullable|string|min:3|max:32|alpha',
+            'date_production' => 'nullable|date',
+            'date_expiry' => 'nullable|date',
+            'date_legalisation' => 'nullable|date',
+            'date_legalisation_due' => 'nullable|date',
+        ]);
+
+        $item->update([
+            'construction_number' => $request->construction_number,
+            'inventory_number' => $request->inventory_number,
+            'identification_number' => $request->identification_number,
+            'name' => $request->name,
+            'date_expiry' => $request->date_expiry,
+            'date_legalisation' => $request->date_legalisation,
+            'date_legalisation_due' => $request->date_legalisation_due,
+            'date_production' => $request->date_production,
+            'manufacturer_id' => $request->manufacturer,
+            'vehicle_id' => $request->vehicle,
+        ]);
+
         return redirect()->back()
             ->with('message', 'Sukces');
     }
 
-    public function update(Request $request, Item $item)
+    public function destroy(Item $item)
     {
-        if ($request->checked == true)
-            $date = '9999-01-01';
-        else {
-            $request->validate([
-                'date' => ['required'],
-            ]);
-            $date = $request->date;
-        };
+        $this->authorize('delete', $item, Item::class);
 
-
-        $item->expiry_date = $date;
-        $item->save();
-
+        $item->delete();
         return redirect()->back()
             ->with('message', 'Sukces');
     }
@@ -127,5 +133,14 @@ class ItemController extends Controller
         $services = Service::where('item_id', $id)->where('is_performed', 1)->with('serviceDatabase', 'user')->orderBy('perform_date', 'desc')->get();
         $usages = Usage::where('item_id', $id)->with('user')->orderBy('usage_date', 'desc')->get();
         return Inertia::render('history', ['services' => $services, 'usages' => $usages]);
+    }
+
+    public function itemDetails(Item $item)
+    {
+
+        $dbservices = ServiceDatabase::where('cathegory_id', $item->databaseItems->cathegory_id)->get();
+        $services = Service::where('item_id', $item->id)->with('serviceDatabase', 'user')->get();
+
+        return Inertia::render('itemDetails', ['item' => $item, 'services' => $services, 'dbservices' => $dbservices]);
     }
 }

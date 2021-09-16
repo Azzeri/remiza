@@ -53,7 +53,8 @@ class ItemPolicy
      */
     public function update(User $user, Item $item)
     {
-        //
+        return $user->privilege_id == Privilege::IS_GLOBAL_ADMIN || $item->fire_brigade_unit_id == $user->fire_brigade_unit_id
+            || ($user->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN && $item->fireBrigadeUnit->superior_unit_id == $user->fire_brigade_unit_id);
     }
 
     /**
@@ -65,7 +66,8 @@ class ItemPolicy
      */
     public function delete(User $user, Item $item)
     {
-        //
+        return $user->privilege_id == Privilege::IS_GLOBAL_ADMIN || $item->fire_brigade_unit_id == $user->fire_brigade_unit_id
+            || ($user->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN && $item->fireBrigadeUnit->superior_unit_id == $user->fire_brigade_unit_id);
     }
 
     /**

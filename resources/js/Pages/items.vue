@@ -25,9 +25,6 @@
                     <td v-if="row.vehicle" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.vehicle.name }}</td>
                     <td v-else class="h-10 sm:h-auto border-primary-200 border p-3"></td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.fire_brigade_unit.name }}</td>
-                     <!--<td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.manufacturer.name }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.fire_brigade_unit.name }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.expiry_date}}</td> -->
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
@@ -43,7 +40,7 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 
                 <div class="text-text-200 font-bold text-lg mb-4">
-					<h3>Dodawanie przedmiotu</h3>
+					<h3>{{title}}</h3>
 				</div>
 
                 <div v-if="!editMode" class="mb-4">
@@ -98,27 +95,7 @@
                         </template>
                     </select>
                     <div class="text-red-500" v-if="errors.unit">{{ errors.unit }}</div>
-                </div> 
-                <!-- <div v-if="!editMode" class="mb-4">
-                    <BreezeLabel for="itemField" value="Przedmiot" />
-                    <select class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="itemField" v-model="form.item">
-                        <template v-for="row in dbitems" :key="row.id">
-                            <option v-if="row.cathegory_id == cathegory" :value="row.id">
-                                {{row.name}}
-                            </option> 
-                        </template>                         
-                    </select>
-                    <div class="text-red-500" v-if="errors.item">{{ errors.item }}</div>
-                </div>
-                <div class="mb-4 flex">
-                    <input type="checkbox" id="checkbox" v-model="form.checked" class="rounded" />              
-                    <BreezeLabel for="checkbox" value="Ważny bezterminowo" class="ml-2"/>  
-                </div>
-                <div class="mb-4" v-if="!form.checked">
-                    <BreezeLabel for="dateField" value="Data ważności" />                
-                    <input id="dateField" type="date" v-model="form.date" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                </div> -->
-                                          
+                </div>                                         
             </div>    
         </form>
         <!-- {{form}} -->
@@ -232,6 +209,9 @@ export default {
             this.fieldIsTrue(this.stencil.manufacturer) ? this.selectFields.push({value:'manufacturer', name:'Producent', data:this.manufacturers}):true;
             this.fieldIsTrue(this.stencil.vehicle) ? this.selectFields.push({value:'vehicle', name:'Samochód', data:this.vehicles}):true;
 
+        },
+        title() {
+            return !this.editMode ? 'Dodawanie przedmiotu' : 'Edycja przedmiotu'
         }
     },
     methods: {
@@ -269,13 +249,17 @@ export default {
         },
         save: function (data) {
             this.$inertia.post('/items', data,{
-                onSuccess: () => this.closeModal(),
+                onSuccess: () => this.closeModal()
             })
-            this.reset();
         },
         edit: function (data) {
+            this.stencil = data.database_items           
+            this.checkFields
             this.form = Object.assign({}, data);
-            this.form.date = data.expiry_date;
+            if(data.manufacturer)
+                this.form.manufacturer = data.manufacturer.id
+            if(data.vehicle)
+                this.form.vehicle = data.vehicle.id
             this.editMode = true;
             this.openModal();
         },
