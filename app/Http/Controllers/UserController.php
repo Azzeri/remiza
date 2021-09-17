@@ -55,7 +55,7 @@ class UserController extends Controller
 
         Request::validate([
             'name' => 'required|string|alpha|min:3|max:32',
-            'surname' => 'required|string|alpha|min:3|max:32',
+            'surname' => 'required|string|alpha_dash|min:3|max:32',
             'phone' => 'nullable|digits:9',
             'email' => 'unique:users|required|email:filter',
             'unit' => 'nullable'
@@ -98,10 +98,10 @@ class UserController extends Controller
 
         $user->update(
             Request::validate([
-                'name' => 'required|string|min:3|max:32',
-                'surname' => 'required|string|min:3|max:32',
+                'name' => 'required|string|alpha|min:3|max:32',
+                'surname' => 'required|string|alpha_dash|min:3|max:32',
                 'email' => ['required', 'email:filter', Rule::unique('users')->ignore(User::find($user->id))],
-                'phone' => 'nullable|size:9',
+                'phone' => 'nullable|digits:9',
             ])
         );
 

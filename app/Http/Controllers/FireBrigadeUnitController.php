@@ -34,7 +34,7 @@ class FireBrigadeUnitController extends Controller
             'name' => ['unique:fire_brigade_units', 'required', 'string', 'min:3', 'max:32'],
             'address' => ['required', 'min:3', 'max:255'],
             'username' => 'required|string|alpha|min:3|max:32',
-            'surname' => 'required|string|alpha|min:3|max:32',
+            'surname' => 'required|string|alpha_dash|min:3|max:32',
             'email' => 'unique:users|required|email:filter',
             'phone' => 'nullable|digits:9',
             'superior' => 'nullable'
