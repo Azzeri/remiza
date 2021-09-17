@@ -15,4 +15,8 @@ class History extends Model
         'ip',
         'browser'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

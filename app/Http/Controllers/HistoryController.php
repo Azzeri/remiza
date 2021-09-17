@@ -14,9 +14,12 @@ use Jenssegers\Agent\Agent;
 
 class HistoryController extends Controller
 {
-    public function index(Request $request, $id)
+    public function index($id)
     {
-        $history = History::where('user_id', $id)->paginate(4);
+        $this->authorize('update', User::find($id), User::class);
+
+        $history = History::where('user_id', $id)->paginate(10);
+
         return Inertia::render('loginHistory', ['history' => $history]);
     }
 

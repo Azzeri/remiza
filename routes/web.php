@@ -49,7 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
         Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']]);
-        // Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']])->middleware('isAdmin');
         Route::resource('sets', SetController::class, ['names' => ['index' => 'sets.index']]);
         Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
         Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
@@ -57,10 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']]);
         Route::resource('stencils', ItemDatabaseController::class, ['names' => ['index' => 'stencils.index']]);
 
-        // Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']])->middleware('isGlobalAdmin');
-
-        // Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details')->middleware('belongsToUnit:item');
-        // Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details')->middleware('belongsToUnitId');
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
         Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details');
 
