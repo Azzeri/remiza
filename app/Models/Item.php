@@ -51,7 +51,7 @@ class Item extends Model
 
     public function vehicle()
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsTo(Vehicle::class)->withTrashed();
     }
 
     public function fireBrigadeUnit()
@@ -61,7 +61,7 @@ class Item extends Model
 
     public function manufacturer()
     {
-        return $this->belongsTo(Manufacturer::class);
+        return $this->belongsTo(Manufacturer::class)->withTrashed();
     }
 
     public function sets()

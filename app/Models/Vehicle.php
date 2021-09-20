@@ -14,4 +14,9 @@ class Vehicle extends Model
         'name',
         'fire_brigade_unit_id'
     ];
+
+    public function unit() 
+    {
+        return $this->belongsTo(FireBrigadeUnit::class, 'fire_brigade_unit_id');
+    }
 }

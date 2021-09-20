@@ -16,6 +16,7 @@ use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
 use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\VehicleController;
 use App\Models\Manufacturer;
 use App\Models\Vehicle;
 

@@ -35,8 +35,7 @@ class ManufacturerController extends Controller
 
         Manufacturer::create(['name' => ucfirst($request->name)]);
 
-        return redirect()->back()
-            ->with('message', 'Sukces');
+        return redirect()->back()->with('message', 'Sukces');
     }
 
     /**
