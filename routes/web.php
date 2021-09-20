@@ -15,6 +15,9 @@ use App\Http\Controllers\ItemDatabaseController;
 use App\Http\Controllers\ScannerController;
 use App\Http\Controllers\SetController;
 use App\Http\Controllers\UsageController;
+use App\Http\Controllers\ManufacturerController;
+use App\Models\Manufacturer;
+use App\Models\Vehicle;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']]);
         Route::resource('stencils', ItemDatabaseController::class, ['names' => ['index' => 'stencils.index']]);
+        Route::resource('manufacturers', ManufacturerController::class, ['names' => ['index' => 'manufacturers.index']]);
+        Route::resource('vehicles', VehicleController::class, ['names' => ['index' => 'vehicles.index']]);
 
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
         Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details');

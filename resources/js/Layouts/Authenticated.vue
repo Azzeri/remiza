@@ -59,6 +59,12 @@
                                             <BreezeDropdownLink :href="route('stencils.index')" method="get" as="button">
                                                 Szablony
                                             </BreezeDropdownLink>
+                                            <BreezeDropdownLink :href="route('manufacturers.index')" method="get" as="button">
+                                                Producenci
+                                            </BreezeDropdownLink>
+                                            <BreezeDropdownLink :href="route('vehicles.index')" method="get" as="button">
+                                                Samochody
+                                            </BreezeDropdownLink>
                                         </template>
                                     </BreezeDropdown>
                                 </div>
@@ -120,7 +126,7 @@
                             Kategorie
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('items.index')" :active="route().current('items.index')">
-                            Sprzęt
+                            Przedmioty
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN" :href="route('fireBrigadeUnits.index')" :active="route().current('fireBrigadeUnits.index')">
                             Jednostki
@@ -130,6 +136,12 @@
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('stencils.index')" :active="route().current('stencils.index')">
                             Szablony
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('manufacturers.index')" :active="route().current('manufacturers.index')">
+                            Producenci
+                        </BreezeResponsiveNavLink>
+                        <BreezeResponsiveNavLink :href="route('vehicles.index')" :active="route().current('vehicles.index')">
+                            Samochody
                         </BreezeResponsiveNavLink>
                         <BreezeResponsiveNavLink :href="route('scanner')" :active="route().current('scanner')">
                             Skanuj

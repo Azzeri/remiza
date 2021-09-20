@@ -10,6 +10,8 @@ class Manufacturer extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $cascadeDeletes = ['items'];
+
     protected $fillable = [
         'name',
     ];
