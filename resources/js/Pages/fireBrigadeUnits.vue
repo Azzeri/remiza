@@ -69,7 +69,7 @@
                         <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
                     </div>
                     <div class="mb-4">
-                        <BreezeLabel for="phoneField" value="Phone" />
+                        <BreezeLabel for="phoneField" value="Nr telefonu" />
                         <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
                         <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                     </div>   
