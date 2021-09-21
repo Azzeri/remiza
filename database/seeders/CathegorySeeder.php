@@ -57,12 +57,14 @@ class CathegorySeeder extends Seeder
 
         Cathegory::create([//10
             'name' => 'Butle kompozytowe',
-            'cathegory_id' => 9
+            'cathegory_id' => 9,
+            'fillable' => true
         ]);
 
         Cathegory::create([//11
             'name' => 'Butle stalowe',
-            'cathegory_id' => 9
+            'cathegory_id' => 9,
+            'fillable' => true
         ]);
 
         Cathegory::create([//12

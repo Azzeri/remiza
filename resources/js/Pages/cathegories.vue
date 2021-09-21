@@ -18,6 +18,7 @@
                         <span v-for="subcat in row.subcathegories" :key="subcat.id">{{subcat.name}} <span class="text-red-700"> | </span></span>
                     </td>
                     <td v-else class="h-16 sm:h-auto border-primary-200 border p-3">Brak</td>
+                    <td v-html="isTrue(row.fillable)" class="h-16 sm:h-auto border-primary-200 border p-3 text-center"></td>
                     <td class="h-16 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
@@ -46,6 +47,10 @@
                             </template>                         
                         </select>
                     </div>
+                    <div class="mb-4 flex">
+                        <Checkbox id="fillableField" v-model="form.fillable" :checked="form.fillable == 1 ? true : false"></Checkbox>
+                        <BreezeLabel for="fillableField" value="Napełnialna" class="ml-2"/>
+                    </div>
                 </div>
             </form>
         </Modal>
@@ -58,6 +63,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import BreezeButton from '@/Components/Button.vue'
 import BreezeInput from '@/Components/Input.vue'
 import BreezeLabel from '@/Components/Label.vue'
+import Checkbox from '@/Components/Checkbox.vue'
 import { Head } from '@inertiajs/inertia-vue3';
 import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
@@ -85,7 +91,8 @@ export default {
         FloatingButton,
         Pagination,
         Message,
-        PhotoForm
+        PhotoForm,
+        Checkbox
     },
 
     data() {
@@ -97,13 +104,17 @@ export default {
             form: {
                 name: null,
                 avatar: null,
-                parent: -1
+                parent: -1,
+                fillable: false
             },
-            throws:['Zdjęcie','Nazwa','Podkategorie','Działania'],
+            throws:['Zdjęcie','Nazwa','Podkategorie','Napełnialna','Działania'],
         }
     },
 
     methods: {
+        isTrue(attr){
+            return attr ? '<i class="fas fa-check fa-lg text-green-700"></i>': '<i class="fas fa-times fa-lg text-red-700"></i>'
+        },
         openModal: function () {
             this.isOpen = true;
         },
@@ -123,7 +134,8 @@ export default {
             this.form = {
                 name: null,
                 avatar: null,
-                parent: -1
+                parent: -1,
+                fillable: false
             }
         },
         save: function (data) {

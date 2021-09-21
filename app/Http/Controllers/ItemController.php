@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cathegory;
+use App\Models\Fill;
 // use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -130,12 +131,14 @@ class ItemController extends Controller
 
     public function history($id)
     {
-        $this->authorize('view', Item::find($id), Item::class);
+        $item = Item::with('cathegory')->where('id', $id)->first();
+        $this->authorize('view', $item, Item::class);
 
         $services = Service::where('item_id', $id)->where('is_performed', 1)->with('serviceDatabase', 'user')->orderBy('perform_date', 'desc')->get();
         $usages = Usage::where('item_id', $id)->with('user')->orderBy('usage_date', 'desc')->get();
+        $fills = Fill::where('item_id', $id)->with('user')->get();
 
-        return Inertia::render('history', ['services' => $services, 'usages' => $usages]);
+        return Inertia::render('history', ['services' => $services, 'usages' => $usages, 'item' => $item, 'fills' => $fills]);
     }
 
     public function itemDetails(Item $item)
@@ -144,7 +147,8 @@ class ItemController extends Controller
 
         $dbservices = ServiceDatabase::where('cathegory_id', $item->databaseItems->cathegory_id)->get();
         $services = Service::where('item_id', $item->id)->with('serviceDatabase', 'user')->get();
+        $cathegory = $item->cathegory->cathegory;
 
-        return Inertia::render('itemDetails', ['item' => $item, 'services' => $services, 'dbservices' => $dbservices]);
+        return Inertia::render('itemDetails', ['item' => $item, 'services' => $services, 'dbservices' => $dbservices, 'cathegory' => $cathegory]);
     }
 }

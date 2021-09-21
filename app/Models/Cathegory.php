@@ -16,6 +16,7 @@ class Cathegory extends Model
     protected $fillable = [
         'name',
         'photo_path',
+        'fillable',
         'cathegory_id'
     ];
 
@@ -47,5 +48,10 @@ class Cathegory extends Model
     public function services()
     {
         return $this->servicesdb()->with('services');
+    }
+
+    public function fills()
+    {
+        return $this->hasMany(Fill::class);
     }
 }

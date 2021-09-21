@@ -24,16 +24,18 @@
 			</div>
 
 			<div v-else class="flex flex-col">
-				<div class="flex w-full bg-primary-200 mb-4 justify-evenly p-3 rounded-lg flex-wrap">
-					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 1">Serwisy</button>
-					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 0">Użycia</button>
-					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out">
-						<Link :href="'history/'+item.id" class="">
-							Historia
-						</Link>
-					</button>
+				<div class="text-left text-tertiary font-bold text-xl mb-4 flex justify-between">
+					<h1>Szczegóły sprzętu</h1>
+					<Link :href="'history/'+item.id" class="">
+						<i class="fas fa-history fa-lg cursor-pointer hover:text-primary-200 transition duration-300 ease-in-out"></i>
+					</Link>
 				</div>
-				<div v-if="tabSwitch" class="p-6 text-text-200 bg-tertiary rounded-lg shadow-lg">
+				<div class="flex w-full bg-primary-200 mb-4 justify-evenly p-3 rounded-lg flex-wrap">
+					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 0">Serwisy</button>
+					<button class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 1">Użycia</button>
+					<button v-if="cathegory.fillable" class="w-1/3 text-tertiary font-semibold rounded p-1 px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="tabSwitch = 2">Napełnienia</button>
+				</div>
+				<div v-if="tabSwitch == 0" class="p-6 text-text-200 bg-tertiary rounded-lg shadow-lg">
 					<div class="text-left text-secondary-200 font-bold text-xl mb-4">
 						<h1>Serwisy</h1>
 					</div>
@@ -58,7 +60,7 @@
 						</template>
 					</div>
 				</div>
-				<div v-if="!tabSwitch" class="p-6 md:mt-0 bg-tertiary rounded-lg shadow-lg">
+				<div v-if="tabSwitch == 1" class="p-6 md:mt-0 bg-tertiary rounded-lg shadow-lg">
 					<Message>
 						{{ $page.props.flash.message }}
 					</Message>
@@ -86,6 +88,54 @@
 						</BreezeButton>
 					</form>
 				</div>
+				<div v-if="tabSwitch == 2" class="p-6 text-text-200 bg-tertiary rounded-lg shadow-lg">
+					<Message>
+						{{ $page.props.flash.message }}
+					</Message>
+					<div class="text-left text-secondary-200 font-bold text-xl mb-4">
+						<h1>Napełnienia</h1>
+					</div>
+					<div class="flex w-full bg-primary-200 mb-4 justify-evenly p-3 rounded-lg flex-wrap">
+						<button class="w-1/2 text-tertiary font-semibold rounded px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="switchType(true)">Stoper</button>
+						<button class="w-1/2 text-tertiary font-semibold rounded px-3 hover:bg-tertiary hover:text-text-200 transition duration-300 ease-in-out" @click="switchType(false)">Formularz</button>
+					</div>
+					<div v-if="!timer">
+						<div class="mb-4">
+							<BreezeLabel for="fillDateStart" value="Rozpoczęcie ładowania" />
+							<div class="flex">
+								<BreezeInput id="fillDateStart" type="date" class="mt-1 block w-2/3" v-model="formFill.date_start" :max="currentDate()"/>	
+								<BreezeInput type="time" step="2" class="w-1/3" v-model="formFill.time_start"></BreezeInput>
+							</div>							
+							<div class="text-red-500" v-if="errors.date_start">{{ errors.date_start }}</div>
+							<div class="text-red-500" v-if="errors.time_start">{{ errors.time_start }}</div>
+						</div>
+
+						<div class="mb-4">
+							<BreezeLabel for="fillDateEnd" value="Zakończenie ładowania" />
+							<div class="flex">
+								<BreezeInput id="fillDateEnd" type="date" class="mt-1 block w-2/3" v-model="formFill.date_end" :max="currentDate()"/>	
+								<BreezeInput type="time" step="2" class="w-1/3" v-model="formFill.time_end"></BreezeInput>
+							</div>							
+							<div class="text-red-500" v-if="errors.date_end">{{ errors.date_end }}</div>
+							<div class="text-red-500" v-if="errors.time_end">{{ errors.time_end }}</div>
+						</div>
+
+						<BreezeButton class="w-full mt-4 justify-center" @click="storeFill()">
+							Zapisz
+						</BreezeButton>
+					</div>
+					<div v-else>
+						<div class="text-center text-5xl font-bold text-text-200 mt-6">{{elapsedTime/1000 + 's'}}</div>
+						<div class="flex justify-center gap-4 mt-6">
+							<BreezeButton class="bg-green-600" @click="timerStart()">Start</BreezeButton>
+							<BreezeButton @click="timerStop()">Stop</BreezeButton>
+							<BreezeButton @click="timerReset()">Reset</BreezeButton>
+						</div>
+						<BreezeButton v-show="formFill.date_end" class="w-full mt-4 justify-center" @click="storeFill()">
+							Zapisz
+						</BreezeButton>
+					</div>
+				</div>
 			</div>
 		</Card>
 	</BreezeAuthenticatedLayout>
@@ -106,6 +156,7 @@ export default {
     item: Object,
     services: Object,
     errors: Object,
+	cathegory: Object
   },
 
   components: {
@@ -126,16 +177,65 @@ export default {
         id: null,
       },
 	  formUsage:{
-		  id:this.item.id,
+		  id:this.item,
 		  description: null,
 		  start: this.currentDateTime(),
 		  end: this.currentDateTime()
 	  },
+	  formFill: {
+		  item: this.item.id,
+		  date_start: null,
+		  date_end: null,
+		  time_start: null,
+		  time_end: null
+	  },
       dates: [],
-	  tabSwitch: 1,
+	  tabSwitch: 0,
+
+	  timer: true,
+	  elapsedTime: 0,
+	  interval: 1000,
+	  counter: null
     };
   },
   methods: {
+	appendLeadingZeroes(n){
+		if(n <= 9){
+			return "0" + n;
+		}
+		return n
+		},
+	timerStart(){
+		let now = new Date()
+		this.formFill.date_start = now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
+		this.formFill.time_start = this.appendLeadingZeroes(now.getHours()) +':'+ this.appendLeadingZeroes(now.getMinutes()) +':'+ this.appendLeadingZeroes(now.getSeconds())
+
+		this.counter = setInterval(() => {
+			this.elapsedTime += this.interval;
+		}, this.interval)
+	},
+	timerStop(){
+		clearInterval(this.counter)
+		if(this.formFill.date_start){
+			let now = new Date()
+			this.formFill.date_end = now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
+			this.formFill.time_end = this.appendLeadingZeroes(now.getHours()) +':'+ this.appendLeadingZeroes(now.getMinutes()) +':'+ this.appendLeadingZeroes(now.getSeconds())
+		}
+	
+	},
+	timerReset(){
+		this.timerStop()
+		this.reset()
+		this.elapsedTime = 0
+	},
+
+	switchType(bool){
+		this.timer = bool
+		this.reset()
+	},
+	currentTime: function(){
+		return new Date().toISOString().split('T')[1];
+	},
 	currentDate: function(){
 		return new Date().toISOString().split('T')[0];
 	},
@@ -154,6 +254,14 @@ export default {
 		  start: this.currentDateTime(),
 		  end: this.currentDateTime()
 	  };
+
+	  this.formFill = {
+		  item: this.item.id,
+		  date_start: null,
+		  date_end: null,
+		  time_start: null,
+		  time_end: null
+	  },
       this.dates = [];
     },
     save: function (data, id, date) {
@@ -181,6 +289,11 @@ export default {
 	insertUsage: function() {
 		this.$inertia.post("/usages/insertNew", this.formUsage,{
 			onSuccess: () => this.reset(),
+		});
+	},
+	storeFill: function() {
+		this.$inertia.post("/fills", this.formFill,{
+			onSuccess: () => (this.reset(), this.timerStop(), this.elapsedTime = 0),
 		});
 	}
   },

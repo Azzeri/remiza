@@ -26,12 +26,14 @@ class CathegoryController extends Controller
 
         $request->validate([
             'name' => ['unique:cathegories', 'required', 'string', 'min:3', 'max:32'],
+            'fillable' => 'required'
         ]);
 
         Cathegory::create(
             [
                 'name' => $request->name,
                 'cathegory_id' => $parent,
+                'fillable' => $request->fillable
             ]
         );
         
@@ -51,9 +53,11 @@ class CathegoryController extends Controller
             [
                 $request->validate([
                     'name' => ['required', 'string', 'min:3', 'max:32', Rule::unique('cathegories')->ignore(Cathegory::find($cathegory->id)),],
+                    'fillable' => 'required'
                 ]),
                 'name' => $request->name,
-                'cathegory_id' => $parent
+                'cathegory_id' => $parent,
+                'fillable' => $request->fillable
             ]
 
         );

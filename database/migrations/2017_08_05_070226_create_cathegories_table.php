@@ -17,6 +17,7 @@ class CreateCathegoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('photo_path')->default('/images/default.png');
+            $table->boolean('fillable')->default(false);
             $table->foreignId('cathegory_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

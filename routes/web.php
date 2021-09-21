@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CathegoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FillController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FireBrigadeUnitController;
@@ -61,6 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('stencils', ItemDatabaseController::class, ['names' => ['index' => 'stencils.index']]);
         Route::resource('manufacturers', ManufacturerController::class, ['names' => ['index' => 'manufacturers.index']]);
         Route::resource('vehicles', VehicleController::class, ['names' => ['index' => 'vehicles.index']]);
+        Route::resource('fills', FillController::class);
 
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
         Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details');
