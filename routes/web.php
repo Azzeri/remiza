@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('manufacturers', ManufacturerController::class, ['names' => ['index' => 'manufacturers.index']]);
         Route::resource('vehicles', VehicleController::class, ['names' => ['index' => 'vehicles.index']]);
         Route::resource('fills', FillController::class);
+        Route::resource('usages', UsageController::class);
 
         Route::get('items/{item}', [ItemController::class, 'itemDetails'])->name('item.details');
         Route::get('sets/{set}', [SetController::class, 'setDetails'])->name('set.details');
@@ -77,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
         Route::post('cathegories/insertPhoto/{id}', [CathegoryController::class, 'insertPhoto']);
 
-        Route::post('usages/insertNew/', [UsageController::class, 'insertNew'])->name('usage.new');;
+        // Route::post('usages/insertNew/', [UsageController::class, 'insertNew'])->name('usage.new');;
 
         Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
     });

@@ -41,8 +41,7 @@ class ServiceController extends Controller
             $item->activated = 1;
             $item->save();
 
-            return redirect()->back()
-                ->with('message', 'Sukces');
+            return redirect()->back();
         };
 
         $today = Carbon::now();

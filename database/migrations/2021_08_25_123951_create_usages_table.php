@@ -17,6 +17,7 @@ class CreateUsagesTable extends Migration
             $table->id();
             $table->string('description')->nullable();
             $table->date('usage_date');
+            $table->time('usage_time');
             $table->integer('usage_minutes');
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('item_id')->constrained()->onUpdate('cascade')->onDelete('cascade');

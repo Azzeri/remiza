@@ -67,23 +67,31 @@
 					<div class="text-left text-secondary-200 font-bold text-xl mb-4">
 						<h1>Wprowadź użycie</h1>
 					</div>
-					<form class="mt-4" @submit.prevent="insertUsage">					 
+					<form class="mt-4" @submit.prevent="insertUsage(formUsage)">					 
 						<div class="mb-4">
-							<BreezeLabel for="usageDateField" value="Rozpoczęcie użycia" />
-							<BreezeInput id="usageDateField" type="datetime-local" :max="currentDateTime()" class="mt-1 block w-full" v-model="formUsage.start"/>								
-							<div class="text-red-500" v-if="errors.start">{{ errors.start }}</div>
+							<BreezeLabel for="usageDateStart" value="Rozpoczęcie użycia" />
+							<div class="flex">
+								<BreezeInput id="usageDateStart" type="date" class="mt-1 block w-2/3" v-model="formUsage.Udate_start" :max="currentDate()"/>	
+								<BreezeInput type="time" class="w-1/3" v-model="formUsage.Utime_start"></BreezeInput>
+							</div>
+							<div class="text-red-500" v-if="errors.Udate_start">{{ errors.Udate_start }}</div>
+							<div class="text-red-500" v-if="errors.Utime_start">{{ errors.Utime_start }}</div>
 						</div> 
 						<div class="mb-4">
-							<BreezeLabel for="usageMinutesField" value="Zakończenie użycia" />
-							<BreezeInput id="usageMinutesField" type="datetime-local" :max="currentDateTime()" class="mt-1 block w-full" v-model="formUsage.end"/>
-							<div class="text-red-500" v-if="errors.end">{{ errors.end }}</div>
+							<BreezeLabel for="usageDateEnd" value="Zakończenie użycia" />
+							<div class="flex">
+								<BreezeInput id="usageDateEnd" type="date" class="mt-1 block w-2/3" v-model="formUsage.Udate_end" :max="currentDate()"/>	
+								<BreezeInput type="time" class="w-1/3" v-model="formUsage.Utime_end"></BreezeInput>
+							</div>
+							<div class="text-red-500" v-if="errors.Udate_end">{{ errors.Udate_end }}</div>
+							<div class="text-red-500" v-if="errors.Utime_end">{{ errors.Utime_end }}</div>
 						</div>  
 						<div class="mb-4">
 							<BreezeLabel for="usageDescField" value="Opis" />
 							<BreezeInput id="usageDescField" type="textarea" class="p-6 block w-full" v-model="formUsage.description" placeholder="Wprowadź opis (opcjonalnie)"/>
 							<div class="text-red-500" v-if="errors.description">{{ errors.description }}</div>
 						</div>  
-						<BreezeButton class="w-full mt-4 justify-center" @click="insertUsage()">
+						<BreezeButton class="w-full mt-4 justify-center" @click="insertUsage">
 							Zapisz użycie
 						</BreezeButton>
 					</form>
@@ -147,7 +155,7 @@
 				<div class="w-full inline-block align-bottom bg-white rounded-lg text-left overflow-hidden my-auto shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
             		<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 						<div class="bg-red-600 p-4 text-tertiary text-xl font-bold rounded-lg shadow-sm">
-							Przedmiot przekroczył datę ważności i/lub legalizacji, nie powinny być na nim wykonywane żadne działania!
+							Przedmiot przekroczył datę ważności i/lub legalizacji, nie powinny być na nim wykonywane żadne działania! Zalecane usunięcie przedmiotu!
 						</div> 
 					</div>
 					
@@ -160,7 +168,7 @@
 							</Link>
 						</span>
 						<span class="flex rounded-md shadow-sm mt-0 w-auto">
-							<BreezeButton  @click="closeModal()">
+							<BreezeButton @click="closeModal()">
 								Zostań
 							</BreezeButton>
 						</span>
@@ -207,10 +215,12 @@ export default {
         id: null,
       },
 	  formUsage:{
-		  id:this.item,
+		  id:this.item.id,
 		  description: null,
-		  start: this.currentDateTime(),
-		  end: this.currentDateTime()
+		  Udate_start: this.currentDateFormatted(),
+		  Udate_end: this.currentDateFormatted(),
+		  Utime_start: this.currentTimeFormatted(),
+		  Utime_end: this.currentTimeFormatted()
 	  },
 	  formFill: {
 		  item: this.item.id,
@@ -220,7 +230,7 @@ export default {
 		  time_end: null
 	  },
       dates: [],
-	  tabSwitch: 0,
+	  tabSwitch: 1,
 
 	  timer: true,
 	  elapsedTime: 0,
@@ -267,6 +277,10 @@ export default {
             let now = new Date()
 		    return now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
 	},
+	currentTimeFormatted: function(){
+            let now = new Date()
+		    return this.appendLeadingZeroes(now.getHours()) +':'+ this.appendLeadingZeroes(now.getMinutes())
+	},
 	currentDate: function(){
 		return new Date().toISOString().split('T')[0];
 	},
@@ -285,8 +299,10 @@ export default {
 	  this.formUsage = {
 		  id:this.item.id,
 		  description: null,
-		  start: this.currentDateTime(),
-		  end: this.currentDateTime()
+		  Udate_start: this.currentDateFormatted(),
+		  Udate_end: this.currentDateFormatted(),
+		  Utime_start: this.currentTimeFormatted(),
+		  Utime_end: this.currentTimeFormatted()
 	  };
 
 	  this.formFill = {
@@ -311,8 +327,8 @@ export default {
 			let data = [];
 			for (let i = 0; i < this.dbservices.length; i++) {
 				let x = {
-				id: this.dbservices[i].id,
-				date: this.dates[i],
+					id: this.dbservices[i].id,
+					date: this.dates[i],
 				};
 				data.push(x);
 			}
@@ -320,8 +336,8 @@ export default {
 			this.reset();
 		}
     },
-	insertUsage: function() {
-		this.$inertia.post("/usages/insertNew", this.formUsage,{
+	insertUsage: function(data) {
+		this.$inertia.post("/usages", data,{
 			onSuccess: () => this.reset(),
 		});
 	},

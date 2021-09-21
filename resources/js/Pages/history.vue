@@ -81,7 +81,7 @@ export default {
 
   data() {
 	  return {
-		  tabSwitch: 2
+		  tabSwitch: 0
 	  }
   }
 };

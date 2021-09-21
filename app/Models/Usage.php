@@ -12,6 +12,7 @@ class Usage extends Model
     protected $fillable = [
         'description',
         'usage_date',
+        'usage_time',
         'usage_minutes',
         'user_id',
         'item_id'
