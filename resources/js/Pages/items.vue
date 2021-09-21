@@ -17,9 +17,11 @@
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.inventory_number }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.identification_number }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_production }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_expiry }}</td>
+                    <td v-if="row.date_expiry < currentDate()" class="h-10 text-red-600 sm:h-auto border-primary-200 border p-3">{{ row.date_expiry }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_expiry }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation_due }}</td>
+                    <td v-if="row.date_legalisation_due < currentDate()" class="h-10 text-red-600 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation_due }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation_due }}</td>
                     <td v-if="row.manufacturer" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.name }}</td>
                     <td v-else class="h-10 sm:h-auto border-primary-200 border p-3"></td>
                     <td v-if="row.vehicle" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.vehicle.name }}</td>
@@ -98,8 +100,6 @@
                 </div>                                         
             </div>    
         </form>
-        <!-- {{form}} -->
-        <!-- {{stencil}} -->
     </Modal>
 </template>
 
@@ -215,6 +215,16 @@ export default {
         }
     },
     methods: {
+        appendLeadingZeroes(n){
+            if(n <= 9){
+                return "0" + n;
+            }
+            return n
+	    },
+        currentDate: function(){
+            let now = new Date()
+		    return now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
+	    },
         fieldIsTrue: function(field){
             return field ? true:false;
         },

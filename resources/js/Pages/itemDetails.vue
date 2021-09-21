@@ -138,6 +138,36 @@
 				</div>
 			</div>
 		</Card>
+		<div v-if="(item.date_expiry && item.date_expiry < currentDateFormatted()) || (item.date_legalisation_due && item.date_legalisation_due < currentDateFormatted())" id="modal" class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" >
+			<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+				<div class="fixed inset-0 transition-opacity">
+					<div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+				</div>
+				<span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+				<div class="w-full inline-block align-bottom bg-white rounded-lg text-left overflow-hidden my-auto shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" >
+            		<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+						<div class="bg-red-600 p-4 text-tertiary text-xl font-bold rounded-lg shadow-sm">
+							Przedmiot przekroczył datę ważności i/lub legalizacji, nie powinny być na nim wykonywane żadne działania!
+						</div> 
+					</div>
+					
+					<div class="bg-secondary-100 px-6 py-3 flex flex-row-reverse">
+						<span class="flex rounded-md shadow-sm ml-3 w-auto">                         
+							<Link :href="route('items.index')">
+								<BreezeButton >
+									Wróć
+								</BreezeButton>
+							</Link>
+						</span>
+						<span class="flex rounded-md shadow-sm mt-0 w-auto">
+							<BreezeButton  @click="closeModal()">
+								Zostań
+							</BreezeButton>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</BreezeAuthenticatedLayout>
 </template>
 
@@ -204,7 +234,7 @@ export default {
 			return "0" + n;
 		}
 		return n
-		},
+	},
 	timerStart(){
 		let now = new Date()
 		this.formFill.date_start = now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
@@ -233,8 +263,9 @@ export default {
 		this.timer = bool
 		this.reset()
 	},
-	currentTime: function(){
-		return new Date().toISOString().split('T')[1];
+	currentDateFormatted: function(){
+            let now = new Date()
+		    return now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
 	},
 	currentDate: function(){
 		return new Date().toISOString().split('T')[0];
@@ -243,6 +274,9 @@ export default {
 		let today = new Date();
 		today.setSeconds(0,0);
 		return(today.toISOString().split('.')[0]);
+	},
+	closeModal(){
+		document.getElementById('modal').setAttribute("hidden", true)
 	},
     reset: function () {
       this.form = {
