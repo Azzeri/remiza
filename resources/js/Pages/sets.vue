@@ -2,9 +2,12 @@
   	<Head title="Zestawy" />
 
 	<BreezeAuthenticatedLayout>
+	<div v-if="$page.props.auth.user.privilege_id  != 1 && set == null" class="m-6 text-text-200 font-bold text-lg mb-4">
+		Brak zestawów
+		<FloatingButton @click="openModal()" class="mb-4"></FloatingButton>
+	</div>
 	<SetsNav :sets="sets" v-if="set != null" @openModal="openModal">
 		<div class="mt-6 border-t-2 rounded">
-
 			<div class="flex">
 				<div class="text-tertiary font-bold text-lg my-4">
 					<h3>{{set.name}}</h3>

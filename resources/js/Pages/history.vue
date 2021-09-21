@@ -44,8 +44,8 @@
 					<div v-for="row in fills" :key="row.id">     
 						<div class="mb-5">
 							<div class="font-bold text-primary-200">Użytkownik: {{ row.user.name }}</div>
-							<div>Rozpoczęcia ładowania: {{ row.date_start }} {{row.time_start}}</div>
-							<div>Zakończenie ładowania: {{ row.date_finish }} {{row.time_finish}}</div>
+							<div>Rozpoczęcia napełniania: {{ row.date_start }} {{row.time_start}}</div>
+							<div>Zakończenie napełniania: {{ row.date_finish }} {{row.time_finish}}</div>
 						</div>
 					</div>
 				</div>
