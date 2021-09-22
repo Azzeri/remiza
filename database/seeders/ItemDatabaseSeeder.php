@@ -74,6 +74,7 @@ class ItemDatabaseSeeder extends Seeder
             'construction_number'=> true,
             'inventory_number'=> true,
             'date_expiry'=> true,
+            'date_production'=> true,
             'date_legalisation'=> true,
             'manufacturer' => true,
             'cathegory_id' => 2

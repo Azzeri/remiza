@@ -35,7 +35,7 @@ class ServiceController extends Controller
 
     public function activate(Request $request, $id)
     {
-        // dd(!$request[0]);
+        // dd($request[0]['date']);
         if (!$request[0]) {
             $item = Item::find($id);
             $item->activated = 1;

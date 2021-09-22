@@ -6,16 +6,24 @@
 			<div v-if="!item.activated">
 				<div class="mt-4">
 					<div class="text-center text-tertiary font-bold text-lg mb-4 sm:text-left">
-						<h3>Aktywacja {{item.database_items.name}}</h3>
+						<h3>Aktywacja</h3>
 					</div>
-					<form @submit.prevent="activateService">
-						<div class="mb-4 md:w-1/3" v-for="(service, index) in dbservices" :key="service.id">
-							<BreezeLabel class="text-tertiary" for="itemField" :value="'Kiedy ostatnio wykonano serwis: '+service.name" />
-							<input type="date" :max="currentDate()" v-model="dates[index]" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
+					<p class="text-tertiary">
+						Podaj datę ostatniego wykonania każdego z poniższych serwisów. Jeżeli nie znasz dokładnej daty, podaj inną, od 
+						której system powinien obliczyć datę następnego serwisu. Przycisk "Data produkcji" obliczy datę kolejnego serwisu
+						od daty produkcji przedmiotu.
+					</p>
+					<form @submit.prevent="activateService()">
+						<div v-for="(service, index) in dbservices" :key="service.id" class="mt-4 md:w-1/3" >
+							<BreezeLabel class="text-tertiary font-bold" for="itemField" :value="service.name+' (co '+service.days_to_next+' dni)'" />
+							<div class="flex gap-4">
+								<input type="date" :max="currentDate()" v-model="dates[index]" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm">
+								<span class="cursor-pointer w-2/3 inline-flex items-center px-4 py-2 bg-primary-200 border border-transparent rounded-md font-semibold text-xs text-tertiary uppercase tracking-widest hover:bg-primary-100 active:bg-primary-200 focus:outline-none focus:border-primary-200 focus:shadow-outline-red transition ease-in-out duration-150" v-if="item.date_production" @click="dates[index] = item.date_production">DATA PRODUKCJI</span>
+							</div>
 						</div>
 						
-						<div class="flex gap-2 justify-center sm:justify-start">
-							<BreezeButton @click="activateService()">
+						<div class="flex mt-4 gap-2 justify-center sm:justify-start">
+							<BreezeButton type="submit">
 								Aktywuj
 							</BreezeButton>
 						</div>
@@ -230,7 +238,7 @@ export default {
 		  time_end: null
 	  },
       dates: [],
-	  tabSwitch: 1,
+	  tabSwitch: 0,
 
 	  timer: true,
 	  elapsedTime: 0,
@@ -268,7 +276,9 @@ export default {
 		this.reset()
 		this.elapsedTime = 0
 	},
-
+	setProductionDate(index){
+		
+	},
 	switchType(bool){
 		this.timer = bool
 		this.reset()
