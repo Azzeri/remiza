@@ -18,6 +18,10 @@
                         <span v-for="subcat in row.subcathegories" :key="subcat.id">{{subcat.name}} <span class="text-red-700"> | </span></span>
                     </td>
                     <td v-else class="h-16 sm:h-auto border-primary-200 border p-3">Brak</td>
+                    <td v-if="row.servicesdb.length" class="h-16 sm:h-auto border-primary-200 border p-3">                       
+                        <span v-for="service in row.servicesdb" :key="service.id">{{service.name}} <span class="text-red-700"> | </span></span>
+                    </td>
+                    <td v-else class="h-16 sm:h-auto border-primary-200 border p-3">Brak</td>
                     <td v-html="isTrue(row.fillable)" class="h-16 sm:h-auto border-primary-200 border p-3 text-center"></td>
                     <td class="h-16 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
@@ -107,7 +111,7 @@ export default {
                 parent: -1,
                 fillable: false
             },
-            throws:['Zdjęcie','Nazwa','Podkategorie','Napełnialna','Działania'],
+            throws:['Zdjęcie','Nazwa','Podkategorie','Serwisy','Napełnialna','Działania'],
         }
     },
 

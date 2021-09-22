@@ -69,6 +69,16 @@ class ItemDatabaseSeeder extends Seeder
             'name'=> true,
         ]);
 
+        ItemDatabase::create([
+            'stencil_name'=> 'Kamera termowizyjna',
+            'construction_number'=> true,
+            'inventory_number'=> true,
+            'date_expiry'=> true,
+            'date_legalisation'=> true,
+            'manufacturer' => true,
+            'cathegory_id' => 2
+        ]);
+
         // DB::table('item_databases')->insert([
         //     'name' => 'Hełm Strażacki Biały',
         //     'cathegory_id' => 1,
