@@ -20730,7 +20730,7 @@ var _hoisted_3 = {
   "class": "bg-secondary shadow-sm sm:rounded-lg"
 };
 var _hoisted_4 = {
-  "class": "p-6 sm:rounded-lg bg-secondary-100 border-b border-secondary-200"
+  "class": "p-6 sm:rounded-lg bg-secondary-100 border-b border-secondary-200 overflow-auto"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])])])]);
