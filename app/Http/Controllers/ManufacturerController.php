@@ -30,7 +30,7 @@ class ManufacturerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['unique:manufacturers', 'required', 'string', 'min:3', 'max:32', 'alpha_dash'],
+            'name' => ['unique:manufacturers', 'required', 'string', 'min:3', 'max:32'],
         ]);
 
         Manufacturer::create(['name' => ucfirst($request->name)]);
@@ -50,7 +50,7 @@ class ManufacturerController extends Controller
         $this->authorize('update', $manufacturer, Manufacturer::class);
 
         $request->validate([
-            'name' => [Rule::unique('manufacturers')->ignore(Manufacturer::find($manufacturer->id)), 'required', 'string', 'min:3', 'max:32', 'alpha_dash'],
+            'name' => [Rule::unique('manufacturers')->ignore(Manufacturer::find($manufacturer->id)), 'required', 'string', 'min:3', 'max:32'],
 
         ]);
 
