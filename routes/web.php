@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('services/finish/', [ServiceController::class, 'finish']);
         Route::post('services/activate/{id}', [ServiceController::class, 'activate']);
 
-        Route::get('items/history/{id}', [ItemController::class, 'history']);
+        Route::get('items/history/{id}/{n}', [ItemController::class, 'history']);
 
         Route::get('loginhistory/{id}', [HistoryController::class, 'index']);
 

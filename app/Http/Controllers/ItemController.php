@@ -129,16 +129,16 @@ class ItemController extends Controller
             ->with('message', 'Sukces');
     }
 
-    public function history($id)
+    public function history($id, $n)
     {
         $item = Item::with('cathegory')->where('id', $id)->first();
         $this->authorize('view', $item, Item::class);
 
-        $services = Service::where('item_id', $id)->where('is_performed', 1)->with('serviceDatabase', 'user')->orderBy('perform_date', 'desc')->get();
-        $usages = Usage::where('item_id', $id)->with('user')->orderBy('usage_date', 'desc')->get();
-        $fills = Fill::where('item_id', $id)->with('user')->get();
+        $services = Service::where('item_id', $id)->where('is_performed', 1)->with('serviceDatabase', 'user')->orderBy('perform_date', 'desc')->paginate(3,['*'], 'services');
+        $usages = Usage::where('item_id', $id)->with('user')->orderBy('usage_date', 'desc')->paginate(3,['*'], 'usages');
+        $fills = Fill::where('item_id', $id)->with('user')->paginate(3, ['*'], 'fills');
 
-        return Inertia::render('history', ['services' => $services, 'usages' => $usages, 'item' => $item, 'fills' => $fills]);
+        return Inertia::render('history', ['services' => $services, 'usages' => $usages, 'item' => $item, 'fills' => $fills, 'n'=>$n]);
     }
 
     public function itemDetails(Item $item)

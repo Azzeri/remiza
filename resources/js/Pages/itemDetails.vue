@@ -34,7 +34,7 @@
 			<div v-else class="flex flex-col">
 				<div class="text-left text-tertiary font-bold text-xl mb-4 flex justify-between">
 					<h1>Szczegóły sprzętu</h1>
-					<Link :href="'history/'+item.id" class="">
+					<Link :href="'history/'+item.id+'/'+0" class="">
 						<i class="fas fa-history fa-lg cursor-pointer hover:text-primary-200 transition duration-300 ease-in-out"></i>
 					</Link>
 				</div>
@@ -238,7 +238,7 @@ export default {
 		  time_end: null
 	  },
       dates: [],
-	  tabSwitch: 2,
+	  tabSwitch: 0,
 
 	  timer: true,
 	  elapsedTime: 0,
