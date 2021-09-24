@@ -238,12 +238,14 @@ export default {
 		  time_end: null
 	  },
       dates: [],
-	  tabSwitch: 0,
+	  tabSwitch: 2,
 
 	  timer: true,
 	  elapsedTime: 0,
 	  interval: 1000,
-	  counter: null
+	  counter: null,
+	  timerRunning: false,
+	  freshStart: true
     };
   },
   methods: {
@@ -254,16 +256,25 @@ export default {
 		return n
 	},
 	timerStart(){
-		let now = new Date()
-		this.formFill.date_start = now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
-		this.formFill.time_start = this.appendLeadingZeroes(now.getHours()) +':'+ this.appendLeadingZeroes(now.getMinutes()) +':'+ this.appendLeadingZeroes(now.getSeconds())
+		if(!this.timerRunning){
+			this.timerRunning = true
+			
+			if(this.freshStart){
+				this.freshStart = false
+				let now = new Date()
+				this.formFill.date_start = now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
+				this.formFill.time_start = this.appendLeadingZeroes(now.getHours()) +':'+ this.appendLeadingZeroes(now.getMinutes()) +':'+ this.appendLeadingZeroes(now.getSeconds())
+			}
 
-		this.counter = setInterval(() => {
-			this.elapsedTime += this.interval;
-		}, this.interval)
+			this.counter = setInterval(() => {
+				this.elapsedTime += this.interval;
+			}, this.interval)
+		}
+		
 	},
 	timerStop(){
 		clearInterval(this.counter)
+		this.timerRunning = false
 		if(this.formFill.date_start){
 			let now = new Date()
 			this.formFill.date_end = now.getFullYear() +'-'+ this.appendLeadingZeroes(now.getMonth()+1) +'-'+ this.appendLeadingZeroes(now.getDate())
@@ -275,6 +286,7 @@ export default {
 		this.timerStop()
 		this.reset()
 		this.elapsedTime = 0
+		this.freshStart = true
 	},
 	setProductionDate(index){
 		

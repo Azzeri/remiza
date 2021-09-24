@@ -19453,11 +19453,13 @@ __webpack_require__.r(__webpack_exports__);
         time_end: null
       },
       dates: [],
-      tabSwitch: 0,
+      tabSwitch: 2,
       timer: true,
       elapsedTime: 0,
       interval: 1000,
-      counter: null
+      counter: null,
+      timerRunning: false,
+      freshStart: true
     };
   },
   methods: {
@@ -19471,15 +19473,24 @@ __webpack_require__.r(__webpack_exports__);
     timerStart: function timerStart() {
       var _this = this;
 
-      var now = new Date();
-      this.formFill.date_start = now.getFullYear() + '-' + this.appendLeadingZeroes(now.getMonth() + 1) + '-' + this.appendLeadingZeroes(now.getDate());
-      this.formFill.time_start = this.appendLeadingZeroes(now.getHours()) + ':' + this.appendLeadingZeroes(now.getMinutes()) + ':' + this.appendLeadingZeroes(now.getSeconds());
-      this.counter = setInterval(function () {
-        _this.elapsedTime += _this.interval;
-      }, this.interval);
+      if (!this.timerRunning) {
+        this.timerRunning = true;
+
+        if (this.freshStart) {
+          this.freshStart = false;
+          var now = new Date();
+          this.formFill.date_start = now.getFullYear() + '-' + this.appendLeadingZeroes(now.getMonth() + 1) + '-' + this.appendLeadingZeroes(now.getDate());
+          this.formFill.time_start = this.appendLeadingZeroes(now.getHours()) + ':' + this.appendLeadingZeroes(now.getMinutes()) + ':' + this.appendLeadingZeroes(now.getSeconds());
+        }
+
+        this.counter = setInterval(function () {
+          _this.elapsedTime += _this.interval;
+        }, this.interval);
+      }
     },
     timerStop: function timerStop() {
       clearInterval(this.counter);
+      this.timerRunning = false;
 
       if (this.formFill.date_start) {
         var now = new Date();
@@ -19491,6 +19502,7 @@ __webpack_require__.r(__webpack_exports__);
       this.timerStop();
       this.reset();
       this.elapsedTime = 0;
+      this.freshStart = true;
     },
     setProductionDate: function setProductionDate(index) {},
     switchType: function switchType(bool) {
