@@ -11,18 +11,18 @@
 
             <Table :data="dbitems.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in dbitems.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.stencil_name }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.cathegory.name }}</td>
-                    <td v-html="isTrue(row.name)" class="h-10 sm:h-auto text-center border-primary-200 border p-3"></td>
-                    <td v-html="isTrue(row.construction_number)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.inventory_number)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.identification_number)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.date_production)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.date_expiry)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.date_legalisation)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.date_legalisation_due)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.manufacturer)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
-                    <td v-html="isTrue(row.vehicle)" class="h-10 sm:h-auto border-primary-200 text-center border p-3"></td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.stencil_name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.cathegory.name }}</td>
+                    <td v-html="isTrue(row.name)" class="h-10 sm:h-auto text-center border-primary-200 border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.construction_number)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.inventory_number)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.identification_number)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.date_production)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.date_expiry)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.date_legalisation)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.date_legalisation_due)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.manufacturer)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
+                    <td v-html="isTrue(row.vehicle)" class="h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"></td>
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN)" @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN)" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>

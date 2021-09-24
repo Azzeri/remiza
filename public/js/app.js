@@ -23445,11 +23445,11 @@ var _hoisted_1 = {
   "class": "h-16 sm:h-auto border-primary-200 border p-1 flex justify-center cursor-pointer"
 };
 var _hoisted_2 = {
-  "class": "h-16 sm:h-auto border-primary-200 border p-3"
+  "class": "h-16 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
   key: 0,
-  "class": "h-16 sm:h-auto border-primary-200 border p-3"
+  "class": "h-16 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
@@ -23460,11 +23460,11 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_5 = {
   key: 1,
-  "class": "h-16 sm:h-auto border-primary-200 border p-3"
+  "class": "h-16 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_6 = {
   key: 2,
-  "class": "h-16 sm:h-auto border-primary-200 border p-3"
+  "class": "h-16 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
@@ -23475,7 +23475,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_8 = {
   key: 3,
-  "class": "h-16 sm:h-auto border-primary-200 border p-3"
+  "class": "h-16 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_9 = {
   "class": "h-16 sm:h-auto border-primary-200 border text-center p-3"
@@ -23588,7 +23588,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* KEYED_FRAGMENT */
                 ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_8, "Brak")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.fillable),
-                  "class": "h-16 sm:h-auto border-primary-200 border p-3 text-center"
+                  "class": "h-16 sm:h-auto border-primary-200 border p-3 text-center overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
@@ -23730,13 +23730,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_4 = {
   "class": "h-10 sm:h-auto border-primary-200 border p-3 text-center"
@@ -24950,60 +24950,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_4 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_5 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_6 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_7 = {
   key: 0,
-  "class": "h-10 text-red-600 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 text-red-600 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_8 = {
   key: 1,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_9 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_10 = {
   key: 2,
-  "class": "h-10 text-red-600 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 text-red-600 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_11 = {
   key: 3,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_12 = {
   key: 4,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_13 = {
   key: 5,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_14 = {
   key: 6,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_15 = {
   key: 7,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_16 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_17 = {
   "class": "h-10 sm:h-auto border-primary-200 border text-center p-3"
@@ -25357,24 +25357,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
   key: 0,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_4 = {
   key: 1,
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_5 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_6 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_7 = {
   key: 1,
@@ -25463,7 +25463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
   "class": "h-10 sm:h-auto border-primary-200 border p-3 text-center"
@@ -26033,10 +26033,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
   "class": "h-10 sm:h-auto border-primary-200 border text-center p-3"
@@ -26137,52 +26137,52 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.name),
-                  "class": "h-10 sm:h-auto text-center border-primary-200 border p-3"
+                  "class": "h-10 sm:h-auto text-center border-primary-200 border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.construction_number),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.inventory_number),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.identification_number),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.date_production),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.date_expiry),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.date_legalisation),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.date_legalisation_due),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.manufacturer),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
                   innerHTML: $options.isTrue(row.vehicle),
-                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3"
+                  "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
@@ -26331,32 +26331,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_4 = {
   key: 0,
-  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"
 };
 var _hoisted_5 = {
   key: 1,
-  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"
 };
 var _hoisted_6 = {
-  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"
 };
 var _hoisted_7 = {
   key: 2,
-  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"
 };
 var _hoisted_8 = {
   key: 3,
-  "class": "h-10 sm:h-auto border-primary-200 border  p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"
 };
 var _hoisted_9 = {
   "class": "h-10 sm:h-auto border-primary-200 border text-center p-3"
@@ -26677,16 +26677,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_2 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_3 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"
 };
 var _hoisted_4 = {
-  "class": "h-10 sm:h-auto border-primary-200 border p-3 text-center"
+  "class": "h-10 sm:h-auto border-primary-200 border p-3 overflow-auto text-center"
 };
 var _hoisted_5 = {
   "class": "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
@@ -52278,24 +52278,6 @@ _scanner_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file
 
 /***/ }),
 
-/***/ "./resources/js/Pages/services.vue":
-/*!*****************************************!*\
-  !*** ./resources/js/Pages/services.vue ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-const script = {}
-script.__file = "resources/js/Pages/services.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
-
-/***/ }),
-
 /***/ "./resources/js/Pages/sets.vue":
 /*!*************************************!*\
   !*** ./resources/js/Pages/sets.vue ***!
@@ -63279,7 +63261,6 @@ var map = {
 	"./loginHistory.vue": "./resources/js/Pages/loginHistory.vue",
 	"./manufacturers.vue": "./resources/js/Pages/manufacturers.vue",
 	"./scanner.vue": "./resources/js/Pages/scanner.vue",
-	"./services.vue": "./resources/js/Pages/services.vue",
 	"./sets.vue": "./resources/js/Pages/sets.vue",
 	"./stencils.vue": "./resources/js/Pages/stencils.vue",
 	"./users.vue": "./resources/js/Pages/users.vue",

@@ -11,7 +11,7 @@
 
             <Table :data="data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3 text-center">
                         <i v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN" @click="edit(row)" class="far fa-edit fa-lg cursor-pointer"></i>
                         <i v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>

@@ -13,16 +13,16 @@
                     <td class="h-16 sm:h-auto border-primary-200 border p-1 flex justify-center cursor-pointer">
                         <img class="w-14 h-14 sm:w-20 sm:h-20" :src="row.photo_path" @click="openPhotoModal(row)">
                     </td>
-                    <td class="h-16 sm:h-auto border-primary-200 border p-3">{{ row.name }}</td>
-                    <td v-if="row.subcathegories.length" class="h-16 sm:h-auto border-primary-200 border p-3">                       
+                    <td class="h-16 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.name }}</td>
+                    <td v-if="row.subcathegories.length" class="h-16 sm:h-auto border-primary-200 border p-3 overflow-auto">                       
                         <span v-for="subcat in row.subcathegories" :key="subcat.id">{{subcat.name}} <span class="text-red-700"> | </span></span>
                     </td>
-                    <td v-else class="h-16 sm:h-auto border-primary-200 border p-3">Brak</td>
-                    <td v-if="row.servicesdb.length" class="h-16 sm:h-auto border-primary-200 border p-3">                       
+                    <td v-else class="h-16 sm:h-auto border-primary-200 border p-3 overflow-auto">Brak</td>
+                    <td v-if="row.servicesdb.length" class="h-16 sm:h-auto border-primary-200 border p-3 overflow-auto">                       
                         <span v-for="service in row.servicesdb" :key="service.id">{{service.name}} <span class="text-red-700"> | </span></span>
                     </td>
-                    <td v-else class="h-16 sm:h-auto border-primary-200 border p-3">Brak</td>
-                    <td v-html="isTrue(row.fillable)" class="h-16 sm:h-auto border-primary-200 border p-3 text-center"></td>
+                    <td v-else class="h-16 sm:h-auto border-primary-200 border p-3 overflow-auto">Brak</td>
+                    <td v-html="isTrue(row.fillable)" class="h-16 sm:h-auto border-primary-200 border p-3 text-center overflow-auto"></td>
                     <td class="h-16 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>

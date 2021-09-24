@@ -11,14 +11,14 @@
 
             <Table :data="data.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in data.data" :key="row" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.name}}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.surname}}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3"> {{row.email}}</td>
-                    <td v-if="row.phone" class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.phone}}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3"> Brak danych</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.privilege.name}}</td>
-                    <td v-if="row.fire_brigade_unit" class="h-10 sm:h-auto border-primary-200 border  p-3"> {{row.fire_brigade_unit.name}}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3"> - </td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"> {{row.name}}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"> {{row.surname}}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"> {{row.email}}</td>
+                    <td v-if="row.phone" class="h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"> {{row.phone}}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"> Brak danych</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"> {{row.privilege.name}}</td>
+                    <td v-if="row.fire_brigade_unit" class="h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"> {{row.fire_brigade_unit.name}}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border  p-3 overflow-auto"> - </td>
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer"></i>
                         <i v-if="row.privilege_id == 3" @click="deleteRow(row)" class="cursor-pointer far fa-trash-alt fa-lg text-red-700 ml-2"></i>

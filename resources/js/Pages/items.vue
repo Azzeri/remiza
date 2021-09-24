@@ -11,22 +11,22 @@
 
             <Table :data="items.data.length" :throws="throws" @edit="edit" @deleteRow="deleteRow" height="h-10" margin="mb-4">
                 <tr v-for="row in items.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-20">
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.cathegory.cathegory.name }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.name }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.construction_number }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.inventory_number }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.identification_number }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_production }}</td>
-                    <td v-if="row.date_expiry < currentDate()" class="h-10 text-red-600 sm:h-auto border-primary-200 border p-3">{{ row.date_expiry }}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_expiry }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation }}</td>
-                    <td v-if="row.date_legalisation_due < currentDate()" class="h-10 text-red-600 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation_due }}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.date_legalisation_due }}</td>
-                    <td v-if="row.manufacturer" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.manufacturer.name }}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3"></td>
-                    <td v-if="row.vehicle" class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.vehicle.name }}</td>
-                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3"></td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3">{{ row.fire_brigade_unit.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.cathegory.cathegory.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.name }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.construction_number }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.inventory_number }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.identification_number }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.date_production }}</td>
+                    <td v-if="row.date_expiry < currentDate()" class="h-10 text-red-600 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.date_expiry }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.date_expiry }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.date_legalisation }}</td>
+                    <td v-if="row.date_legalisation_due < currentDate()" class="h-10 text-red-600 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.date_legalisation_due }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.date_legalisation_due }}</td>
+                    <td v-if="row.manufacturer" class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.manufacturer.name }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"></td>
+                    <td v-if="row.vehicle" class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.vehicle.name }}</td>
+                    <td v-else class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto"></td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.fire_brigade_unit.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg "></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
