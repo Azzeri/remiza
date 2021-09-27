@@ -19730,7 +19730,7 @@ __webpack_require__.r(__webpack_exports__);
         unit: this.defaultUnit,
         stencil: null
       },
-      "throws": ['Kategoria', 'Nazwa', 'Nr fabryczny', 'Nr inwentarzowy', 'Nr ewidencyjny', 'Data produkcji', 'Data ważności', 'Data Legalizacji', 'Termin Legalizacji', 'Producent', 'Samochód', 'Remiza', 'Działania'],
+      "throws": ['Kategoria', 'Nazwa', 'Nr fabryczny', 'Nr inwentarzowy', 'Nr ewidencyjny', 'Data produkcji', 'Data ważności', 'Data Legalizacji', 'Termin Legalizacji', 'Producent', 'Samochód', 'Jednostka', 'Działania'],
       selectFields: [],
       textFields: [],
       dateFields: []

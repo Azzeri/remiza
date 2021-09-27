@@ -164,7 +164,7 @@ export default {
                 stencil:null
             },
             throws:['Kategoria','Nazwa','Nr fabryczny', 'Nr inwentarzowy','Nr ewidencyjny', 'Data produkcji',
-            'Data ważności', 'Data Legalizacji','Termin Legalizacji','Producent', 'Samochód', 'Remiza', 'Działania'],
+            'Data ważności', 'Data Legalizacji','Termin Legalizacji','Producent', 'Samochód', 'Jednostka', 'Działania'],
             selectFields: [],
             textFields: [],
             dateFields: []

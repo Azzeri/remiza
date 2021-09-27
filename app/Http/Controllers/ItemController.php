@@ -27,7 +27,7 @@ class ItemController extends Controller
 
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
             $units = FireBrigadeUnit::all();
-            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer', 'vehicle')->orderBy('item_database_id', 'asc')->paginate(10);
+            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer', 'vehicle')->orderBy('fire_brigade_unit_id', 'asc')->paginate(10);
             $vehicles = Vehicle::all();
         } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->get();
@@ -38,12 +38,12 @@ class ItemController extends Controller
                     array_push($unitIds, $unit->id);
             }
 
-            $items = Item::whereIn('fire_brigade_unit_id', $unitIds)->with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer', 'vehicle')->orderBy('item_database_id', 'asc')->paginate(10);
+            $items = Item::whereIn('fire_brigade_unit_id', $unitIds)->with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer', 'vehicle')->orderBy('fire_brigade_unit_id', 'asc')->paginate(10);
             $vehicles = Vehicle::whereIn('fire_brigade_unit_id', $unitIds)->get();
         } else {
 
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
-            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('item_database_id', 'asc')->paginate(10);
+            $items = Item::with('databaseItems', 'fireBrigadeUnit', 'cathegory', 'manufacturer')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('fire_brigade_unit_id', 'asc')->paginate(10);
             $vehicles = Vehicle::where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
         }
 
