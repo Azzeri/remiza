@@ -26073,8 +26073,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: function onClick($event) {
                 return $options.addToChosen(row);
               }
-            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.database_items.name), 9
-            /* TEXT, PROPS */
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.id) + " | ", 1
+            /* TEXT */
+            ), row.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+              key: 0
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
+            /* TEXT */
+            )], 2112
+            /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+            )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), row.construction_number ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+              key: 1
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" | " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.construction_number), 1
+            /* TEXT */
+            )], 2112
+            /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+            )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
+            /* PROPS */
             , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
             /* STABLE_FRAGMENT */
             );
@@ -26089,8 +26103,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: function onClick($event) {
                 return $options.removeFromChosen(row);
               }
-            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.database_items.name), 9
-            /* TEXT, PROPS */
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.id) + " | ", 1
+            /* TEXT */
+            ), row.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+              key: 0
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
+            /* TEXT */
+            )], 2112
+            /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+            )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), row.construction_number ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+              key: 1
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" | " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.construction_number), 1
+            /* TEXT */
+            )], 2112
+            /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+            )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
+            /* PROPS */
             , ["onClick"]);
           }), 128
           /* KEYED_FRAGMENT */

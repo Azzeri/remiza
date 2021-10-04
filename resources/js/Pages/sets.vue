@@ -42,7 +42,13 @@
 						<select multiple class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="itemsField">
 							<template v-for="row in items" :key="row.id">
 								<option v-if="!idsInArr.includes(row.id)" @click="addToChosen(row)">
-									{{row.database_items.name}}
+									{{row.id}} | 
+									<template v-if="row.name">
+										{{row.name}}
+									</template>
+									<template v-if="row.construction_number">
+										 | {{row.construction_number}}
+									</template>
 								</option>
 							</template>
 						</select>
@@ -52,7 +58,13 @@
 						<select multiple class="border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="chosenField">
 							<template v-for="row in form.selected" :key="row.id">
 								<option @click="removeFromChosen(row)">
-									{{row.database_items.name}}
+									{{row.id}} | 
+									<template v-if="row.name">
+										{{row.name}}
+									</template>
+									<template v-if="row.construction_number">
+										 | {{row.construction_number}}
+									</template>
 								</option>
 							</template>
 						</select>
