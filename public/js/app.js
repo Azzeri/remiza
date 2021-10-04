@@ -19202,11 +19202,17 @@ __webpack_require__.r(__webpack_exports__);
       isOpen: false,
       isPhotoOpen: false,
       cathegory: this.data.data[0],
+      isOpenService: false,
       form: {
         name: null,
         avatar: null,
         parent: -1,
         fillable: false
+      },
+      formService: {
+        name: null,
+        days_to_next: null,
+        cathegory_id: null
       },
       "throws": ['Zdjęcie', 'Nazwa', 'Podkategorie', 'Serwisy', 'Napełnialna', 'Działania']
     };
@@ -19218,8 +19224,13 @@ __webpack_require__.r(__webpack_exports__);
     openModal: function openModal() {
       this.isOpen = true;
     },
+    openServiceModal: function openServiceModal(id) {
+      this.formService.cathegory_id = id;
+      this.isOpenService = true;
+    },
     closeModal: function closeModal() {
       this.isOpen = false;
+      this.isOpenService = false;
       this.reset();
       this.editMode = false;
     },
@@ -19236,6 +19247,11 @@ __webpack_require__.r(__webpack_exports__);
         avatar: null,
         parent: -1,
         fillable: false
+      };
+      this.formService = {
+        name: null,
+        days_to_next: null,
+        cathegory_id: null
       };
     },
     save: function save(data) {
@@ -19272,6 +19288,16 @@ __webpack_require__.r(__webpack_exports__);
       this.$inertia["delete"]('/cathegories/' + data.id);
       this.reset();
       this.closeModal();
+    },
+    saveService: function saveService(data) {
+      var _this3 = this;
+
+      this.$inertia.post('/servicesdb', data, {
+        onSuccess: function onSuccess() {
+          return _this3.closeModal();
+        }
+      });
+      this.reset();
     }
   }
 });
@@ -23503,6 +23529,23 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_15 = {
   "class": "mb-4 flex"
 };
+var _hoisted_16 = {
+  "class": "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
+};
+var _hoisted_17 = {
+  "class": "mb-4"
+};
+var _hoisted_18 = {
+  key: 0,
+  "class": "text-red-500"
+};
+var _hoisted_19 = {
+  "class": "mb-4"
+};
+var _hoisted_20 = {
+  key: 0,
+  "class": "text-red-500"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
@@ -23605,7 +23648,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
                 /* PROPS */
-                , ["onClick"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN]])])]);
+                , ["onClick"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN]]), !row.itemsdb.length ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", {
+                  key: 0,
+                  onClick: function onClick($event) {
+                    return $options.openServiceModal(row.id);
+                  },
+                  "class": "fas fa-plus ml-2 cursor-pointer bg-primary-200 p-2 rounded-full text-tertiary"
+                }, null, 8
+                /* PROPS */
+                , ["onClick"])), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
               }), 128
               /* KEYED_FRAGMENT */
               ))];
@@ -23706,7 +23757,54 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onClosePhotoModal: $options.closePhotoModal
       }, null, 8
       /* PROPS */
-      , ["cathegory", "onClosePhotoModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      , ["cathegory", "onClosePhotoModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
+        isOpen: $data.isOpenService,
+        form: $data.formService,
+        onSave: $options.saveService,
+        onCloseModal: $options.closeModal
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+            "for": "nameFieldService",
+            value: "Nazwa"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+            id: "nameFieldService",
+            type: "text",
+            "class": "mt-1 block w-full",
+            modelValue: $data.formService.name,
+            "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+              return $data.formService.name = $event;
+            }),
+            placeholder: "Wprowadź nazwę"
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"]), $props.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.name), 1
+          /* TEXT */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+            "for": "daysFieldService",
+            value: "Odstęp czasowy [dni]"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
+            id: "daysFieldService",
+            type: "number",
+            "class": "mt-1 block w-full",
+            modelValue: $data.formService.days_to_next,
+            "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+              return $data.formService.days_to_next = $event;
+            }),
+            min: 1,
+            placeholder: "Wprowadź odstęp czasowy"
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"]), $props.errors.days_to_next ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.days_to_next), 1
+          /* TEXT */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["isOpen", "form", "onSave", "onCloseModal"])];
     }),
     _: 1
     /* STABLE */

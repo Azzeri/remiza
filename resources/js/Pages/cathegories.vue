@@ -26,6 +26,7 @@
                     <td class="h-16 sm:h-auto border-primary-200 border text-center p-3">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
                         <i @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer" v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
+                        <i @click="openServiceModal(row.id)" v-if="!row.itemsdb.length" class="fas fa-plus ml-2 cursor-pointer bg-primary-200 p-2 rounded-full text-tertiary"  v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN"></i>
                     </td>
                 </tr>
             </Table>
@@ -59,6 +60,20 @@
             </form>
         </Modal>
         <PhotoForm :cathegory="cathegory" v-if="isPhotoOpen" @closePhotoModal="closePhotoModal"></PhotoForm>
+        <Modal :isOpen="isOpenService" :form="formService" @save="saveService" @closeModal="closeModal">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="mb-4">
+                    <BreezeLabel for="nameFieldService" value="Nazwa" />
+                    <BreezeInput id="nameFieldService" type="text" class="mt-1 block w-full" v-model="formService.name" placeholder="Wprowadź nazwę" />
+                    <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
+                </div>    
+                <div class="mb-4">
+                    <BreezeLabel for="daysFieldService" value="Odstęp czasowy [dni]" />
+                    <BreezeInput id="daysFieldService" type="number" class="mt-1 block w-full" v-model="formService.days_to_next" :min=1 placeholder="Wprowadź odstęp czasowy" />
+                    <div class="text-red-500" v-if="errors.days_to_next">{{ errors.days_to_next }}</div>
+                </div> 
+            </div>
+        </Modal>
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -105,11 +120,17 @@ export default {
             isOpen: false,
             isPhotoOpen: false,
             cathegory: this.data.data[0],
+            isOpenService: false,
             form: {
                 name: null,
                 avatar: null,
                 parent: -1,
-                fillable: false
+                fillable: false,
+            },
+            formService: {
+                name: null,
+                days_to_next: null,
+                cathegory_id: null
             },
             throws:['Zdjęcie','Nazwa','Podkategorie','Serwisy','Napełnialna','Działania'],
         }
@@ -122,8 +143,13 @@ export default {
         openModal: function () {
             this.isOpen = true;
         },
+        openServiceModal: function (id) {
+            this.formService.cathegory_id = id
+            this.isOpenService = true;
+        },
         closeModal: function () {
             this.isOpen = false;
+            this.isOpenService = false;
             this.reset();
             this.editMode=false;
         },
@@ -140,6 +166,11 @@ export default {
                 avatar: null,
                 parent: -1,
                 fillable: false
+            }
+            this.formService = {
+                name: null,
+                days_to_next: null,
+                cathegory_id: null
             }
         },
         save: function (data) {
@@ -172,6 +203,12 @@ export default {
             this.reset();
             this.closeModal();
         },
+        saveService: function(data) {
+            this.$inertia.post('/servicesdb', data,{
+                onSuccess: () => this.closeModal(),
+            })
+            this.reset();
+        }
     }
 }
 </script>
