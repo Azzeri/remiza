@@ -16,16 +16,24 @@
 								<h3 v-if="services.length">Nadchodzące serwisy</h3>
 								<h3 v-else>Brak nadchodzących serwisów</h3>
 							</div>
-							<div class="flex flex-wrap justify-between">
-								<template v-for="service in services" :key="service.id">
-									<Link :href="'items/' + service.item.id" class="">
-										<div class="ml-5 mb-5 pl-2 pr-2 rounded border-l-4 border-primary-200 hover:border-primary-100 hover:bg-tertiary transition duration-500 ease-in-out">
-											<div class="font-semibold">{{ service.service_database.name }}</div>
-											<div class="text-sm">{{ service.perform_date }}</div>																																
-										</div>
-									</Link>		
-								</template>														
-							</div>
+							<template v-for="unit in units" :key="unit.id">
+								<template v-if="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || 
+												$page.props.auth.user.fire_brigade_unit_id == unit.id">
+									<h1 class="text-tertiary font-bold text-md mb-4 ml-5">{{unit.name}}</h1>
+									<div class="flex flex-wrap justify-between">
+										<template v-for="service in services" :key="service.id">
+											<template v-if="service.item.fire_brigade_unit_id == unit.id">
+												<Link :href="'items/' + service.item.id" class="">
+													<div class="ml-5 mb-5 pl-2 pr-2 rounded border-l-4 border-primary-200 hover:border-primary-100 hover:bg-tertiary transition duration-500 ease-in-out">
+														<div class="font-semibold">{{ service.service_database.name }}</div>
+														<div class="text-sm">{{ service.perform_date }}</div>																																
+													</div>
+												</Link>	
+											</template>
+										</template>														
+									</div>
+								</template>
+							</template>
 						</div>
 					</div>
 				</div>
@@ -44,6 +52,7 @@ export default {
   props: {
     user: Object,
     services: Object,
+	units:Object
   },
   components: {
     BreezeAuthenticatedLayout,

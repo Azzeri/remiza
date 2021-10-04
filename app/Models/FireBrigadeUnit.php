@@ -28,6 +28,11 @@ class FireBrigadeUnit extends Model
     {
         return $this->hasMany(Item::class);
     }
+    
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 
     public function superiorUnit()
     {
