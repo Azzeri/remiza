@@ -7,7 +7,8 @@
 
 <body>
     <h1>Witamy w serwisie</h1>
-
+    Twoje tymczasowe hasło: 
+    {{$details['password']}}
 </body>
 
 </html>

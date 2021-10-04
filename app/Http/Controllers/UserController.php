@@ -52,7 +52,7 @@ class UserController extends Controller
     public function store()
     {
         $this->authorize('create', User::class);
-
+        
         Request::validate([
             'name' => 'required|string|alpha|min:3|max:32',
             'surname' => 'required|string|alpha_dash|min:3|max:32',
@@ -71,13 +71,15 @@ class UserController extends Controller
         else
             $unit = Auth::user()->fire_brigade_unit_id;
 
+        $pass = substr(str_shuffle('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz'), 0, 16);
+        
         User::create(
             [
                 'name' => ucfirst(Request::get('name')),
                 'surname' => ucfirst(Request::get('surname')),
                 'email' => Request::get('email'),
                 'phone' => Request::get('phone'),
-                'password' => Hash::make('qwerty'),
+                'password' => Hash::make($pass),
                 'privilege_id' => 3,
                 'fire_brigade_unit_id' => $unit,
                 // 'google2fa_secret' => $key
@@ -85,7 +87,9 @@ class UserController extends Controller
             ]
         );
 
-        Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail(['title' => 'Witaj w jednostce']));
+        Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail(
+            ['title' => 'Witaj w jednostce',
+            'password' => $pass]));
 
 
         return redirect()->back()

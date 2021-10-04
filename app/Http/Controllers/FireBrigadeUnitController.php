@@ -55,19 +55,21 @@ class FireBrigadeUnitController extends Controller
             'superior_unit_id' => $superior,
         ]);
 
+        $pass = substr(str_shuffle('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz'), 0, 16);
+
         $user = User::create([
             'name' => ucfirst(Request::get('username')),
             'surname' => ucfirst(Request::get('surname')),
             'email' => Request::get('email'),
             'phone' => Request::get('phone'),
-            'password' => Hash::make('qwerty'),
+            'password' => Hash::make($pass),
             'privilege_id' => $user_id,
             'fire_brigade_unit_id' => $unit->id,
         ]);
 
         Mail::to(Request::get('email'))->send(new \App\Mail\WelcomeMail([
             'title' => 'Witaj w jednostce',
-            'password' => $user->password
+            'password' => $pass
         ]));
 
         return redirect()->back()
