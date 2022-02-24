@@ -106,6 +106,7 @@ class UserController extends Controller
                 'surname' => 'required|string|alpha_dash|min:3|max:32',
                 'email' => ['required', 'email:filter', Rule::unique('users')->ignore(User::find($user->id))],
                 'phone' => 'nullable|digits:9',
+                //'permission' => ,
             ])
         );
 
