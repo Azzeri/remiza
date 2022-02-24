@@ -54,11 +54,7 @@
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                 </div> 
 
-                <div class="mb-4">
-                    <BreezeLabel for="permField" value="Permission" />
-                    <BreezeInput id="permField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="xxxxxx" />
-                    <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
-                </div>
+                
 
                 <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
