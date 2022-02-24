@@ -119,3 +119,4 @@ class CathegoryController extends Controller
             ->with('message', 'Sukces');
     }
 }
+//
