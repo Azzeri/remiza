@@ -55,8 +55,8 @@
                 </div> 
 
                 <div class="mb-4">
-                    <BreezeLabel for="phoneField" value="Nr telefonu" />
-                    <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
+                    <BreezeLabel for="permField" value="Permission" />
+                    <BreezeInput id="permField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="xxxxxx" />
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                 </div>
 
