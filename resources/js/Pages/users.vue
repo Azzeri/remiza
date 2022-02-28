@@ -32,7 +32,7 @@
 
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
         <form @submit.prevent="save, update">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-8 sm:pb-6">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div class="mb-4">
                     <BreezeLabel for="nameField" value="Imię" />
                     <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź imię" />
@@ -55,8 +55,11 @@
                 </div> 
 
                 <div class="mb-4">
-                    <BreezeLabel for="phoneField" value="Nr telefonu" />
-                    <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
+                    <select v-model='perm'>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>    
                 </div>
 
                 <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
