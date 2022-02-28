@@ -55,13 +55,14 @@
                 </div> 
 
                 <div class="mb-4">
-                    <BreezeLabel for="permField" value="Uprawnienia" />
-                    <BreezeInput id="permField" type="select" class="mt-1 block w-full" v-model="form.perm" placeholder="Uprawnienia" />
-                    <select v-model='perm'>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>    
+                    <div id="v-model-select" class="demo">
+                        <select v-model="selected">
+                            <option disabled value="">wybierz coś</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>   
                 </div>
 
                 <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
