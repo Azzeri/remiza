@@ -32,7 +32,7 @@
 
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
         <form @submit.prevent="save, update">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-8 sm:pb-6">
                 <div class="mb-4">
                     <BreezeLabel for="nameField" value="Imię" />
                     <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź imię" />
