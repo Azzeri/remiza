@@ -55,6 +55,8 @@
                 </div> 
 
                 <div class="mb-4">
+                    <BreezeLabel for="permField" value="Uprawnienia" />
+                    <BreezeInput id="permField" type="select" class="mt-1 block w-full" v-model="form.perm" placeholder="Uprawnienia" />
                     <select v-model='perm'>
                         <option>1</option>
                         <option>2</option>
