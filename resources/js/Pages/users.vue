@@ -136,6 +136,15 @@ export default {
         }
     },
 
+
+    new :Vue({
+        el: '...',
+        data: {
+            selected: ''
+        }
+    }),
+
+
     created(){
         this.reset();
     },
