@@ -16,7 +16,10 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        $manufacturers = Manufacturer::all();
+        $manufacturers = Manufacturer::paginate()->through(fn ($manufacturer) => [
+            'id' => $manufacturer->id,
+            'name' => $manufacturer->name,
+        ]);
 
         return Inertia::render('manufacturers', ['data' => $manufacturers]);
     }
