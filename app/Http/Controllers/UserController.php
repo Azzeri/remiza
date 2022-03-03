@@ -19,6 +19,7 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
 
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
+            $privileges = Privilege::all();
             $units = FireBrigadeUnit::all();
             $users = User::with('privilege', 'fireBrigadeUnit')
                 ->orderBy('name')
@@ -46,7 +47,7 @@ class UserController extends Controller
                 ->paginate(10);
         }
 
-        return Inertia::render('users', ['data' => $users, 'units' => $units]);
+        return Inertia::render('users', ['data' => $users, 'units' => $units, 'privileges' => $privileges]);
     }
 
     public function store()
@@ -58,7 +59,7 @@ class UserController extends Controller
             'surname' => 'required|string|alpha_dash|min:3|max:32',
             'phone' => 'nullable|digits:9',
             'email' => 'unique:users|required|email:filter',
-            'unit' => 'nullable'
+            'unit' => 'nullable',
         ]);
 
         // $google2fa = app('pragmarx.google2fa');
@@ -100,14 +101,21 @@ class UserController extends Controller
     {
         $this->authorize('update', $user, User::class);
 
-        $user->update(
-            Request::validate([
-                'name' => 'required|string|alpha|min:3|max:32',
-                'surname' => 'required|string|alpha_dash|min:3|max:32',
-                'email' => ['required', 'email:filter', Rule::unique('users')->ignore(User::find($user->id))],
-                'phone' => 'nullable|digits:9',
-            ])
-        );
+        Request::validate([
+            'name' => 'required|string|alpha|min:3|max:32',
+            'surname' => 'required|string|alpha_dash|min:3|max:32',
+            'email' => ['required', 'email:filter', Rule::unique('users')->ignore(User::find($user->id))],
+            'phone' => 'nullable|digits:9',
+            'privilege_new' => 'required|integer|exists:privileges,id|',Rule::notIn([Privilege::IS_GLOBAL_ADMIN]), 
+        ]);
+
+        $user->update([
+            'name' => Request::get('name'),
+            'surname' => Request::get('surname'),
+            'email' => Request::get('email'),
+            'phone' => Request::get('phone'),
+            'privilege_id' => Request::get('privilege_new'),
+        ]);
 
         return redirect()->back()
             ->with('message', 'Sukces');

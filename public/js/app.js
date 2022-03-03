@@ -20534,7 +20534,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     data: Object,
     errors: Object,
-    units: Object
+    units: Object,
+    privileges: Object
   },
   components: {
     BreezeAuthenticatedLayout: _Layouts_Authenticated_vue__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -20554,11 +20555,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editMode: false,
       isOpen: false,
+      currentUser: null,
       form: {
         name: null,
         surname: null,
         email: null,
         phone: null,
+        privilege_new: null,
         unit: this.defaultUnit
       },
       "throws": ['Imię', 'Nazwisko', 'Email', 'Telefon', 'Rola', 'Remiza', 'Działania']
@@ -20587,8 +20590,9 @@ __webpack_require__.r(__webpack_exports__);
         surname: null,
         email: null,
         phone: null,
+        privilege_new: null,
         unit: this.defaultUnit
-      };
+      }, this.currentUser = null;
     },
     save: function save(data) {
       var _this = this;
@@ -20600,9 +20604,11 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.reset();
     },
-    edit: function edit(data) {
-      this.form = Object.assign({}, data);
+    edit: function edit(row) {
+      this.form = Object.assign({}, row);
       this.editMode = true;
+      this.form.privilege_new = row.privilege_id;
+      this.currentUser = row;
       this.openModal();
     },
     update: function update(data) {
@@ -26548,10 +26554,11 @@ var _hoisted_19 = {
   "class": "text-red-500"
 };
 var _hoisted_20 = {
+  key: 0,
   "class": "mb-4"
 };
 var _hoisted_21 = {
-  key: 0,
+  key: 1,
   "class": "mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto"
 };
 
@@ -26755,29 +26762,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), $props.errors.phone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.phone), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
-        "for": "unitField",
-        value: "Remiza"
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.currentUser.privilege_id != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+        "for": "privilegeField",
+        value: "Uprawnienia"
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"text-red-500\" v-if=\"errors.privilege\">{{ errors.privilege }}</div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-          return $data.form.unit = $event;
+          return $data.form.privilege_new = $event;
         }),
         "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
-        id: "unitField"
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.units, function (fbunit) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: fbunit.id,
-          value: fbunit.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fbunit.name), 9
+        id: "privilegeField"
+      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.privileges, function (privilege) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+          key: privilege.id
+        }, [privilege.id != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+          key: 0,
+          value: privilege.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(privilege.name), 9
         /* TEXT, PROPS */
-        , ["value"]);
+        , ["value"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
+        /* STABLE_FRAGMENT */
+        );
       }), 128
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]])], 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$data.editMode]]), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.privilege_new]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-show=\"($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode\" class=\"mb-4\">\r\n                    <BreezeLabel for=\"unitField\" value=\"Remiza\" />\r\n                    <select v-model=\"form.unit\" class=\"border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm\" id=\"unitField\">\r\n                        <template v-for=\"fbunit in units\" :key=\"fbunit.id\">\r\n                            <option :value=\"fbunit.id\">\r\n                                {{fbunit.name}}\r\n                            </option>\r\n                        </template>\r\n                    </select>\r\n                </div> "), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: _ctx.route('password.change')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

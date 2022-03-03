@@ -52,8 +52,21 @@
                     <BreezeLabel for="phoneField" value="Nr telefonu" />
                     <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
-                </div> 
-                <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
+                </div>
+
+                <div class="mb-4" v-if="currentUser.privilege_id != 1">
+                    <BreezeLabel for="privilegeField" value="Uprawnienia" />
+                    <!-- <div class="text-red-500" v-if="errors.privilege">{{ errors.privilege }}</div> -->
+                    <select v-model="form.privilege_new" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="privilegeField">
+                        <template v-for="privilege in privileges" :key="privilege.id">
+                            <option :value="privilege.id" v-if="privilege.id != 1">    
+                                {{privilege.name}}
+                            </option>
+                        </template>
+                    </select>
+                </div>
+
+                <!-- <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
                     <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
                         <template v-for="fbunit in units" :key="fbunit.id">
@@ -62,7 +75,7 @@
                             </option>
                         </template>
                     </select>
-                </div>                     
+                </div> -->
                 <span v-if="editMode && $page.props.auth.user.id == form.id" class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <Link :href="route('password.change')">
                         <BreezeButton>
@@ -92,7 +105,8 @@ export default {
     props: {
         data: Object,
         errors: Object,
-        units: Object
+        units: Object,
+        privileges: Object
     },
     components: {
         BreezeAuthenticatedLayout,
@@ -113,11 +127,13 @@ export default {
         return {
             editMode: false,
             isOpen: false,
+            currentUser: null,
             form: {
                 name: null,
                 surname: null,
                 email: null,
                 phone: null,
+                privilege_new: null,
                 unit: this.defaultUnit
             },
             throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
@@ -149,8 +165,10 @@ export default {
                 surname: null,
                 email: null,
                 phone: null,
-                unit: this.defaultUnit
-            }
+                privilege_new: null,
+                unit: this.defaultUnit,
+            },
+            this.currentUser = null
         },
         save: function (data) {
             this.$inertia.post('/users', data,{
@@ -158,9 +176,11 @@ export default {
             })
             this.reset();
         },
-        edit: function (data) {
-            this.form = Object.assign({}, data);
+        edit: function (row) {
+            this.form = Object.assign({}, row);
             this.editMode = true;
+            this.form.privilege_new = row.privilege_id;
+            this.currentUser = row;
             this.openModal();
         },
         update: function (data) {
