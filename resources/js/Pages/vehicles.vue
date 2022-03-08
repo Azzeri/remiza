@@ -20,7 +20,7 @@
                     </td>
                 </tr>
             </Table>
-            <pagination class="mmt-6" :links="data.links" />
+            <pagination class="mt-6 mx-auto" :links="data.links" />
         </Card>
     </BreezeAuthenticatedLayout>
 

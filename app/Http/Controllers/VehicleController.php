@@ -19,15 +19,10 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        // $vehicles = Vehicle::paginate(2)->through(fn ($vehicle) => [
-            //     'id' => $vehicle->id,
-            //     'number' => $vehicle->number,
-            //     'name' => $vehicle->name,
-            // ]);
 
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
 
-            $vehicles = Vehicle::with('unit')->paginate(1);
+            $vehicles = Vehicle::with('unit')->paginate(10);
             $units = FireBrigadeUnit::all();
 
         } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
