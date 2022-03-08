@@ -19,9 +19,17 @@ class VehicleController extends Controller
      */
     public function index()
     {
+        // $vehicles = Vehicle::paginate(2)->through(fn ($vehicle) => [
+            //     'id' => $vehicle->id,
+            //     'number' => $vehicle->number,
+            //     'name' => $vehicle->name,
+            // ]);
+
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
-            $vehicles = Vehicle::with('unit')->get();
+
+            $vehicles = Vehicle::with('unit')->paginate(1);
             $units = FireBrigadeUnit::all();
+
         } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->get();
 
@@ -31,9 +39,9 @@ class VehicleController extends Controller
                     array_push($unitIds, $unit->id);
             }
 
-            $vehicles = Vehicle::with('unit')->whereIn('fire_brigade_unit_id', $unitIds)->get();
+            $vehicles = Vehicle::with('unit')->whereIn('fire_brigade_unit_id', $unitIds)->paginate(10);
         } else {
-            $vehicles = Vehicle::with('unit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+            $vehicles = Vehicle::with('unit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->paginate(10);
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
         }
 

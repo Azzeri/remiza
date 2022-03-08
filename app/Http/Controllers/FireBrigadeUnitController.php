@@ -19,7 +19,7 @@ class FireBrigadeUnitController extends Controller
         $this->authorize('viewAny', FireBrigadeUnit::class);
 
         $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
-            ? FireBrigadeUnit::with('superiorUnit')->get()
+            ? FireBrigadeUnit::with('superiorUnit')->paginate(10)
             : FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
 
         return Inertia::render('fireBrigadeUnits', ['data' => $units]);
