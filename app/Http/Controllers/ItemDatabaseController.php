@@ -13,9 +13,40 @@ class ItemDatabaseController extends Controller
 {
     public function index()
     {
-        $dbservices = ServiceDatabase::all();
-        $dbitems = ItemDatabase::with('cathegory')->paginate(10);
-        $cathegories = Cathegory::all();
+        // $dbservices = ServiceDatabase::all();
+        // $dbitems = ItemDatabase::with('cathegory')->paginate(10);
+        // $cathegories = Cathegory::all();
+
+        $queryServiceDatabase=ServiceDatabase::query();
+        $queryItemDatabase=ItemDatabase::query();
+        $queryCathegory=Cathegory::query();
+
+
+        $dbservices = $queryServiceDatabase->get()->map(fn($ServiceDatabase) => [
+            'id' => $ServiceDatabase->id,
+        ]);
+        $dbitems = $queryItemDatabase->paginate(10)->through(fn($ItemDatabase) => [
+            'id' => $ItemDatabase->id,
+            'stencil_name' => $ItemDatabase->stencil_name,
+            'cathegory' => array(
+                'id' => $ItemDatabase->Cathegory->id,
+                'name' => $ItemDatabase->Cathegory->name,
+            ),//jak 'cathegory' z $dbitems można połączyć z $cathegories?
+            'name' => $ItemDatabase->name,
+            'construction_number' => $ItemDatabase->construction_number,
+            'inventory_number' => $ItemDatabase->inventory_number,
+            'identification_number' => $ItemDatabase->identification_number,
+            'date_production' => $ItemDatabase->date_production,
+            'date_expiry' => $ItemDatabase->date_expiry,
+            'date_legalisation' => $ItemDatabase->date_legalisation,
+            'date_legalisation_due' => $ItemDatabase->date_legalisation_due,
+            'manufacturer' => $ItemDatabase->manufacturer,
+            'vehicle' => $ItemDatabase->vehicle,
+        ]);
+        $cathegories = $queryCathegory->get()->map(fn($cathegory) => [
+            'id' => $cathegory->id,
+            'name' => $cathegory->name,
+        ]);
 
         return Inertia::render('stencils', ['dbitems' => $dbitems, 'dbservices' => $dbservices, 'cathegories' => $cathegories]);
     }

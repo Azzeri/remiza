@@ -19,28 +19,81 @@ class VehicleController extends Controller
      */
     public function index()
     {
+        $queryVehicle=Vehicle::query();
+        $queryUnit=FireBrigadeUnit::query();
 
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
+            //wszystke jednostki
 
-            $vehicles = Vehicle::with('unit')->paginate(10);
-            $units = FireBrigadeUnit::all();
-
-        } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
-            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+        } else if(Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
+            //pojazdy z jednostki zalogowanego admina i jednsotek podrzednych
+            $queryUnit->where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id);
 
             $unitIds = [Auth::user()->fire_brigade_unit_id];
-            foreach ($units as $unit) {
+            foreach ($queryUnit as $unit) {
                 if ($unit->superior_unit_id == Auth::user()->fire_brigade_unit_id)
                     array_push($unitIds, $unit->id);
             }
 
-            $vehicles = Vehicle::with('unit')->whereIn('fire_brigade_unit_id', $unitIds)->paginate(10);
+            $queryVehicle->with('unit')->whereIn('fire_brigade_unit_id', $unitIds);
+
         } else {
-            $vehicles = Vehicle::with('unit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->paginate(10);
-            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
+            //tylko pojazd jednostki zalogowanego koordynatora
+            $queryVehicle->with('unit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id);
+            $queryUnit->where('id', Auth::user()->fire_brigade_unit_id);
         }
 
+        $vehicles = $queryVehicle->paginate(10)->through(fn($vehicle) => [
+            'id' => $vehicle->id,
+            'name' => $vehicle->name,
+            'number' => $vehicle->number,
+            'unit' => array(
+                'name' => $vehicle->unit->name
+            ),
+        ]);
+        $units = $queryUnit->get()->map(fn($unit) => [
+            'id' => $unit->id,
+            'name' => $unit->name,
+        ]);
+        //na końcu mapowanie i paginacja
         return Inertia::render('vehicles', ['data' => $vehicles, 'units' => $units]);
+
+        ///////////////////////////////////////////
+        // if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
+
+        //     //$vehicles = Vehicle::with('unit')->paginate(10);
+        //     //$units = FireBrigadeUnit::all();
+
+        //     $vehicles = Vehicle::paginate(10)->through(fn($vehicle) => [
+        //         'id' => $vehicle->id,
+        //         'name' => $vehicle->name,
+        //         'number' => $vehicle->number,
+        //         'unit' => array(
+        //             'name' => $vehicle->unit->name,
+        //         )
+        //     ]);
+        //     $units = FireBrigadeUnit::get()->map(fn($unit) => [
+        //         'id' => $unit->id,
+        //         'name' => $unit->name,
+        //     ]);
+
+        // } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
+        //     $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->get();
+
+        //     $unitIds = [Auth::user()->fire_brigade_unit_id];
+        //     foreach ($units as $unit) {
+        //         if ($unit->superior_unit_id == Auth::user()->fire_brigade_unit_id)
+        //             array_push($unitIds, $unit->id);
+        //     }
+
+        //     $vehicles = Vehicle::with('unit')->whereIn('fire_brigade_unit_id', $unitIds)->paginate(10);
+        // } else {
+        //     $vehicles = Vehicle::with('unit')->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->paginate(10);
+        //     $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
+        // }
+
+        // return Inertia::render('vehicles', ['data' => $vehicles, 'units' => $units]);
+        /////////////////////////////////////////////
     }
     /**
      * Store a newly created resource in storage.

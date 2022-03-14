@@ -54,7 +54,7 @@
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                 </div>
 
-                <div class="mb-4" v-if="currentUser.privilege_id != 1">
+                <div class="mb-4" v-if="editMode && currentUser.privilege_id != 1 && $page.props.auth.user.id == 1">
                     <BreezeLabel for="privilegeField" value="Uprawnienia" />
                     <!-- <div class="text-red-500" v-if="errors.privilege">{{ errors.privilege }}</div> -->
                     <select v-model="form.privilege_new" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="privilegeField">
@@ -179,7 +179,7 @@ export default {
         edit: function (row) {
             this.form = Object.assign({}, row);
             this.editMode = true;
-            this.form.privilege_new = row.privilege_id;
+            this.form.privilege_new = row.privilege.id;
             this.currentUser = row;
             this.openModal();
         },

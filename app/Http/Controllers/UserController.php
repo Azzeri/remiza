@@ -18,34 +18,87 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
+        $queryPrivilege=Privilege::query();
+        $queryUnit=FireBrigadeUnit::query();
+        $queryUser=User::query();
+
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
-            $privileges = Privilege::all();
-            $units = FireBrigadeUnit::all();
-            $users = User::with('privilege', 'fireBrigadeUnit')
-                ->orderBy('name')
-                ->paginate(10);
+            
+
         } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
-            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)
-                ->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)
-                ->get();
+            $queryUnit->where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id);
 
             $unitIds = [Auth::user()->fire_brigade_unit_id];
-            foreach ($units as $unit) {
+            foreach ($queryUnit as $unit) {
                 if ($unit->superior_unit_id == Auth::user()->fire_brigade_unit_id)
                     array_push($unitIds, $unit->id);
             }
 
-            $users = User::with('privilege', 'fireBrigadeUnit')
-                ->whereIn('fire_brigade_unit_id', $unitIds)
-                ->orderBy('name')
-                ->paginate(10);
+            $queryUser->whereIn('fire_brigade_unit_id', $unitIds)->orderBy('name');
+
         } else {
-            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
-            $users = User::with('privilege', 'fireBrigadeUnit')
-                ->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)
-                ->orderBy('name')
-                ->paginate(10);
+            $queryUnit->where('id', Auth::user()->fire_brigade_unit_id);
+            $queryUser->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)->orderBy('name');
         }
+
+        // $privileges = [];
+        // $privileges = Privilege::all();
+
+        $privileges = $queryPrivilege->get()->map(fn($privilege) => [
+            'id' => $privilege->id,
+            'name' => $privilege->name,
+        ]);
+        $units = $queryUnit->get()->map(fn($unit) => [
+            'id' => $unit->id,
+            'name' => $unit->name,
+        ]);
+        $users = $queryUser->paginate(10)->through(fn($user) => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'surname' => $user->surname,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'privilege' => array(   
+                'id' => $user->privilege->id,
+                'name' => $user->privilege->name
+            ),
+            'fire_brigade_unit'=>$user->fireBrigadeUnit,
+            // 'fire_brigade_unit' => array(
+            //     'name' => $user->fireBrigadeUnit
+            // ),
+        ]);
+
+        ///////////////////////////////////////////
+        // $privileges = [];
+        // if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
+        //     $privileges = Privilege::all();
+        //     $units = FireBrigadeUnit::all();
+        //     $users = User::with('privilege', 'fireBrigadeUnit')
+        //         ->orderBy('name')
+        //         ->paginate(10);
+        // } else if (Auth::user()->privilege_id == Privilege::IS_SUPERIOR_UNIT_ADMIN) {
+        //     $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)
+        //         ->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)
+        //         ->get();
+
+        //     $unitIds = [Auth::user()->fire_brigade_unit_id];
+        //     foreach ($units as $unit) {
+        //         if ($unit->superior_unit_id == Auth::user()->fire_brigade_unit_id)
+        //             array_push($unitIds, $unit->id);
+        //     }
+
+        //     $users = User::with('privilege', 'fireBrigadeUnit')
+        //         ->whereIn('fire_brigade_unit_id', $unitIds)
+        //         ->orderBy('name')
+        //         ->paginate(10);
+        // } else {
+        //     $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->get();
+        //     $users = User::with('privilege', 'fireBrigadeUnit')
+        //         ->where('fire_brigade_unit_id', Auth::user()->fire_brigade_unit_id)
+        //         ->orderBy('name')
+        //         ->paginate(10);
+        // }
+        /////////////////////////////////////////////
 
         return Inertia::render('users', ['data' => $users, 'units' => $units, 'privileges' => $privileges]);
     }

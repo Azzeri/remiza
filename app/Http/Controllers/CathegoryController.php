@@ -12,8 +12,20 @@ class CathegoryController extends Controller
 {
     public function index()
     {
-        // $cathegories = Cathegory::with('subcathegories')->get();
-        $cathegories = Cathegory::with('subcathegories', 'servicesdb', 'itemsdb')->paginate(10);
+        // $cathegories = Cathegory::with('subcathegories', 'servicesdb', 'itemsdb')->paginate(10);
+
+        $queryCathegory=Cathegory::query();
+
+        $cathegories = $queryCathegory->paginate(10)->through(fn($cathegory) => [
+            'id' => $cathegory->id,
+            'name' => $cathegory->name,
+            'photo_path' => $cathegory->photo_path,
+            'fillable' => $cathegory->fillable,
+            'subcathegories' => $cathegory->subcathegories,
+            'servicesdb' => $cathegory->servicesdb,
+            'itemsdb' => $cathegory->itemsdb,
+        ]);
+        
         return Inertia::render('cathegories', ['data' => $cathegories]);
     }
 

@@ -18,9 +18,20 @@ class FireBrigadeUnitController extends Controller
     {
         $this->authorize('viewAny', FireBrigadeUnit::class);
 
+        $queryFireBrigadeUnit=FireBrigadeUnit::query();
+
         $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
-            ? FireBrigadeUnit::with('superiorUnit')->paginate(10)
-            : FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
+            ?   $fireBrigadeUnits = $queryFireBrigadeUnit->paginate(10)->through(fn($fireBrigadeUnit) => [
+                    'id' => $fireBrigadeUnit->id,
+                    'name' => $fireBrigadeUnit->name,
+                    'address' => $fireBrigadeUnit->address,
+                    'superiorUnit' => $fireBrigadeUnit->superiorUnit,
+                ])
+            :FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
+
+        // $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
+        //     ? FireBrigadeUnit::with('superiorUnit')->paginate(10)
+        //     : FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
 
         return Inertia::render('fireBrigadeUnits', ['data' => $units]);
     }

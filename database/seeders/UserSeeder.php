@@ -48,22 +48,22 @@ class UserSeeder extends Seeder
             'mfaverified' => true
         ]);
 
-        // DB::table('users')->insert([
-        //     'name' => 'Arek',
-        //     'surname' => 'Kowalski',
-        //     'email' => 'ak@remiza.com',
-        //     'password' => Hash::make('qwerty'),
-        //     'privilege_id' => 3,
-        //     'fire_brigade_unit_id' => 1
-        // ]);
+        DB::table('users')->insert([
+            'name' => 'Arek',
+            'surname' => 'Kowalski',
+            'email' => 'ak@remiza.com',
+            'password' => Hash::make('qwerty'),
+            'privilege_id' => 3,
+            'fire_brigade_unit_id' => 1
+        ]);
 
-        // DB::table('users')->insert([
-        //     'name' => 'Dawid',
-        //     'surname' => 'Reka',
-        //     'email' => 'dr@remiza.com',
-        //     'password' => Hash::make('qwerty'),
-        //     'privilege_id' => 3,
-        //     'fire_brigade_unit_id' => 2
-        // ]);
+        DB::table('users')->insert([
+            'name' => 'Dawid',
+            'surname' => 'Reka',
+            'email' => 'dr@remiza.com',
+            'password' => Hash::make('qwerty'),
+            'privilege_id' => 3,
+            'fire_brigade_unit_id' => 2
+        ]);
     }
 }

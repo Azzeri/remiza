@@ -16,7 +16,9 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        $manufacturers = Manufacturer::paginate(10)->through(fn ($manufacturer) => [
+        $queryManufacturer=Manufacturer::query();
+
+        $manufacturers = $queryManufacturer->paginate(10)->through(fn ($manufacturer) => [
             'id' => $manufacturer->id,
             'name' => $manufacturer->name,
         ]);
