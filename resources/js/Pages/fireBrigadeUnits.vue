@@ -13,7 +13,7 @@
                 <tr v-for="row in data.data" :key="row.id" class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0 hover:bg-secondary-50 bg-tertiary justify-center text-text-200">
                     <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.name }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ row.address }}</td>
-                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ superiorUnit(row) }}</td>
+                    <td class="h-10 sm:h-auto border-primary-200 border p-3 overflow-auto">{{ superior_unit(row) }}</td>
                     <td class="h-10 sm:h-auto border-primary-200 border p-3 text-center">
                         <i @click="edit(row)" class="far fa-edit fa-lg cursor-pointer"></i>
                         <i v-if="row.id != $page.props.auth.user.fire_brigade_unit_id" @click="deleteRow(row)" class="far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"></i>
@@ -113,6 +113,10 @@ export default {
         Message
     },
 
+    created(){
+        this.reset();
+    },
+
     data() {
         return {
             editMode: false,
@@ -131,11 +135,14 @@ export default {
     },
 
     computed: {
-
+        defaultUnit(){
+            if (this.units.length)
+                return this.units[0].id
+        }
     },
     
     methods: {
-        superiorUnit(unit){
+        superior_unit(unit){
             return unit.superior_unit ? unit.superior_unit.name : 'brak';
         },
         openModal: function () {

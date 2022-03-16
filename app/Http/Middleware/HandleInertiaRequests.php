@@ -50,7 +50,15 @@ class HandleInertiaRequests extends Middleware
 
     }
 
-    private function isAdmin(): bool {
+    public function hasPrivilege($Privilege) {
+        if (Auth::user()->privilege_id == $Privilege) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function isAdmin() {
         return 1;
     }
 

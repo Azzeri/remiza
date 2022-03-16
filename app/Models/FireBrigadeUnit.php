@@ -34,8 +34,8 @@ class FireBrigadeUnit extends Model
         return $this->hasMany(Service::class);
     }
 
-    public function superiorUnit()
+    public function superior_unit()
     {
-        return $this->belongsTo(FireBrigadeUnit::class);
+        return $this->belongsTo(FireBrigadeUnit::class, 'superior_unit_id');
     }
 }

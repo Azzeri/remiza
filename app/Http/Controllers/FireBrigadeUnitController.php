@@ -18,16 +18,34 @@ class FireBrigadeUnitController extends Controller
     {
         $this->authorize('viewAny', FireBrigadeUnit::class);
 
-        $queryFireBrigadeUnit=FireBrigadeUnit::query();
+        $queryUnit=FireBrigadeUnit::query();
 
-        $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
-            ?   $fireBrigadeUnits = $queryFireBrigadeUnit->paginate(10)->through(fn($fireBrigadeUnit) => [
-                    'id' => $fireBrigadeUnit->id,
-                    'name' => $fireBrigadeUnit->name,
-                    'address' => $fireBrigadeUnit->address,
-                    'superiorUnit' => $fireBrigadeUnit->superiorUnit,
-                ])
-            :FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
+        if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
+            $units = FireBrigadeUnit::with('superior_unit', 'name');
+        } else {
+            $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit');
+        }
+
+        $units = $queryUnit->paginate(10)->through(fn($unit) => [
+            'id' => $unit->id,
+            'name' => $unit->name,
+            'address' => $unit->address,
+            'superior_unit' => $unit->superior_unit,
+            // 'superiorUnit' => array(
+            //     'id' => $unit->superiorUnit->id,
+            //     'name' => $unit->superiorUnit->name,
+            //     'superior_unit_id' => $unit->superiorUnit->superior_unit_id,
+            // ),
+        ]);
+//dd($units);
+        // $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
+        //     ?   $fireBrigadeUnits = $queryFireBrigadeUnit->paginate(10)->through(fn($fireBrigadeUnit) => [
+        //             'id' => $fireBrigadeUnit->id,
+        //             'name' => $fireBrigadeUnit->name,
+        //             'address' => $fireBrigadeUnit->address,
+        //             'superiorUnit' => $fireBrigadeUnit->superiorUnit,
+        //         ])
+        //     :FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit')->get();
 
         // $units = Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN
         //     ? FireBrigadeUnit::with('superiorUnit')->paginate(10)

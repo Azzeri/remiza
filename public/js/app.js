@@ -19356,6 +19356,9 @@ __webpack_require__.r(__webpack_exports__);
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__.default,
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__.default
   },
+  created: function created() {
+    this.reset();
+  },
   data: function data() {
     return {
       editMode: false,
@@ -19372,9 +19375,13 @@ __webpack_require__.r(__webpack_exports__);
       "throws": ['Nazwa', 'Adres', 'Jednostka nadrzędna', 'Działania']
     };
   },
-  computed: {},
+  computed: {
+    defaultUnit: function defaultUnit() {
+      if (this.units.length) return this.units[0].id;
+    }
+  },
   methods: {
-    superiorUnit: function superiorUnit(unit) {
+    superior_unit: function superior_unit(unit) {
       return unit.superior_unit ? unit.superior_unit.name : 'brak';
     },
     openModal: function openModal() {
@@ -24001,7 +24008,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.address), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.superiorUnit(row)), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.superior_unit(row)), 1
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
