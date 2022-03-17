@@ -41,7 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message')
             ],
             'privileges' => [
-                'IS_GLOBAL_ADMIN' => $this->isAdmin(),
+                'IS_GLOBAL_ADMIN' => 1,
                 'IS_LOWLY_UNIT_ADMIN' => 2,
                 'IS_COORDINATOR' => 3,
                 'IS_SUPERIOR_UNIT_ADMIN' => 4,
@@ -58,13 +58,4 @@ class HandleInertiaRequests extends Middleware
         }
     }
 
-    private function isAdmin() {
-        return 1;
-    }
-
-    // private function isAdmin() {
-    //     return 1;
-
-    //     //dodac funkcje (jesli isAdmin - to true, jesli nie - to false)
-    // }
 }

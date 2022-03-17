@@ -100,7 +100,7 @@ class UserController extends Controller
         // }
         /////////////////////////////////////////////
 
-        return Inertia::render('users', ['data' => $users, 'units' => $units, 'privileges' => $privileges]);
+        return Inertia::render('users', ['data' => $users, 'units' => $units, 'privileges_form' => $privileges]);
     }
 
     public function store()

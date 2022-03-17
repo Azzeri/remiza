@@ -53,13 +53,13 @@
                     <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
                     <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
                 </div>
-
-                <div class="mb-4" v-if="editMode && currentUser.privilege_id != 1 && $page.props.auth.user.id == 1">
+                
+                <div class="mb-4" v-if="editMode && currentUser.privilege.id != $page.props.privileges.IS_GLOBAL_ADMIN && $page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN">
                     <BreezeLabel for="privilegeField" value="Uprawnienia" />
                     <!-- <div class="text-red-500" v-if="errors.privilege">{{ errors.privilege }}</div> -->
                     <select v-model="form.privilege_new" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="privilegeField">
-                        <template v-for="privilege in privileges" :key="privilege.id">
-                            <option :value="privilege.id" v-if="privilege.id != 1">    
+                        <template v-for="privilege in privileges_form" :key="privilege.id">
+                            <option :value="privilege.id" v-if="privilege.id != 1">
                                 {{privilege.name}}
                             </option>
                         </template>
@@ -106,7 +106,7 @@ export default {
         data: Object,
         errors: Object,
         units: Object,
-        privileges: Object
+        privileges_form: Object
     },
     components: {
         BreezeAuthenticatedLayout,

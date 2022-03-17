@@ -21,7 +21,7 @@ class FireBrigadeUnitController extends Controller
         $queryUnit=FireBrigadeUnit::query();
 
         if (Auth::user()->privilege_id == Privilege::IS_GLOBAL_ADMIN) {
-            $units = FireBrigadeUnit::with('superior_unit', 'name');
+            $units = FireBrigadeUnit::with('superior_unit');
         } else {
             $units = FireBrigadeUnit::where('id', Auth::user()->fire_brigade_unit_id)->orWhere('superior_unit_id', Auth::user()->fire_brigade_unit_id)->with('superiorUnit');
         }
