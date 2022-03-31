@@ -30,8 +30,8 @@
                 </div>
                 <div class="mb-4">
                     <BreezeLabel for="nameField" value="Nazwa" />
-                    <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
-                    <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
+                    <BreezeInput  id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
+                    <div class="text-red-500" v-if="form.errors.name">{{ form.errors.name }}</div>
                 </div>   
             </div>                
         </form>
@@ -51,12 +51,13 @@ import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Message from "@/Components/Message.vue";
-
+import { ref, nextTick } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     props: {
         data: Object,
-        errors: Object,
     },
  
     components: {
@@ -73,53 +74,131 @@ export default {
         Message
     },
 
-    data() {
-        return {
-            editMode: false,
-            isOpen: false,
-            form: {
-                name: null,
-            },
-            throws:['Nazwa', 'Działania'],
+    setup() {
+        const editMode = ref(false)
+        const isOpen = ref(false)
+
+        const form = useForm({
+            name: null
+        })
+        const throws = ['Nazwa', 'Działania']
+        
+        const openModal = (_) => {
+            isOpen.value = true
+            nextTick(() => document.getElementById("nameField").focus());
         }
+        const closeModal = (_) => {
+            isOpen.value = false
+            reset()
+        }
+        const reset = (_) => {
+            form.reset()
+            form.clearErrors()
+            editMode.value = false
+        }
+        const save = (_) => {
+            form.post(route("manufacturers.store"), {
+                onSuccess: () => closeModal()
+            })
+        }
+        const edit = (row) => {
+            editMode.value = true
+            openModal()
+            form.id = row.id
+            form.name = row.name
+            nextTick(() => {
+                const element = document.getElementById("nameField");
+                element ? element.focus() : true;
+            });
+        }
+        //do update - zrobić ścieżke manufacturers.coś
+        const update = (data) => {
+            form.put(route("manufacturers.update", data.id), {
+                onSuccess: () => {
+                    closeModal()
+                }
+            })
+
+        }
+        const deleteRow = (data) => {
+            if (!confirm('Na pewno? Usuniesz również wszytkie przedmioty producenta!')) return;
+            Inertia.delete(route("manufacturers.destroy", data.id))
+            form.reset();
+        }
+
+        // update: function (data) {
+        //     this.$inertia.put('/manufacturers/' + data.id, data,{
+        //         onSuccess: () => this.closeModal()
+        //     });     
+        // },
+        // edit: function (data) {
+        //     this.form = Object.assign({}, data);
+        //     this.editMode = true;
+        //     this.openModal();
+        // },
+
+        return { 
+            editMode, 
+            isOpen, 
+            form, 
+            throws,
+            openModal,
+            closeModal,
+            reset,
+            save,
+            edit,
+            update,
+            deleteRow
+             }
     },
 
-    methods: {
-        openModal: function () {
-            this.isOpen = true;
-        },
-        closeModal: function () {
-            this.isOpen = false;
-            this.reset();
-            this.editMode=false;
-        },
-        reset: function () {
-            this.form = {
-                name: null,
-            }
-        },
-        save: function (data) {
-            this.$inertia.post('/manufacturers', data,{
-                onSuccess: () => this.closeModal(),
-            })
-            this.reset();
-        },
-        edit: function (data) {
-            this.form = Object.assign({}, data);
-            this.editMode = true;
-            this.openModal();
-        },
-        update: function (data) {
-            this.$inertia.put('/manufacturers/' + data.id, data,{
-                onSuccess: () => this.closeModal()
-            });     
-        },
-        deleteRow: function (data) {
-            if (!confirm('Na pewno? Usuniesz również wszytkie przedmioty producenta!')) return;
-            this.$inertia.delete('/manufacturers/' + data.id)
-            this.closeModal();
-        }
-    }
+    // data() {
+    //     return {
+    //         editMode: false,
+    //         isOpen: false,
+    //         form: {
+    //             name: null,
+    //         },
+    //         throws:['Nazwa', 'Działania'],
+    //     }
+    // },
+
+    // methods: {
+    //     openModal: function () {
+    //         this.isOpen = true;
+    //     },
+    //     closeModal: function () {
+    //         this.isOpen = false;
+    //         this.reset();
+    //         this.editMode=false;
+    //     },
+    //     reset: function () {
+    //         this.form = {
+    //             name: null,
+    //         }
+    //     },
+    //     save: function (data) {
+    //         this.$inertia.post('/manufacturers', data,{
+    //             onSuccess: () => this.closeModal(),
+    //         })
+    //         this.reset();
+    //     },
+    //     edit: function (data) {
+    //         this.form = Object.assign({}, data);
+    //         this.editMode = true;
+    //         this.openModal();
+    //     },
+    //     update: function (data) {
+    //         this.$inertia.put('/manufacturers/' + data.id, data,{
+    //             onSuccess: () => this.closeModal()
+    //         });     
+    //     },
+    //     deleteRow: function (data) {
+    //         if (!confirm('Na pewno? Usuniesz również wszytkie przedmioty producenta!')) return;
+    //         this.$inertia.delete('/manufacturers/' + data.id)
+    //         this.closeModal();
+    //     }
+    // }
 }
 
 </script>

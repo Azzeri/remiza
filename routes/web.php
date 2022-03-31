@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
         Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']]);
         Route::resource('stencils', ItemDatabaseController::class, ['names' => ['index' => 'stencils.index']]);
-        Route::resource('manufacturers', ManufacturerController::class, ['names' => ['index' => 'manufacturers.index']]);
+        Route::resource('/manufacturers', ManufacturerController::class);
         Route::resource('vehicles', VehicleController::class, ['names' => ['index' => 'vehicles.index']]);
         Route::resource('fills', FillController::class);
         Route::resource('usages', UsageController::class);
