@@ -33,16 +33,19 @@
                 <div class="mb-4">
                     <BreezeLabel for="numberField" value="Numer" />
                     <BreezeInput id="numberField" type="text" class="mt-1 block w-full" v-model="form.number" placeholder="Wprowadź numer" />
-                    <div class="text-red-500" v-if="errors.number">{{ errors.number }}</div>
+                    <div class="text-red-500" v-if="form.errors.number">{{ form.errors.number }}</div>
                 </div>
                 <div class="mb-4">
                     <BreezeLabel for="nameField" value="Nazwa" />
                     <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
-                    <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
+                    <div class="text-red-500" v-if="form.errors.name">{{ form.errors.name }}</div>
                 </div>
-                <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" class="mb-4">
+                <div v-show="($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN 
+                    || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode" 
+                class="mb-4">
                     <BreezeLabel for="unitField" value="Remiza" />
-                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
+                    <select v-model="form.unit" class="border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 
+                        focus:ring-opacity-50 rounded-md shadow-sm" id="unitField">
                         <template v-for="fbunit in units" :key="fbunit.id">
                             <option :value="fbunit.id">
                                 {{fbunit.name}}
@@ -56,6 +59,7 @@
 </template>
 
 <script>
+
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import BreezeButton from '@/Components/Button.vue'
 import BreezeInput from '@/Components/Input.vue'
@@ -67,6 +71,9 @@ import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
 import Message from "@/Components/Message.vue";
 import Pagination from "@/Components/Pagination.vue";
+import { ref, computed } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     props: {
@@ -89,67 +96,139 @@ export default {
         Message
     },
 
-    created(){
-        this.reset();
-    },
+    setup() {
+        const editMode = ref(false)
+        const isOpen = ref(false)
 
-    computed: {
-        defaultUnit(){
-            if (this.units.length)
-                return this.units[0].id
+        const form = useForm({
+            name: null,
+            number: null,
+            unit: null,
+        })
+        const throws = ['Numer', 'Nazwa', 'Jednostka', 'Działania']
+
+        const openModal = (_) => {
+            isOpen.value = true
         }
-    },
-
-    data() {
-        return {
-            editMode: false,
-            isOpen: false,
-            form: {
-                name: null,
-                number: null,
-                unit: this.defaultUnit
-            },
-            throws:['Numer', 'Nazwa', 'Jednostka', 'Działania'],
+        const closeModal = (_) => {
+            isOpen.value = false
+            reset()
         }
-    },
-
-    methods: {
-        openModal: function () {
-            this.isOpen = true;
-        },
-        closeModal: function () {
-            this.isOpen = false;
-            this.reset();
-            this.editMode=false;
-        },
-        reset: function () {
-            this.form = {
-                name: null,
-                number:null,
-                unit: this.defaultUnit
-            }
-        },
-        save: function (data) {
-            this.$inertia.post('/vehicles', data,{
-                onSuccess: () => this.closeModal(),
+        const reset = (_) => {
+            form.reset()
+            form.clearErrors()
+            editMode.value = false
+        }
+        const save = (_) => {
+            form.post(route("vehicles.store"), {
+                onSuccess: () => closeModal()
             })
-            this.reset();
-        },
-        edit: function (data) {
-            this.form = Object.assign({}, data);
-            this.editMode = true;
-            this.openModal();
-        },
-        update: function (data) {
-            this.$inertia.put('/vehicles/' + data.id, data,{
-                onSuccess: () => this.closeModal()
-            });     
-        },
-        deleteRow: function (data) {
-            if (!confirm('Na pewno?')) return;
-            this.$inertia.delete('/vehicles/' + data.id)
-            this.closeModal();
         }
-    }
+        const edit = (row) => {
+            editMode.value = true
+            openModal()
+            form.id = row.id
+            form.number = row.number
+            form.name = row.name
+            form.unit = row.unit.name
+        }
+        const update = (data) => {
+            form.put(route("vehicles.update", data.id), {
+                onSuccess: () => {
+                    closeModal()
+                }
+            })
+
+        }
+        const deleteRow = (data) => {
+            if (!confirm('Na pewno?')) return;
+            Inertia.delete(route("vehicles.destroy", data.id))
+            form.reset();
+        }
+        // Coś trzeba zrobić z tym computed !!!
+        const defaultUnit = computed(
+            () => { 
+                if (this.units.length)
+                return this.units[0].id
+        });
+
+        return {
+            editMode,
+            isOpen,
+            form,
+            throws,
+            defaultUnit,
+            openModal,
+            closeModal,
+            reset,
+            save,
+            edit,
+            update,
+            deleteRow
+        }
+    },
+
+    // created(){
+    //     this.reset();
+    // },
+
+    // computed: {
+    //     defaultUnit(){
+    //         if (this.units.length)
+    //             return this.units[0].id
+    //     }
+    // },
+
+    // data() {
+    //     return {
+    //         editMode: false,
+    //         isOpen: false,
+    //         form: {
+    //             name: null,
+    //             number: null,
+    //             unit: this.defaultUnit
+    //         },
+    //         throws:['Numer', 'Nazwa', 'Jednostka', 'Działania'],
+    //     }
+    // },
+
+    // methods: {
+    //     openModal: function () {
+    //         this.isOpen = true;
+    //     },
+    //     closeModal: function () {
+    //         this.isOpen = false;
+    //         this.reset();
+    //         this.editMode=false;
+    //     },
+    //     reset: function () {
+    //         this.form = {
+    //             name: null,
+    //             number:null,
+    //             unit: this.defaultUnit
+    //         }
+    //     },
+    //     save: function (data) {
+    //         this.$inertia.post('/vehicles', data,{
+    //             onSuccess: () => this.closeModal(),
+    //         })
+    //         this.reset();
+    //     },
+    //     edit: function (data) {
+    //         this.form = Object.assign({}, data);
+    //         this.editMode = true;
+    //         this.openModal();
+    //     },
+    //     update: function (data) {
+    //         this.$inertia.put('/vehicles/' + data.id, data,{
+    //             onSuccess: () => this.closeModal()
+    //         });     
+    //     },
+    //     deleteRow: function (data) {
+    //         if (!confirm('Na pewno?')) return;
+    //         this.$inertia.delete('/vehicles/' + data.id)
+    //         this.closeModal();
+    //     }
+    // }
 }
 </script>

@@ -20060,12 +20060,7 @@ __webpack_require__.r(__webpack_exports__);
       openModal();
       form.id = row.id;
       form.name = row.name;
-      (0,vue__WEBPACK_IMPORTED_MODULE_11__.nextTick)(function () {
-        var element = document.getElementById("nameField");
-        element ? element.focus() : true;
-      });
-    }; //do update - zrobić ścieżke manufacturers.coś
-
+    };
 
     var update = function update(data) {
       form.put(route("manufacturers.update", data.id), {
@@ -20079,17 +20074,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!confirm('Na pewno? Usuniesz również wszytkie przedmioty producenta!')) return;
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__.Inertia.delete(route("manufacturers.destroy", data.id));
       form.reset();
-    }; // update: function (data) {
-    //     this.$inertia.put('/manufacturers/' + data.id, data,{
-    //         onSuccess: () => this.closeModal()
-    //     });     
-    // },
-    // edit: function (data) {
-    //     this.form = Object.assign({}, data);
-    //     this.editMode = true;
-    //     this.openModal();
-    // },
-
+    };
 
     return {
       editMode: editMode,
@@ -20739,6 +20724,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Components/FloatingButton.vue */ "./resources/js/Components/FloatingButton.vue");
 /* harmony import */ var _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Components/Message.vue */ "./resources/js/Components/Message.vue");
 /* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+
+
+
 
 
 
@@ -20769,72 +20759,142 @@ __webpack_require__.r(__webpack_exports__);
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__.default,
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__.default
   },
-  created: function created() {
-    this.reset();
-  },
-  computed: {
-    defaultUnit: function defaultUnit() {
-      if (this.units.length) return this.units[0].id;
-    }
-  },
-  data: function data() {
-    return {
-      editMode: false,
-      isOpen: false,
-      form: {
-        name: null,
-        number: null,
-        unit: this.defaultUnit
-      },
-      "throws": ['Numer', 'Nazwa', 'Jednostka', 'Działania']
+  setup: function setup() {
+    var _this = this;
+
+    var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
+    var isOpen = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
+    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_4__.useForm)({
+      name: null,
+      number: null,
+      unit: null
+    });
+    var _throws = ['Numer', 'Nazwa', 'Jednostka', 'Działania'];
+
+    var openModal = function openModal(_) {
+      isOpen.value = true;
     };
-  },
-  methods: {
-    openModal: function openModal() {
-      this.isOpen = true;
-    },
-    closeModal: function closeModal() {
-      this.isOpen = false;
-      this.reset();
-      this.editMode = false;
-    },
-    reset: function reset() {
-      this.form = {
-        name: null,
-        number: null,
-        unit: this.defaultUnit
-      };
-    },
-    save: function save(data) {
-      var _this = this;
 
-      this.$inertia.post('/vehicles', data, {
+    var closeModal = function closeModal(_) {
+      isOpen.value = false;
+      reset();
+    };
+
+    var reset = function reset(_) {
+      form.reset();
+      form.clearErrors();
+      editMode.value = false;
+    };
+
+    var save = function save(_) {
+      form.post(route("vehicles.store"), {
         onSuccess: function onSuccess() {
-          return _this.closeModal();
+          return closeModal();
         }
       });
-      this.reset();
-    },
-    edit: function edit(data) {
-      this.form = Object.assign({}, data);
-      this.editMode = true;
-      this.openModal();
-    },
-    update: function update(data) {
-      var _this2 = this;
+    };
 
-      this.$inertia.put('/vehicles/' + data.id, data, {
+    var edit = function edit(row) {
+      editMode.value = true;
+      openModal();
+      form.id = row.id;
+      form.number = row.number;
+      form.name = row.name;
+      form.unit = row.unit.name;
+    };
+
+    var update = function update(data) {
+      form.put(route("vehicles.update", data.id), {
         onSuccess: function onSuccess() {
-          return _this2.closeModal();
+          closeModal();
         }
       });
-    },
-    deleteRow: function deleteRow(data) {
+    };
+
+    var deleteRow = function deleteRow(data) {
       if (!confirm('Na pewno?')) return;
-      this.$inertia["delete"]('/vehicles/' + data.id);
-      this.closeModal();
-    }
-  }
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__.Inertia.delete(route("vehicles.destroy", data.id));
+      form.reset();
+    }; // Coś trzeba zrobić z tym computed !!!
+
+
+    var defaultUnit = (0,vue__WEBPACK_IMPORTED_MODULE_11__.computed)(function () {
+      if (_this.units.length) return _this.units[0].id;
+    });
+    return {
+      editMode: editMode,
+      isOpen: isOpen,
+      form: form,
+      "throws": _throws,
+      defaultUnit: defaultUnit,
+      openModal: openModal,
+      closeModal: closeModal,
+      reset: reset,
+      save: save,
+      edit: edit,
+      update: update,
+      deleteRow: deleteRow
+    };
+  } // created(){
+  //     this.reset();
+  // },
+  // computed: {
+  //     defaultUnit(){
+  //         if (this.units.length)
+  //             return this.units[0].id
+  //     }
+  // },
+  // data() {
+  //     return {
+  //         editMode: false,
+  //         isOpen: false,
+  //         form: {
+  //             name: null,
+  //             number: null,
+  //             unit: this.defaultUnit
+  //         },
+  //         throws:['Numer', 'Nazwa', 'Jednostka', 'Działania'],
+  //     }
+  // },
+  // methods: {
+  //     openModal: function () {
+  //         this.isOpen = true;
+  //     },
+  //     closeModal: function () {
+  //         this.isOpen = false;
+  //         this.reset();
+  //         this.editMode=false;
+  //     },
+  //     reset: function () {
+  //         this.form = {
+  //             name: null,
+  //             number:null,
+  //             unit: this.defaultUnit
+  //         }
+  //     },
+  //     save: function (data) {
+  //         this.$inertia.post('/vehicles', data,{
+  //             onSuccess: () => this.closeModal(),
+  //         })
+  //         this.reset();
+  //     },
+  //     edit: function (data) {
+  //         this.form = Object.assign({}, data);
+  //         this.editMode = true;
+  //         this.openModal();
+  //     },
+  //     update: function (data) {
+  //         this.$inertia.put('/vehicles/' + data.id, data,{
+  //             onSuccess: () => this.closeModal()
+  //         });     
+  //     },
+  //     deleteRow: function (data) {
+  //         if (!confirm('Na pewno?')) return;
+  //         this.$inertia.delete('/vehicles/' + data.id)
+  //         this.closeModal();
+  //     }
+  // }
+
 });
 
 /***/ }),
@@ -27012,14 +27072,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FloatingButton, {
-            onOpenModal: $options.openModal
+            onOpenModal: $setup.openModal
           }, null, 8
           /* PROPS */
           , ["onOpenModal"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
             data: $props.data.data.length,
-            "throws": $data["throws"],
-            onEdit: $options.edit,
-            onDeleteRow: $options.deleteRow,
+            "throws": $setup["throws"],
+            onEdit: $setup.edit,
+            onDeleteRow: $setup.deleteRow,
             height: "h-10",
             margin: "mb-4"
           }, {
@@ -27036,14 +27096,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
-                    return $options.edit(row);
+                    return $setup.edit(row);
                   },
                   "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
                 /* PROPS */
                 , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
-                    return $options.deleteRow(row);
+                    return $setup.deleteRow(row);
                   },
                   "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
@@ -27074,17 +27134,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
-    isOpen: $data.isOpen,
-    editMode: $data.editMode,
-    form: $data.form,
-    onSave: $options.save,
-    onUpdate: $options.update,
-    onCloseModal: $options.closeModal
+    isOpen: $setup.isOpen,
+    editMode: $setup.editMode,
+    form: $setup.form,
+    onSave: $setup.save,
+    onUpdate: $setup.update,
+    onCloseModal: $setup.closeModal
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
         onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return $options.save, $options.update;
+          return $setup.save, $setup.update;
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "numberField",
@@ -27093,14 +27153,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "numberField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.number,
+        modelValue: $setup.form.number,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.form.number = $event;
+          return $setup.form.number = $event;
         }),
         placeholder: "Wprowadź numer"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.number ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.number), 1
+      , ["modelValue"]), $setup.form.errors.number ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.number), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "nameField",
@@ -27109,23 +27169,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "nameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.name,
+        modelValue: $setup.form.name,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.form.name = $event;
+          return $setup.form.name = $event;
         }),
         placeholder: "Wprowadź nazwę"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.name), 1
+      , ["modelValue"]), $setup.form.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.name), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "unitField",
         value: "Remiza"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.form.unit = $event;
+          return $setup.form.unit = $event;
         }),
-        "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
+        "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 \r\n                        focus:ring-opacity-50 rounded-md shadow-sm",
         id: "unitField"
       }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.units, function (fbunit) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
@@ -27138,9 +27198,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.unit]])], 512
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.unit]])], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$data.editMode]])])], 32
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !$setup.editMode]])])], 32
       /* HYDRATE_EVENTS */
       )];
     }),

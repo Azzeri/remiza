@@ -106,12 +106,7 @@ export default {
             openModal()
             form.id = row.id
             form.name = row.name
-            nextTick(() => {
-                const element = document.getElementById("nameField");
-                element ? element.focus() : true;
-            });
         }
-        //do update - zrobić ścieżke manufacturers.coś
         const update = (data) => {
             form.put(route("manufacturers.update", data.id), {
                 onSuccess: () => {
@@ -125,17 +120,6 @@ export default {
             Inertia.delete(route("manufacturers.destroy", data.id))
             form.reset();
         }
-
-        // update: function (data) {
-        //     this.$inertia.put('/manufacturers/' + data.id, data,{
-        //         onSuccess: () => this.closeModal()
-        //     });     
-        // },
-        // edit: function (data) {
-        //     this.form = Object.assign({}, data);
-        //     this.editMode = true;
-        //     this.openModal();
-        // },
 
         return { 
             editMode, 
