@@ -23,7 +23,6 @@
             <pagination class="mt-6 mx-auto" :links="data.links" />
         </Card>
     </BreezeAuthenticatedLayout>
-
     <Modal :isOpen="isOpen" :editMode="editMode" :form="form" @save="save" @update="update" @closeModal="closeModal">
         <form @submit.prevent="save, update"> 
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -64,7 +63,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import BreezeButton from '@/Components/Button.vue'
 import BreezeInput from '@/Components/Input.vue'
 import BreezeLabel from '@/Components/Label.vue'
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
@@ -72,7 +71,6 @@ import FloatingButton from "@/Components/FloatingButton.vue";
 import Message from "@/Components/Message.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { ref, computed } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 
 export default {
@@ -96,14 +94,14 @@ export default {
         Message
     },
 
-    setup() {
+    setup(props) {
         const editMode = ref(false)
         const isOpen = ref(false)
 
         const form = useForm({
             name: null,
             number: null,
-            unit: null,
+            unit: props.units[0].id,
         })
         const throws = ['Numer', 'Nazwa', 'Jednostka', 'Działania']
 
@@ -134,9 +132,7 @@ export default {
         }
         const update = (data) => {
             form.put(route("vehicles.update", data.id), {
-                onSuccess: () => {
-                    closeModal()
-                }
+                onSuccess: () => closeModal()
             })
 
         }
@@ -145,12 +141,12 @@ export default {
             Inertia.delete(route("vehicles.destroy", data.id))
             form.reset();
         }
-        // Coś trzeba zrobić z tym computed !!!
         const defaultUnit = computed(
             () => { 
-                if (this.units.length)
-                return this.units[0].id
-        });
+                if (props.units.length)
+                return props.units[0].id
+            }
+        )
 
         return {
             editMode,

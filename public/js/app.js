@@ -19327,6 +19327,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Components/FloatingButton.vue */ "./resources/js/Components/FloatingButton.vue");
 /* harmony import */ var _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Components/Message.vue */ "./resources/js/Components/Message.vue");
 /* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+
+
 
 
 
@@ -19356,76 +19360,152 @@ __webpack_require__.r(__webpack_exports__);
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__.default,
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__.default
   },
-  data: function data() {
-    return {
-      editMode: false,
-      isOpen: false,
-      form: {
-        name: null,
-        address: null,
-        username: null,
-        surname: null,
-        email: null,
-        phone: null,
-        superior: null
-      },
-      "throws": ['Nazwa', 'Adres', 'Jednostka nadrzędna', 'Działania']
-    };
-  },
-  computed: {},
-  methods: {
-    superior_unit: function superior_unit(unit) {
+  setup: function setup() {
+    var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
+    var isOpen = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
+    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_4__.useForm)({
+      name: null,
+      address: null,
+      superior: null,
+      username: null,
+      surname: null,
+      email: null,
+      phone: null
+    });
+    var _throws = ['Nazwa', 'Adres', 'Jednostka nadrzędna', 'Działania'];
+
+    var superior_unit = function superior_unit(unit) {
       return unit.superior_unit ? unit.superior_unit.name : 'brak';
-    },
-    openModal: function openModal() {
-      this.isOpen = true;
-    },
-    closeModal: function closeModal() {
-      this.isOpen = false;
-      this.reset();
-      this.editMode = false;
-    },
-    reset: function reset() {
-      this.form = {
-        name: null,
-        address: null,
-        username: null,
-        surname: null,
-        email: null,
-        phone: null,
-        superior: null
-      };
-    },
-    save: function save(data) {
-      var _this = this;
+    };
 
-      this.$inertia.post('/fireBrigadeUnits', data, {
+    var openModal = function openModal(_) {
+      isOpen.value = true;
+    };
+
+    var closeModal = function closeModal(_) {
+      isOpen.value = false;
+      reset();
+    };
+
+    var reset = function reset(_) {
+      form.reset();
+      form.clearErrors();
+      editMode.value = false;
+    };
+
+    var save = function save(_) {
+      form.post(route("fireBrigadeUnits.store"), {
         onSuccess: function onSuccess() {
-          return _this.closeModal();
+          return closeModal();
         }
       });
-      this.reset();
-    },
-    edit: function edit(data) {
-      this.form = Object.assign({}, data);
-      this.editMode = true;
-      this.openModal();
-    },
-    update: function update(data) {
-      var _this2 = this;
+    };
 
-      this.$inertia.put('/fireBrigadeUnits/' + data.id, data, {
+    var edit = function edit(row) {
+      editMode.value = true;
+      openModal();
+      form.id = row.id;
+      form.name = row.name;
+      form.address = row.address;
+      form.superior = row.superior_unit_id;
+      form.username = null;
+      form.surname = null;
+      form.email = null;
+      form.phone = null;
+    };
+
+    var update = function update(data) {
+      form.put(route("fireBrigadeUnits.update", data.id), {
         onSuccess: function onSuccess() {
-          return _this2.closeModal();
+          return closeModal();
         }
       });
-    },
-    deleteRow: function deleteRow(data) {
-      if (!confirm('Na pewno? Usuniesz wszystkie dane związane z jednostką!')) return;
-      this.$inertia["delete"]('/fireBrigadeUnits/' + data.id);
-      this.closeModal();
-    }
-  }
+    };
+
+    var deleteRow = function deleteRow(data) {
+      if (!confirm('Na pewno?')) return;
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__.Inertia.delete(route("fireBrigadeUnits.destroy", data.id));
+      form.reset();
+    };
+
+    return {
+      editMode: editMode,
+      isOpen: isOpen,
+      form: form,
+      "throws": _throws,
+      superior_unit: superior_unit,
+      openModal: openModal,
+      closeModal: closeModal,
+      reset: reset,
+      save: save,
+      edit: edit,
+      update: update,
+      deleteRow: deleteRow
+    };
+  } // data() {
+  //     return {
+  //         editMode: false,
+  //         isOpen: false,
+  //         form: {
+  //             name: null,
+  //             address: null,
+  //             username: null,
+  //             surname: null,
+  //             email: null,
+  //             phone: null,
+  //             superior: null
+  //         },
+  //         throws:['Nazwa','Adres','Jednostka nadrzędna', 'Działania'],
+  //     }
+  // },
+  // computed: {
+  // },
+  // methods: {
+  //     superior_unit(unit){
+  //         return unit.superior_unit ? unit.superior_unit.name : 'brak';
+  //     },
+  //     openModal: function () {
+  //         this.isOpen = true;
+  //     },
+  //     closeModal: function () {
+  //         this.isOpen = false;
+  //         this.reset();
+  //         this.editMode=false;
+  //     },
+  //     reset: function () {
+  //         this.form = {
+  //             name: null,
+  //             address: null,
+  //             username: null,
+  //             surname: null,
+  //             email: null,
+  //             phone: null,
+  //             superior: null
+  //         }
+  //     },
+  //     save: function (data) {
+  //         this.$inertia.post('/fireBrigadeUnits', data,{
+  //             onSuccess: () => this.closeModal(),
+  //         })
+  //         this.reset();
+  //     },
+  //     edit: function (data) {
+  //         this.form = Object.assign({}, data);
+  //         this.editMode = true;
+  //         this.openModal();
+  //     },
+  //     update: function (data) {
+  //         this.$inertia.put('/fireBrigadeUnits/' + data.id, data,{
+  //             onSuccess: () => this.closeModal()
+  //         });     
+  //     },
+  //     deleteRow: function (data) {
+  //         if (!confirm('Na pewno? Usuniesz wszystkie dane związane z jednostką!')) return;
+  //         this.$inertia.delete('/fireBrigadeUnits/' + data.id)
+  //         this.closeModal();
+  //     }
+  // }
+
 });
 
 /***/ }),
@@ -20065,7 +20145,7 @@ __webpack_require__.r(__webpack_exports__);
     var update = function update(data) {
       form.put(route("manufacturers.update", data.id), {
         onSuccess: function onSuccess() {
-          closeModal();
+          return closeModal();
         }
       });
     };
@@ -20410,6 +20490,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Components/FloatingButton.vue */ "./resources/js/Components/FloatingButton.vue");
 /* harmony import */ var _Components_Message_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Components/Message.vue */ "./resources/js/Components/Message.vue");
 /* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+
+
 
 
 
@@ -20444,126 +20528,237 @@ __webpack_require__.r(__webpack_exports__);
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_11__.default,
     Checkbox: _Components_Checkbox_vue__WEBPACK_IMPORTED_MODULE_4__.default
   },
-  created: function created() {
-    this.reset();
-  },
-  data: function data() {
-    return {
-      editMode: false,
-      isOpen: false,
-      form: {
-        cathegory_id: this.defaultCathegory,
-        stencil_name: null,
-        construction_number: false,
-        inventory_number: false,
-        identification_number: false,
-        name: false,
-        date_production: false,
-        date_expiry: false,
-        date_legalisation: false,
-        date_legalisation_due: false,
-        manufacturer: false,
-        vehicle: false
-      },
-      "throws": ['Nazwa szablonu', 'Kategoria', 'Nazwa', 'Nr fabryczny', 'Nr inwentarzowy', 'Nr ewidencyjny', 'Data produkcji', 'Data ważności', 'Data legalizacji', 'Termin legalizacji', 'Producent', 'Samochód', 'Działania'],
-      fields: [{
-        name: 'Nr fabryczny',
-        value: 'construction_number'
-      }, {
-        name: 'Nr inwentarzowy',
-        value: 'inventory_number'
-      }, {
-        name: 'Nr ewidencyjny',
-        value: 'identification_number'
-      }, {
-        name: 'Nazwa',
-        value: 'name'
-      }, {
-        name: 'Data produkcji',
-        value: 'date_production'
-      }, {
-        name: 'Data ważności',
-        value: 'date_expiry'
-      }, {
-        name: 'Data legalizacji',
-        value: 'date_legalisation'
-      }, {
-        name: 'Termin legalizacji',
-        value: 'date_legalisation_due'
-      }, {
-        name: 'Producent',
-        value: 'manufacturer'
-      }, {
-        name: 'Samochód',
-        value: 'vehicle'
-      }]
-    };
-  },
-  computed: {
-    defaultCathegory: function defaultCathegory() {
-      if (this.cathegories.length) return this.cathegories[0].id;
-    },
-    title: function title() {
-      return !this.editMode ? 'Dodawanie szablonu' : 'Edycja szablonu';
-    }
-  },
-  methods: {
-    isTrue: function isTrue(attr) {
+  setup: function setup(props) {
+    var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_12__.ref)(false);
+    var isOpen = (0,vue__WEBPACK_IMPORTED_MODULE_12__.ref)(false);
+    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_5__.useForm)({
+      cathegory_id: props.cathegories[0].id,
+      stencil_name: null,
+      construction_number: false,
+      inventory_number: false,
+      identification_number: false,
+      name: false,
+      date_production: false,
+      date_expiry: false,
+      date_legalisation: false,
+      date_legalisation_due: false,
+      manufacturer: false,
+      vehicle: false
+    });
+    var _throws = ['Nazwa szablonu', 'Kategoria', 'Nazwa', 'Nr fabryczny', 'Nr inwentarzowy', 'Nr ewidencyjny', 'Data produkcji', 'Data ważności', 'Data legalizacji', 'Termin legalizacji', 'Producent', 'Samochód', 'Działania'];
+    var fields = [{
+      name: 'Nr fabryczny',
+      value: 'construction_number'
+    }, {
+      name: 'Nr inwentarzowy',
+      value: 'inventory_number'
+    }, {
+      name: 'Nr ewidencyjny',
+      value: 'identification_number'
+    }, {
+      name: 'Nazwa',
+      value: 'name'
+    }, {
+      name: 'Data produkcji',
+      value: 'date_production'
+    }, {
+      name: 'Data ważności',
+      value: 'date_expiry'
+    }, {
+      name: 'Data legalizacji',
+      value: 'date_legalisation'
+    }, {
+      name: 'Termin legalizacji',
+      value: 'date_legalisation_due'
+    }, {
+      name: 'Producent',
+      value: 'manufacturer'
+    }, {
+      name: 'Samochód',
+      value: 'vehicle'
+    }];
+    var defaultCathegory = (0,vue__WEBPACK_IMPORTED_MODULE_12__.computed)(function () {
+      if (props.cathegories.length) return props.cathegories[0].id;
+    }); // Czy może tak być, jeśli jest tylko editMode ???
+
+    var title = (0,vue__WEBPACK_IMPORTED_MODULE_12__.computed)(function () {
+      return !props.editMode ? 'Dodawanie szablonu' : 'Edycja szablonu';
+    });
+
+    var isTrue = function isTrue(attr) {
       return attr ? '<i class="fas fa-check fa-lg text-green-700"></i>' : '<i class="fas fa-times fa-lg text-red-700"></i>';
-    },
-    openModal: function openModal() {
-      this.isOpen = true;
-    },
-    closeModal: function closeModal() {
-      this.isOpen = false;
-      this.reset();
-      this.editMode = false;
-    },
-    reset: function reset() {
-      this.form = {
-        cathegory_id: this.defaultCathegory,
-        stencil_name: null,
-        construction_number: false,
-        inventory_number: false,
-        identification_number: false,
-        name: false,
-        date_production: false,
-        date_expiry: false,
-        date_legalisation: false,
-        date_legalisation_due: false,
-        manufacturer: false,
-        vehicle: false
-      };
-    },
-    save: function save(data) {
-      var _this = this;
+    };
 
-      this.$inertia.post('/stencils', data, {
+    var openModal = function openModal(_) {
+      isOpen.value = true;
+    };
+
+    var closeModal = function closeModal(_) {
+      isOpen.value = false;
+      reset();
+    };
+
+    var reset = function reset(_) {
+      form.reset();
+      form.clearErrors();
+      editMode.value = false;
+    };
+
+    var save = function save(_) {
+      form.post(route("stencils.store"), {
         onSuccess: function onSuccess() {
-          return _this.closeModal();
+          return closeModal();
         }
       });
-    },
-    edit: function edit(data) {
-      this.form = Object.assign({}, data);
-      this.editMode = true;
-      this.openModal();
-    },
-    update: function update(data) {
-      var _this2 = this;
+    }; // Nie działa edycja !!!
 
-      this.$inertia.put('/stencils/' + data.id, data, {
+
+    var edit = function edit(row) {
+      editMode.value = true;
+      openModal();
+      form.id = row.id;
+      form.cathegory_id = row.cathegory.id;
+      form.stencil_name = row.stencil_name;
+      form.construction_number = row.construction_number;
+      form.inventory_number = row.inventory_number;
+      form.identification_number = row.identification_number;
+      form.name = row.name;
+      form.date_production = row.date_production;
+      form.date_expiry = row.date_expiry;
+      form.date_legalisation = row.date_legalisation;
+      form.date_legalisation_due = row.date_legalisation_due;
+      form.manufacturer = row.manufacturer;
+      form.vehicle = row.vehicle;
+    };
+
+    var update = function update(data) {
+      form.put(route("stencils.update", data.id), {
         onSuccess: function onSuccess() {
-          return _this2.closeModal();
+          return closeModal();
         }
       });
-    },
-    deleteRow: function deleteRow(data) {
+    };
+
+    var deleteRow = function deleteRow(data) {
       if (!confirm('Na pewno? Usuniesz również przypisane przedmioty i serwisy!')) return;
-      this.$inertia["delete"]('/stencils/' + data.id);
-      this.reset();
-    }
-  }
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_13__.Inertia.delete(route("stencils.destroy", data.id));
+      form.reset();
+    };
+
+    return {
+      editMode: editMode,
+      isOpen: isOpen,
+      form: form,
+      "throws": _throws,
+      fields: fields,
+      defaultCathegory: defaultCathegory,
+      title: title,
+      computed: vue__WEBPACK_IMPORTED_MODULE_12__.computed,
+      isTrue: isTrue,
+      openModal: openModal,
+      closeModal: closeModal,
+      reset: reset,
+      save: save,
+      edit: edit,
+      update: update,
+      deleteRow: deleteRow
+    };
+  } // created(){
+  //     this.reset();
+  // },
+  // data() {
+  //     return {
+  //         editMode: false,
+  //         isOpen: false,
+  //         form: {
+  //             cathegory_id: this.defaultCathegory,
+  //             stencil_name: null,
+  //             construction_number: false,
+  //             inventory_number: false,
+  //             identification_number: false,
+  //             name:false,
+  //             date_production:false,
+  //             date_expiry:false,
+  //             date_legalisation:false,
+  //             date_legalisation_due:false,
+  //             manufacturer:false,
+  //             vehicle: false,
+  //         },
+  //         throws:['Nazwa szablonu', 'Kategoria','Nazwa','Nr fabryczny', 'Nr inwentarzowy','Nr ewidencyjny', 'Data produkcji',
+  //         'Data ważności', 'Data legalizacji','Termin legalizacji','Producent', 'Samochód', 'Działania'],
+  //         fields:[
+  //             {name: 'Nr fabryczny', value: 'construction_number'},
+  //             {name: 'Nr inwentarzowy', value: 'inventory_number'},
+  //             {name: 'Nr ewidencyjny', value: 'identification_number'},
+  //             {name: 'Nazwa', value: 'name'},
+  //             {name: 'Data produkcji', value: 'date_production'},
+  //             {name: 'Data ważności', value: 'date_expiry'},
+  //             {name: 'Data legalizacji', value: 'date_legalisation'},
+  //             {name: 'Termin legalizacji', value: 'date_legalisation_due'},
+  //             {name: 'Producent', value: 'manufacturer'},
+  //             {name: 'Samochód', value: 'vehicle'},
+  //         ]
+  //     }
+  // },
+  // computed: {
+  //     defaultCathegory() {
+  //         if (this.cathegories.length)
+  //             return this.cathegories[0].id
+  //     },
+  //     title() {
+  //         return !this.editMode ? 'Dodawanie szablonu' : 'Edycja szablonu'
+  //     }
+  // },
+  // methods: {
+  //     isTrue(attr){
+  //         return attr ? '<i class="fas fa-check fa-lg text-green-700"></i>': '<i class="fas fa-times fa-lg text-red-700"></i>'
+  //     },
+  //     openModal: function () {
+  //         this.isOpen = true;
+  //     },
+  //     closeModal: function () {
+  //         this.isOpen = false;
+  //         this.reset();
+  //         this.editMode = false;
+  //     },
+  //     reset: function () {
+  //       this.form = {
+  //             cathegory_id: this.defaultCathegory,
+  //             stencil_name: null,
+  //             construction_number: false,
+  //             inventory_number: false,
+  //             identification_number: false,
+  //             name:false,
+  //             date_production:false,
+  //             date_expiry:false,
+  //             date_legalisation:false,
+  //             date_legalisation_due:false,
+  //             manufacturer:false,
+  //             vehicle: false,
+  //         }
+  //     },
+  //     save: function (data) {
+  //         this.$inertia.post('/stencils', data,{
+  //             onSuccess: () => this.closeModal()
+  //         })
+  //     },
+  //     edit: function (data) {
+  //         this.form = Object.assign({}, data);
+  //         this.editMode = true;
+  //         this.openModal();
+  //     },
+  //     update: function (data) {
+  //         this.$inertia.put('/stencils/' + data.id, data,{
+  //             onSuccess: () => this.closeModal()
+  //         });     
+  //     },
+  //     deleteRow: function (data) {
+  //         if (!confirm('Na pewno? Usuniesz również przypisane przedmioty i serwisy!')) return;
+  //         this.$inertia.delete('/stencils/' + data.id)
+  //         this.reset();
+  //     }
+  // }
+
 });
 
 /***/ }),
@@ -20590,6 +20785,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Modal_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Components/Modal.vue */ "./resources/js/Components/Modal.vue");
 /* harmony import */ var _Components_FloatingButton_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Components/FloatingButton.vue */ "./resources/js/Components/FloatingButton.vue");
 /* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+
+
 
 
 
@@ -20622,82 +20821,160 @@ __webpack_require__.r(__webpack_exports__);
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__.default,
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_6__.default
   },
-  data: function data() {
-    return {
-      editMode: false,
-      isOpen: false,
-      currentUser: null,
-      form: {
-        name: null,
-        surname: null,
-        email: null,
-        phone: null,
-        privilege_new: null,
-        unit: this.defaultUnit
-      },
-      "throws": ['Imię', 'Nazwisko', 'Email', 'Telefon', 'Rola', 'Remiza', 'Działania']
+  setup: function setup(props) {
+    var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
+    var isOpen = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
+    var currentUser = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(null);
+    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_4__.useForm)({
+      name: null,
+      surname: null,
+      email: null,
+      phone: null,
+      privilege_new: null,
+      unit: props.units[0].id
+    });
+    var _throws = ['Imię', 'Nazwisko', 'Email', 'Telefon', 'Rola', 'Remiza', 'Działania'];
+
+    var openModal = function openModal(_) {
+      isOpen.value = true;
     };
-  },
-  created: function created() {
-    this.reset();
-  },
-  computed: {
-    defaultUnit: function defaultUnit() {
-      if (this.units.length) return this.units[0].id;
-    }
-  },
-  methods: {
-    openModal: function openModal() {
-      this.isOpen = true;
-    },
-    closeModal: function closeModal() {
-      this.isOpen = false;
-      this.reset();
-      this.editMode = false;
-    },
-    reset: function reset() {
-      this.form = {
-        name: null,
-        surname: null,
-        email: null,
-        phone: null,
-        privilege_new: null,
-        unit: this.defaultUnit
-      }, this.currentUser = null;
-    },
-    save: function save(data) {
-      var _this = this;
 
-      this.$inertia.post('/users', data, {
+    var closeModal = function closeModal(_) {
+      isOpen.value = false;
+      reset();
+    };
+
+    var reset = function reset(_) {
+      form.reset();
+      form.clearErrors();
+      editMode.value = false;
+    };
+
+    var save = function save(_) {
+      form.post(route("users.store"), {
         onSuccess: function onSuccess() {
-          return _this.closeModal();
+          return closeModal();
         }
       });
-      this.reset();
-    },
-    edit: function edit(row) {
-      this.form = Object.assign({}, row);
-      this.editMode = true;
-      this.form.privilege_new = row.privilege.id;
-      this.currentUser = row;
-      this.openModal();
-    },
-    update: function update(data) {
-      var _this2 = this;
+    };
 
-      this.$inertia.put('/users/' + data.id, data, {
+    var edit = function edit(row) {
+      editMode.value = true;
+      openModal();
+      currentUser.value = row;
+      form.id = row.id;
+      form.name = row.name;
+      form.surname = row.surname;
+      form.email = row.email;
+      form.phone = row.phone;
+      form.privilege_new = row.privilege.id;
+    };
+
+    var update = function update(data) {
+      form.put(route("users.update", data.id), {
         onSuccess: function onSuccess() {
-          return _this2.closeModal();
+          return closeModal();
         }
       });
-    },
-    deleteRow: function deleteRow(data) {
+    }; // Nie usuwa z bazy
+
+
+    var deleteRow = function deleteRow(data) {
       if (!confirm('Na pewno?')) return;
-      this.$inertia["delete"]('/users/' + data.id);
-      this.reset();
-      this.closeModal();
-    }
-  }
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__.Inertia.delete(route("users.destroy", data.id));
+      form.reset();
+    };
+
+    var defaultUnit = (0,vue__WEBPACK_IMPORTED_MODULE_11__.computed)(function () {
+      if (props.units.length) return props.units[0].id;
+    });
+    return {
+      editMode: editMode,
+      isOpen: isOpen,
+      currentUser: currentUser,
+      form: form,
+      "throws": _throws,
+      defaultUnit: defaultUnit,
+      openModal: openModal,
+      closeModal: closeModal,
+      reset: reset,
+      save: save,
+      edit: edit,
+      update: update,
+      deleteRow: deleteRow,
+      computed: vue__WEBPACK_IMPORTED_MODULE_11__.computed
+    };
+  } // data() {
+  //     return {
+  //         editMode: false,
+  //         isOpen: false,
+  //         currentUser: null,
+  //         form: {
+  //             name: null,
+  //             surname: null,
+  //             email: null,
+  //             phone: null,
+  //             privilege_new: null,
+  //             unit: this.defaultUnit
+  //         },
+  //         throws:['Imię','Nazwisko','Email','Telefon','Rola','Remiza','Działania'],
+  //     }
+  // },
+  // created(){
+  //     this.reset();
+  // },
+  // computed: {
+  //     defaultUnit(){
+  //         if (this.units.length)
+  //             return this.units[0].id
+  //     }
+  // },
+  // methods: {
+  //     openModal: function () {
+  //         this.isOpen = true;
+  //     },
+  //     closeModal: function () {
+  //         this.isOpen = false;
+  //         this.reset();
+  //         this.editMode=false;
+  //     },
+  //     reset: function () {
+  //         this.form = {
+  //             name: null,
+  //             surname: null,
+  //             email: null,
+  //             phone: null,
+  //             privilege_new: null,
+  //             unit: this.defaultUnit,
+  //         },
+  //         this.currentUser = null
+  //     },
+  //     save: function (data) {
+  //         this.$inertia.post('/users', data,{
+  //             onSuccess: () => this.closeModal(),
+  //         })
+  //         this.reset();
+  //     },
+  //     edit: function (row) {
+  //         this.form = Object.assign({}, row);
+  //         this.editMode = true;
+  //         this.form.privilege_new = row.privilege.id;
+  //         this.currentUser = row;
+  //         this.openModal();
+  //     },
+  //     update: function (data) {
+  //         this.$inertia.put('/users/' + data.id, data,{
+  //             onSuccess: () => this.closeModal()
+  //         });  
+  //     },
+  //     deleteRow: function (data) {
+  //         if (!confirm('Na pewno?')) return;
+  //         this.$inertia.delete('/users/' + data.id)
+  //         this.reset();
+  //         this.closeModal();
+  //     }
+  // }
+
 });
 
 /***/ }),
@@ -20739,7 +21016,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     data: Object,
@@ -20759,15 +21035,13 @@ __webpack_require__.r(__webpack_exports__);
     Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_10__.default,
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_9__.default
   },
-  setup: function setup() {
-    var _this = this;
-
+  setup: function setup(props) {
     var editMode = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
     var isOpen = (0,vue__WEBPACK_IMPORTED_MODULE_11__.ref)(false);
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_4__.useForm)({
       name: null,
       number: null,
-      unit: null
+      unit: props.units[0].id
     });
     var _throws = ['Numer', 'Nazwa', 'Jednostka', 'Działania'];
 
@@ -20806,7 +21080,7 @@ __webpack_require__.r(__webpack_exports__);
     var update = function update(data) {
       form.put(route("vehicles.update", data.id), {
         onSuccess: function onSuccess() {
-          closeModal();
+          return closeModal();
         }
       });
     };
@@ -20815,11 +21089,10 @@ __webpack_require__.r(__webpack_exports__);
       if (!confirm('Na pewno?')) return;
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_12__.Inertia.delete(route("vehicles.destroy", data.id));
       form.reset();
-    }; // Coś trzeba zrobić z tym computed !!!
-
+    };
 
     var defaultUnit = (0,vue__WEBPACK_IMPORTED_MODULE_11__.computed)(function () {
-      if (_this.units.length) return _this.units[0].id;
+      if (props.units.length) return props.units[0].id;
     });
     return {
       editMode: editMode,
@@ -24121,14 +24394,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FloatingButton, {
-            onOpenModal: $options.openModal
+            onOpenModal: $setup.openModal
           }, null, 8
           /* PROPS */
           , ["onOpenModal"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
             data: $props.data.data.length,
-            "throws": $data["throws"],
-            onEdit: $options.edit,
-            onDeleteRow: $options.deleteRow,
+            "throws": $setup["throws"],
+            onEdit: $setup.edit,
+            onDeleteRow: $setup.deleteRow,
             height: "h-10",
             margin: "mb-4"
           }, {
@@ -24141,11 +24414,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.address), 1
                 /* TEXT */
-                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.superior_unit(row)), 1
+                ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.superior_unit(row)), 1
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
-                    return $options.edit(row);
+                    return $setup.edit(row);
                   },
                   "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
@@ -24153,7 +24426,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 , ["onClick"]), row.id != _ctx.$page.props.auth.user.fire_brigade_unit_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", {
                   key: 0,
                   onClick: function onClick($event) {
-                    return $options.deleteRow(row);
+                    return $setup.deleteRow(row);
                   },
                   "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
@@ -24184,17 +24457,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
-    isOpen: $data.isOpen,
-    editMode: $data.editMode,
-    form: $data.form,
-    onSave: $options.save,
-    onUpdate: $options.update,
-    onCloseModal: $options.closeModal
+    isOpen: $setup.isOpen,
+    editMode: $setup.editMode,
+    form: $setup.form,
+    onSave: $setup.save,
+    onUpdate: $setup.update,
+    onCloseModal: $setup.closeModal
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
         onSubmit: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return $options.save, $options.update;
+          return $setup.save, $setup.update;
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "nameField",
@@ -24203,14 +24476,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "nameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.name,
+        modelValue: $setup.form.name,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.form.name = $event;
+          return $setup.form.name = $event;
         }),
         placeholder: "Wprowadź nazwę"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.name), 1
+      , ["modelValue"]), $setup.form.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.name), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "addressField",
@@ -24219,14 +24492,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "addressField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.address,
+        modelValue: $setup.form.address,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.form.address = $event;
+          return $setup.form.address = $event;
         }),
         placeholder: "Wprowadź adres"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.address), 1
+      , ["modelValue"]), $setup.form.errors.address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.address), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "parentField",
@@ -24234,7 +24507,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         id: "parentField",
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.form.superior = $event;
+          return $setup.form.superior = $event;
         }),
         "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm"
       }, [_hoisted_12, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data.data, function (row) {
@@ -24252,23 +24525,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.superior]])], 512
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.superior]])], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN && !$data.editMode]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN && !$setup.editMode]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "userNameField",
         value: "Imię"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
         id: "userNameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.username,
+        modelValue: $setup.form.username,
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-          return $data.form.username = $event;
+          return $setup.form.username = $event;
         }),
         placeholder: "Wprowadź imię"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.username ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.username), 1
+      , ["modelValue"]), $setup.form.errors.username ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.username), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "surnameField",
@@ -24277,14 +24550,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "surnameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.surname,
+        modelValue: $setup.form.surname,
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-          return $data.form.surname = $event;
+          return $setup.form.surname = $event;
         }),
         placeholder: "Wprowadź nazwisko"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.surname ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.surname), 1
+      , ["modelValue"]), $setup.form.errors.surname ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.surname), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "emailField",
@@ -24293,14 +24566,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "emailField",
         type: "email",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.email,
+        modelValue: $setup.form.email,
         "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-          return $data.form.email = $event;
+          return $setup.form.email = $event;
         }),
         placeholder: "Wprowadź email"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.email), 1
+      , ["modelValue"]), $setup.form.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.email), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "phoneField",
@@ -24309,18 +24582,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "phoneField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.phone,
+        modelValue: $setup.form.phone,
         "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-          return $data.form.phone = $event;
+          return $setup.form.phone = $event;
         }),
         placeholder: "Wprowadź nr telefonu"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.phone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.phone), 1
+      , ["modelValue"]), $setup.form.errors.phone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.phone), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, !$data.editMode]])])], 32
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, !$setup.editMode]])])], 32
       /* HYDRATE_EVENTS */
       )];
     }),
@@ -26432,14 +26705,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FloatingButton, {
-            onOpenModal: $options.openModal
+            onOpenModal: $setup.openModal
           }, null, 8
           /* PROPS */
           , ["onOpenModal"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
             data: $props.dbitems.data.length,
-            "throws": $data["throws"],
-            onEdit: $options.edit,
-            onDeleteRow: $options.deleteRow,
+            "throws": $setup["throws"],
+            onEdit: $setup.edit,
+            onDeleteRow: $setup.deleteRow,
             height: "h-10",
             margin: "mb-4"
           }, {
@@ -26453,65 +26726,65 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.cathegory.name), 1
                 /* TEXT */
                 ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.name),
+                  innerHTML: $setup.isTrue(row.name),
                   "class": "h-10 sm:h-auto text-center border-primary-200 border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.construction_number),
+                  innerHTML: $setup.isTrue(row.construction_number),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.inventory_number),
+                  innerHTML: $setup.isTrue(row.inventory_number),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.identification_number),
+                  innerHTML: $setup.isTrue(row.identification_number),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.date_production),
+                  innerHTML: $setup.isTrue(row.date_production),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.date_expiry),
+                  innerHTML: $setup.isTrue(row.date_expiry),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.date_legalisation),
+                  innerHTML: $setup.isTrue(row.date_legalisation),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.date_legalisation_due),
+                  innerHTML: $setup.isTrue(row.date_legalisation_due),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.manufacturer),
+                  innerHTML: $setup.isTrue(row.manufacturer),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
-                  innerHTML: $options.isTrue(row.vehicle),
+                  innerHTML: $setup.isTrue(row.vehicle),
                   "class": "h-10 sm:h-auto border-primary-200 text-center border p-3 overflow-auto"
                 }, null, 8
                 /* PROPS */
                 , ["innerHTML"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
-                    return $options.edit(row);
+                    return $setup.edit(row);
                   },
                   "class": "far fa-edit fa-lg "
                 }, null, 8
                 /* PROPS */
                 , ["onClick"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
-                    return $options.deleteRow(row);
+                    return $setup.deleteRow(row);
                   },
                   "class": "far fa-trash-alt fa-lg text-red-700 ml-2 cursor-pointer"
                 }, null, 8
@@ -26542,27 +26815,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
-    isOpen: $data.isOpen,
-    editMode: $data.editMode,
-    form: $data.form,
-    onSave: $options.save,
-    onUpdate: $options.update,
-    onCloseModal: $options.closeModal
+    isOpen: $setup.isOpen,
+    editMode: $setup.editMode,
+    form: $setup.form,
+    onSave: $setup.save,
+    onUpdate: $setup.update,
+    onCloseModal: $setup.closeModal
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
         onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return $options.save, $options.update;
+          return $setup.save, $setup.update;
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.title), 1
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.title), 1
       /* TEXT */
-      )]), !$data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      )]), !$setup.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "cathegoryField",
         value: "Kategoria"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         id: "cathegoryField",
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.form.cathegory_id = $event;
+          return $setup.form.cathegory_id = $event;
         }),
         "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm"
       }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.cathegories, function (row) {
@@ -26576,7 +26849,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.cathegory_id]]), $props.errors.cathegory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.cathegory), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.cathegory_id]]), $setup.form.errors.cathegory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.cathegory), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "stencilNameField",
@@ -26585,26 +26858,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "stencilNameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.stencil_name,
+        modelValue: $setup.form.stencil_name,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.form.stencil_name = $event;
+          return $setup.form.stencil_name = $event;
         }),
         placeholder: "Wpisz nazwę szablonu"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.stencil_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.stencil_name), 1
+      , ["modelValue"]), $setup.form.errors.stencil_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.stencil_name), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.fields, function (row) {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.fields, function (row) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           key: row.value,
           "class": "mb-4"
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Checkbox, {
           id: row.value,
-          modelValue: $data.form[row.value],
+          modelValue: $setup.form[row.value],
           "onUpdate:modelValue": function onUpdateModelValue($event) {
-            return $data.form[row.value] = $event;
+            return $setup.form[row.value] = $event;
           },
-          checked: $data.form[row.value] == 1 ? true : false
+          checked: $setup.form[row.value] == 1 ? true : false
         }, null, 8
         /* PROPS */
         , ["id", "modelValue", "onUpdate:modelValue", "checked"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
@@ -26613,7 +26886,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "ml-4"
         }, null, 8
         /* PROPS */
-        , ["for", "value"])]), $props.errors[row.value] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors[row.value]), 1
+        , ["for", "value"])]), $setup.form.errors[row.value] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors[row.value]), 1
         /* TEXT */
         )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
       }), 128
@@ -26721,11 +26994,14 @@ var _hoisted_20 = {
   "class": "mb-4"
 };
 var _hoisted_21 = {
+  "class": "mb-4"
+};
+var _hoisted_22 = {
   key: 1,
   "class": "mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto"
 };
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Zmień hasło ");
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Zmień hasło ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -26769,14 +27045,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
           }), $props.units.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FloatingButton, {
             key: 0,
-            onOpenModal: $options.openModal
+            onOpenModal: $setup.openModal
           }, null, 8
           /* PROPS */
           , ["onOpenModal"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Table, {
             data: $props.data.data.length,
-            "throws": $data["throws"],
-            onEdit: $options.edit,
-            onDeleteRow: $options.deleteRow,
+            "throws": $setup["throws"],
+            onEdit: $setup.edit,
+            onDeleteRow: $setup.deleteRow,
             height: "h-10",
             margin: "mb-4"
           }, {
@@ -26799,15 +27075,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* TEXT */
                 )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_8, " - ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
                   onClick: function onClick($event) {
-                    return $options.edit(row);
+                    return $setup.edit(row);
                   },
                   "class": "far fa-edit fa-lg cursor-pointer"
                 }, null, 8
                 /* PROPS */
-                , ["onClick"]), row.privilege_id == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", {
+                , ["onClick"]), row.privilege.id == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", {
                   key: 0,
                   onClick: function onClick($event) {
-                    return $options.deleteRow(row);
+                    return $setup.deleteRow(row);
                   },
                   "class": "cursor-pointer far fa-trash-alt fa-lg text-red-700 ml-2"
                 }, null, 8
@@ -26823,7 +27099,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
                 }, 1032
                 /* PROPS, DYNAMIC_SLOTS */
-                , ["href"])])]);
+                , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.privilege.id), 1
+                /* TEXT */
+                )])]);
               }), 128
               /* KEYED_FRAGMENT */
               ))];
@@ -26849,17 +27127,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
-    isOpen: $data.isOpen,
-    editMode: $data.editMode,
-    form: $data.form,
-    onSave: $options.save,
-    onUpdate: $options.update,
-    onCloseModal: $options.closeModal
+    isOpen: $setup.isOpen,
+    editMode: $setup.editMode,
+    form: $setup.form,
+    onSave: $setup.save,
+    onUpdate: $setup.update,
+    onCloseModal: $setup.closeModal
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-        onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return $options.save, $options.update;
+        onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+          return $setup.save, $setup.update;
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "nameField",
@@ -26868,14 +27146,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "nameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.name,
+        modelValue: $setup.form.name,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.form.name = $event;
+          return $setup.form.name = $event;
         }),
         placeholder: "Wprowadź imię"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.name), 1
+      , ["modelValue"]), $setup.form.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.name), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "surnameField",
@@ -26884,14 +27162,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "surnameField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.surname,
+        modelValue: $setup.form.surname,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.form.surname = $event;
+          return $setup.form.surname = $event;
         }),
         placeholder: "Wprowadź nazwisko"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.surname ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.surname), 1
+      , ["modelValue"]), $setup.form.errors.surname ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.surname), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "emailField",
@@ -26900,14 +27178,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "emailField",
         type: "email",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.email,
+        modelValue: $setup.form.email,
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.form.email = $event;
+          return $setup.form.email = $event;
         }),
         placeholder: "Wprowadź email"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.email), 1
+      , ["modelValue"]), $setup.form.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.email), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "phoneField",
@@ -26916,21 +27194,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "phoneField",
         type: "text",
         "class": "mt-1 block w-full",
-        modelValue: $data.form.phone,
+        modelValue: $setup.form.phone,
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-          return $data.form.phone = $event;
+          return $setup.form.phone = $event;
         }),
         placeholder: "Wprowadź nr telefonu"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), $props.errors.phone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.phone), 1
+      , ["modelValue"]), $setup.form.errors.phone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.form.errors.phone), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.editMode && $data.currentUser.privilege.id != _ctx.$page.props.privileges.IS_GLOBAL_ADMIN && _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $setup.editMode && $setup.currentUser.privilege.id != _ctx.$page.props.privileges.IS_GLOBAL_ADMIN && _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "privilegeField",
         value: "Uprawnienia"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"text-red-500\" v-if=\"errors.privilege\">{{ errors.privilege }}</div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-          return $data.form.privilege_new = $event;
+          return $setup.form.privilege_new = $event;
         }),
         "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
         id: "privilegeField"
@@ -26949,13 +27227,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.privilege_new]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-show=\"($page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN || $page.props.auth.user.privilege_id == $page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && !editMode\" class=\"mb-4\">\r\n                    <BreezeLabel for=\"unitField\" value=\"Remiza\" />\r\n                    <select v-model=\"form.unit\" class=\"border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm\" id=\"unitField\">\r\n                        <template v-for=\"fbunit in units\" :key=\"fbunit.id\">\r\n                            <option :value=\"fbunit.id\">\r\n                                {{fbunit.name}}\r\n                            </option>\r\n                        </template>\r\n                    </select>\r\n                </div> "), $data.editMode && _ctx.$page.props.auth.user.id == $data.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.privilege_new]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+        "for": "unitField",
+        value: "Remiza"
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $setup.form.unit = $event;
+        }),
+        "class": "border-gray-300 w-full focus:border-primary-200 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md shadow-sm",
+        id: "unitField"
+      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.units, function (fbunit) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+          key: fbunit.id,
+          value: fbunit.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fbunit.name), 9
+        /* TEXT, PROPS */
+        , ["value"]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.unit]])], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, (_ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_GLOBAL_ADMIN || _ctx.$page.props.auth.user.privilege_id == _ctx.$page.props.privileges.IS_SUPERIOR_UNIT_ADMIN) && $setup.editMode]]), $setup.editMode && _ctx.$page.props.auth.user.id == $setup.form.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: _ctx.route('password.change')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeButton, null, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [_hoisted_22];
+              return [_hoisted_23];
             }),
             _: 1
             /* STABLE */

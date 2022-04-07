@@ -54,13 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
-        Route::resource('users', UserController::class, ['names' => ['index' => 'users.index']]);
+        Route::resource('/users', UserController::class);
         Route::resource('sets', SetController::class, ['names' => ['index' => 'sets.index']]);
         Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
         Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
         Route::resource('services', ServiceController::class, ['names' => ['index' => 'services.index']]);
-        Route::resource('fireBrigadeUnits', FireBrigadeUnitController::class, ['names' => ['index' => 'fireBrigadeUnits.index']]);
-        Route::resource('stencils', ItemDatabaseController::class, ['names' => ['index' => 'stencils.index']]);
+        Route::resource('/fireBrigadeUnits', FireBrigadeUnitController::class);
+        Route::resource('/stencils', ItemDatabaseController::class);
         Route::resource('/manufacturers', ManufacturerController::class);
         Route::resource('/vehicles', VehicleController::class);
         Route::resource('fills', FillController::class);
@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::post('usages/insertNew/', [UsageController::class, 'insertNew'])->name('usage.new');;
 
         Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
+        Route::get('create-pdf-file', [PDFController::class, 'index'])->name('create_pdf');;
     });
 
     // Route::get('/mfa', [UserController::class, 'mfa'])->name('mfa');

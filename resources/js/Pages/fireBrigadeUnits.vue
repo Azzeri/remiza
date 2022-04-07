@@ -32,12 +32,12 @@
                 <div class="mb-4">
                     <BreezeLabel for="nameField" value="Nazwa" />
                     <BreezeInput id="nameField" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Wprowadź nazwę" />
-                    <div class="text-red-500" v-if="errors.name">{{ errors.name }}</div>
+                    <div class="text-red-500" v-if="form.errors.name">{{ form.errors.name }}</div>
                 </div>   
                 <div class="mb-4">
                     <BreezeLabel for="addressField" value="Adres" />
                     <BreezeInput id="addressField" type="text" class="mt-1 block w-full" v-model="form.address" placeholder="Wprowadź adres" />
-                    <div class="text-red-500" v-if="errors.address">{{ errors.address }}</div>
+                    <div class="text-red-500" v-if="form.errors.address">{{ form.errors.address }}</div>
                 </div>
 
                 <div v-show="$page.props.auth.user.privilege_id == $page.props.privileges.IS_GLOBAL_ADMIN && !editMode" class="mb-4">
@@ -59,22 +59,22 @@
                     <div class="mb-4">
                         <BreezeLabel for="userNameField" value="Imię" />
                         <BreezeInput id="userNameField" type="text" class="mt-1 block w-full" v-model="form.username" placeholder="Wprowadź imię" />
-                        <div class="text-red-500" v-if="errors.username">{{ errors.username }}</div>
+                        <div class="text-red-500" v-if="form.errors.username">{{ form.errors.username }}</div>
                     </div>
                     <div class="mb-4">
                         <BreezeLabel for="surnameField" value="Nazwisko" />
                         <BreezeInput id="surnameField" type="text" class="mt-1 block w-full" v-model="form.surname" placeholder="Wprowadź nazwisko"  />
-                        <div class="text-red-500" v-if="errors.surname">{{ errors.surname }}</div>
+                        <div class="text-red-500" v-if="form.errors.surname">{{ form.errors.surname }}</div>
                     </div>
                     <div class="mb-4">
                         <BreezeLabel for="emailField" value="Email" />
                         <BreezeInput id="emailField" type="email" class="mt-1 block w-full" v-model="form.email" placeholder="Wprowadź email" />
-                        <div class="text-red-500" v-if="errors.email">{{ errors.email }}</div>
+                        <div class="text-red-500" v-if="form.errors.email">{{ form.errors.email }}</div>
                     </div>
                     <div class="mb-4">
                         <BreezeLabel for="phoneField" value="Nr telefonu" />
                         <BreezeInput id="phoneField" type="text" class="mt-1 block w-full" v-model="form.phone" placeholder="Wprowadź nr telefonu" />
-                        <div class="text-red-500" v-if="errors.phone">{{ errors.phone }}</div>
+                        <div class="text-red-500" v-if="form.errors.phone">{{ form.errors.phone }}</div>
                     </div>   
                 </div>                                                             
             </div>                
@@ -83,17 +83,20 @@
 </template>
 
 <script>
+
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import BreezeButton from '@/Components/Button.vue'
 import BreezeInput from '@/Components/Input.vue'
 import BreezeLabel from '@/Components/Label.vue'
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Card from "@/Components/Card.vue";
 import Table from "@/Components/Table.vue";
 import Modal from "@/Components/Modal.vue";
 import FloatingButton from "@/Components/FloatingButton.vue";
 import Message from "@/Components/Message.vue";
 import Pagination from "@/Components/Pagination.vue";
+import { ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     props: {
@@ -115,71 +118,142 @@ export default {
         Message
     },
 
-    data() {
-        return {
-            editMode: false,
-            isOpen: false,
-            form: {
-                name: null,
-                address: null,
-                username: null,
-                surname: null,
-                email: null,
-                phone: null,
-                superior: null
-            },
-            throws:['Nazwa','Adres','Jednostka nadrzędna', 'Działania'],
+    setup() {
+        const editMode = ref(false)
+        const isOpen = ref(false)
+        const form = useForm({
+            name: null,
+            address: null,
+            superior: null,
+            username: null,
+            surname: null,
+            email: null,
+            phone: null,
+        })
+        const throws = ['Nazwa', 'Adres', 'Jednostka nadrzędna', 'Działania']
+        const superior_unit = (unit) => {
+            return unit.superior_unit ? unit.superior_unit.name : 'brak'
         }
-    },
-
-    computed: {
-
-    },
-    
-    methods: {
-        superior_unit(unit){
-            return unit.superior_unit ? unit.superior_unit.name : 'brak';
-        },
-        openModal: function () {
-            this.isOpen = true;
-        },
-        closeModal: function () {
-            this.isOpen = false;
-            this.reset();
-            this.editMode=false;
-        },
-        reset: function () {
-            this.form = {
-                name: null,
-                address: null,
-                username: null,
-                surname: null,
-                email: null,
-                phone: null,
-                superior: null
-            }
-        },
-        save: function (data) {
-            this.$inertia.post('/fireBrigadeUnits', data,{
-                onSuccess: () => this.closeModal(),
+        const openModal = (_) => {
+            isOpen.value = true
+        }
+        const closeModal = (_) => {
+            isOpen.value = false
+            reset()
+        }
+        const reset = (_) => {
+            form.reset()
+            form.clearErrors()
+            editMode.value = false
+        }
+        const save = (_) => {
+            form.post(route("fireBrigadeUnits.store"), {
+                onSuccess: () => closeModal()
             })
-            this.reset();
-        },
-        edit: function (data) {
-            this.form = Object.assign({}, data);
-            this.editMode = true;
-            this.openModal();
-        },
-        update: function (data) {
-            this.$inertia.put('/fireBrigadeUnits/' + data.id, data,{
-                onSuccess: () => this.closeModal()
-            });     
-        },
-        deleteRow: function (data) {
-            if (!confirm('Na pewno? Usuniesz wszystkie dane związane z jednostką!')) return;
-            this.$inertia.delete('/fireBrigadeUnits/' + data.id)
-            this.closeModal();
         }
-    }
+        const edit = (row) => {
+            editMode.value = true
+            openModal()
+            form.id = row.id
+            form.name = row.name
+            form.address = row.address
+            form.superior = row.superior_unit_id
+            form.username = null
+            form.surname = null
+            form.email = null
+            form.phone = null
+        }
+        const update = (data) => {
+            form.put(route("fireBrigadeUnits.update", data.id), {
+                onSuccess: () => closeModal()
+            })
+        }
+        const deleteRow = (data) => {
+            if (!confirm('Na pewno?')) return;
+            Inertia.delete(route("fireBrigadeUnits.destroy", data.id))
+            form.reset()
+        }
+        return {
+            editMode,
+            isOpen,
+            form,
+            throws,
+            superior_unit,
+            openModal,
+            closeModal,
+            reset,
+            save,
+            edit,
+            update,
+            deleteRow,
+        }
+    },
+
+    // data() {
+    //     return {
+    //         editMode: false,
+    //         isOpen: false,
+    //         form: {
+    //             name: null,
+    //             address: null,
+    //             username: null,
+    //             surname: null,
+    //             email: null,
+    //             phone: null,
+    //             superior: null
+    //         },
+    //         throws:['Nazwa','Adres','Jednostka nadrzędna', 'Działania'],
+    //     }
+    // },
+
+    // computed: {
+
+    // },
+    
+    // methods: {
+    //     superior_unit(unit){
+    //         return unit.superior_unit ? unit.superior_unit.name : 'brak';
+    //     },
+    //     openModal: function () {
+    //         this.isOpen = true;
+    //     },
+    //     closeModal: function () {
+    //         this.isOpen = false;
+    //         this.reset();
+    //         this.editMode=false;
+    //     },
+    //     reset: function () {
+    //         this.form = {
+    //             name: null,
+    //             address: null,
+    //             username: null,
+    //             surname: null,
+    //             email: null,
+    //             phone: null,
+    //             superior: null
+    //         }
+    //     },
+    //     save: function (data) {
+    //         this.$inertia.post('/fireBrigadeUnits', data,{
+    //             onSuccess: () => this.closeModal(),
+    //         })
+    //         this.reset();
+    //     },
+    //     edit: function (data) {
+    //         this.form = Object.assign({}, data);
+    //         this.editMode = true;
+    //         this.openModal();
+    //     },
+    //     update: function (data) {
+    //         this.$inertia.put('/fireBrigadeUnits/' + data.id, data,{
+    //             onSuccess: () => this.closeModal()
+    //         });     
+    //     },
+    //     deleteRow: function (data) {
+    //         if (!confirm('Na pewno? Usuniesz wszystkie dane związane z jednostką!')) return;
+    //         this.$inertia.delete('/fireBrigadeUnits/' + data.id)
+    //         this.closeModal();
+    //     }
+    // }
 }
 </script>

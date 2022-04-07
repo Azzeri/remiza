@@ -109,9 +109,7 @@ export default {
         }
         const update = (data) => {
             form.put(route("manufacturers.update", data.id), {
-                onSuccess: () => {
-                    closeModal()
-                }
+                onSuccess: () => closeModal()
             })
 
         }
