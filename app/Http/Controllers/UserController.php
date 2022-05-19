@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Storage;
+// use Illuminate\Http\Request;
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -101,6 +106,17 @@ class UserController extends Controller
         /////////////////////////////////////////////
 
         return Inertia::render('users', ['data' => $users, 'units' => $units, 'privileges_form' => $privileges]);
+    }
+
+    public function generatePdf()
+    {
+        $data = User::all();
+
+        // view()->share('create_pdf_user', $data);
+        $pdf = PDF::loadView('generates/generate_users_pdf', ['data' => $data])->setPaper('a4', 'portrait');
+        return $pdf->download('generate_users_pdf.pdf');
+        // $pdf->save('user.pdf');
+        return view('generates/generate_users_pdf');
     }
 
     public function store()

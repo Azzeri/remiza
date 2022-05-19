@@ -26,7 +26,10 @@
                         {{row.privilege.id}}
                     </td>
                 </tr>
-            </Table>
+            </Table><br><br>
+            <Link :href="route('create_pdf')" class="">
+                <BreezeButton class="mb-2 mt-4">WYGENERUJ PDF</BreezeButton>
+            </Link>
             <pagination class="mt-6 mx-auto" :links="data.links" />
         </Card>
     </BreezeAuthenticatedLayout>
@@ -186,6 +189,9 @@ export default {
                 return props.units[0].id
             }
         )
+        const generatePdf = () => {
+
+        }
 
         return {
             editMode,
@@ -201,7 +207,8 @@ export default {
             edit,
             update,
             deleteRow,
-            computed
+            computed,
+            generatePdf
         }
     },
 

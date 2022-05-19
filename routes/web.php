@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
 
         Route::resource('/users', UserController::class);
+        
         Route::resource('sets', SetController::class, ['names' => ['index' => 'sets.index']]);
         Route::resource('cathegories', CathegoryController::class, ['names' => ['index' => 'cathegories.index']]);
         Route::resource('items', ItemController::class, ['names' => ['index' => 'items.index']]);
@@ -75,6 +76,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('items/history/{id}/{n}', [ItemController::class, 'history']);
 
         Route::get('loginhistory/{id}', [HistoryController::class, 'index']);
+        
+        Route::get('create_pdf_user', [UserController::class, 'generatePdf'])->name('create_pdf');
 
         Route::post('cathegories/deletePhoto/{id}', [CathegoryController::class, 'deletePhoto']);
         Route::post('cathegories/insertPhoto/{id}', [CathegoryController::class, 'insertPhoto']);
