@@ -82,7 +82,6 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::post('usages/insertNew/', [UsageController::class, 'insertNew'])->name('usage.new');;
 
         Route::get('scanner', [ScannerController::class, 'index'])->name('scanner');
-        Route::get('create-pdf-file', [PDFController::class, 'index'])->name('create_pdf');;
     });
 
     // Route::get('/mfa', [UserController::class, 'mfa'])->name('mfa');
