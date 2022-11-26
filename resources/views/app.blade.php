@@ -17,18 +17,7 @@
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/093e387b29.js" crossorigin="anonymous"></script>
-       
-       <!-- Hotjar Tracking Code for https://remiza.herokuapp.com/ -->
-        <script>
-            (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:3265092,hjsv:6};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                a.appendChild(r);
-            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-        </script>
+      
     </head>
     <body class="font-sans antialiased">
         @inertia
@@ -36,6 +25,15 @@
         @env ('local')
             <script src="http://localhost:8080/js/bundle.js"></script>
         @endenv
+        <script type="text/javascript">
+          window._mfq = window._mfq || [];
+          (function() {
+            var mf = document.createElement("script");
+            mf.type = "text/javascript"; mf.defer = true;
+            mf.src = "//cdn.mouseflow.com/projects/6650ddac-3a18-4210-9188-5d437d02dc55.js";
+            document.getElementsByTagName("head")[0].appendChild(mf);
+          })();
+        </script>
 
     </body>
 </html>
