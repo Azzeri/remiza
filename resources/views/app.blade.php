@@ -17,6 +17,13 @@
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/093e387b29.js" crossorigin="anonymous"></script>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WCN6VW4');</script>
+        <!-- End Google Tag Manager -->
     </head>
     <body class="font-sans antialiased">
         @inertia
@@ -25,15 +32,10 @@
             <script src="http://localhost:8080/js/bundle.js"></script>
         @endenv
 
-        <script type="text/javascript">
-          window._mfq = window._mfq || [];
-          (function() {
-            var mf = document.createElement("script");
-            mf.type = "text/javascript"; mf.defer = true;
-            mf.src = "//cdn.mouseflow.com/projects/6650ddac-3a18-4210-9188-5d437d02dc55.js";
-            document.getElementsByTagName("head")[0].appendChild(mf);
-          })();
-        </script>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCN6VW4"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
     </body>
 </html>
